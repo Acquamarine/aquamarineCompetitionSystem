@@ -1,0 +1,72 @@
+html {
+    overflow-y: scroll;
+}
+
+
+body {
+    margin: 0% 0% 0% 0%;
+    min-width: 960px;
+    min-height: 2000px;
+}
+
+#main {
+    //padding:2% 10% 5% 10%; 
+    margin: 0 auto;
+    background-image: url("assets/bg3.jpg");
+    background-size: 100%;
+    min-height: 2000px;
+    background-repeat: repeat;
+    
+    
+}
+#content {
+    margin: 0 auto;
+    width: 80%;
+    background-color: #202f3e;
+    opacity: 0.9;
+    height: 90%;
+    border-radius: 20px;
+    
+}
+
+#horizMenu {
+    margin: 0 auto;
+    background: transparent url("assets/header-bg.png") no-repeat;
+    width: 1200px;
+    height: 150px;
+    padding: 95px 0px 0px 0px;
+
+
+}
+ul {
+    margin-left: 100px; 
+    width: 1000px;
+    display: table;
+    border-collapse: collapse;
+    
+    
+
+}
+
+li {
+    width: 25%;
+    list-style-type: none;
+    text-align: center;
+    list-style: none;
+    display: table-cell;
+    float: none;
+    position: relative;
+
+
+}
+
+a {
+   color: #5fdbe2;
+   text-decoration: none;
+   font-family: "Adobe Garamond Pro",Garamond,Baskerville,"Baskerville Old Face","Hoefler Text","Times New Roman",serif;
+   text-transform: uppercase;
+   position: relative;
+   z-index: 2;
+   text-align: center;
+   box-sizing: border-box;
+}
