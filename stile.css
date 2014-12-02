@@ -5,68 +5,107 @@ html {
 
 body {
     margin: 0% 0% 0% 0%;
-    min-width: 960px;
     min-height: 2000px;
 }
 
 #main {
     //padding:2% 10% 5% 10%; 
+	//width: 1350px;
+	width: 100%;
+	min-height: 2000px;
     margin: 0 auto;
     background-image: url("assets/bg3.jpg");
-    background-size: 100%;
-    min-height: 2000px;
+    background-size: contain;
     background-repeat: repeat;
-    
-    
+
+
 }
 #content {
     margin: 0 auto;
-    width: 80%;
+    width: 1100px;
     background-color: #202f3e;
     opacity: 0.9;
     height: 90%;
-    border-radius: 20px;
-    
 }
 
-#horizMenu {
-    margin: 0 auto;
-    background: transparent url("assets/header-bg.png") no-repeat;
-    width: 1200px;
-    height: 150px;
-    padding: 95px 0px 0px 0px;
-
-
-}
-ul {
-    margin-left: 100px; 
-    width: 1000px;
-    display: table;
-    border-collapse: collapse;
-    
-    
+#horizMenuDiv {
+	background: transparent url("assets/header-bg.png") no-repeat 50% 0;
+	background-position: center;
+	position: relative;
+	width: 1350px;
+	height: 300px;
+	z-index: 8;
+	margin:0 auto;
+	margin-bottom:-20px;
 
 }
 
-li {
-    width: 25%;
-    list-style-type: none;
+
+
+#menuList {
+	width:1000px;
+	margin:0;
+	position: relative;
+	margin-left: 200px;
+	top: 27px;
+	list-style-type: none;
+	overflow: visible;
+	height: 37px;
+	display: table;
+	border-collapse: collapse;
+	clear:both;
+}
+
+.menuListItems {
     text-align: center;
-    list-style: none;
-    display: table-cell;
-    float: none;
-    position: relative;
+	list-style: none;
+	display: table-cell;
+	float: none;
+	position: relative;
+	border-collapse: collapse;
+	width: 130px;
+}
 
+/*#firstItemOfTheMenu {
+	width: 150px;
+	padding-left: 150px;
 
 }
+#lastItemOfTheMenu {
+	padding-right: 150px;
+}*/
+
 
 a {
-   color: #5fdbe2;
-   text-decoration: none;
-   font-family: "Adobe Garamond Pro",Garamond,Baskerville,"Baskerville Old Face","Hoefler Text","Times New Roman",serif;
-   text-transform: uppercase;
-   position: relative;
-   z-index: 2;
-   text-align: center;
-   box-sizing: border-box;
+	color: #5fdbe2;
+	font-family: "Adobe Garamond Pro",Garamond,Baskerville,"Baskerville Old Face","Hoefler Text","Times New Roman",serif;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	display: block;
+	padding: 23px 0 11px 0;
+	position: relative;
+	z-index: 2;
+	font-size: .9em;
+	line-height: 1.4em;
+	border-collapse: collapse;
+}
+
+#login{
+	position:relative;
+	margin-left: 80%;
+	width: 120px;
+	height: 100px;
+	background: transparent url("assets/login_button_01.gif") no-repeat 0;
+	background-size: contain;
+	top:10px;
+	//opacity: 0;
+	font-style: italic;
+	font-size: .9em;
+}
+.hidden{
+	opacity: 0;
+	position:relative;
+	padding: 0;
+	top:35px;
 }
