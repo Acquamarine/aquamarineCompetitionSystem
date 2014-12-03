@@ -1,0 +1,120 @@
+html {
+    overflow-y: scroll;
+}
+
+
+body {
+    margin: 0% 0% 0% 0%;
+    min-height: 2000px;
+}
+
+#main {
+    //padding:2% 10% 5% 10%; 
+	//width: 1350px;
+	min-width: 85em;
+	min-height: 2000px;
+    margin: 0 auto;
+    background-image: url("../assets/background_main2.png");
+    background-size: contain;
+    background-repeat: repeat;
+
+
+}
+#content {
+    margin: 0 auto;
+    width: 75em;
+    background-color: #202f3e;
+	border-style: ridge;
+	border-radius: 5%;
+	border-color: #5fdbe2;
+    opacity: 0.9;
+    min-height: 75em;
+}
+
+#header {
+	background: transparent url("../assets/header-bg.png") no-repeat 50% 0;
+	background-position: center;
+	position: relative;
+	width: 1350px;
+	height: 450px;
+	z-index: 8;
+	margin:0 auto;
+	margin-bottom:-100px;
+
+}
+
+
+
+#menuList {
+	width:1000px;
+	margin:0;
+	position: relative;
+	margin-left: 200px;
+	top: -250px;
+	list-style-type: none;
+	overflow: visible;
+	height: 37px;
+	display: table;
+	border-collapse: collapse;
+	clear:both;
+}
+
+.menuListItems {
+    text-align: center;
+	list-style: none;
+	display: table-cell;
+	float: none;
+	position: relative;
+	border-collapse: collapse;
+	width: 130px;
+}
+
+
+
+
+a {
+	color: #5fdbe2;
+	font-family: "Adobe Garamond Pro",Garamond,Baskerville,"Baskerville Old Face","Hoefler Text","Times New Roman",serif;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	display: block;
+	padding: 23px 0 11px 0;
+	position: relative;
+	z-index: 2;
+	font-size: .9em;
+	line-height: 1.4em;
+	border-collapse: collapse;
+}
+
+#loginButton{
+	position:relative;
+	margin-left: 80%;
+	width: 120px;
+	height: 100px;
+	background: transparent url("../assets/login_button_01.gif") no-repeat 0;
+	background-size: contain;
+	top:-270px;
+	//opacity: 0;
+	font-style: italic;
+	font-size: .9em;
+}
+.hidden{
+	opacity: 0;
+	position:relative;
+	padding: 0;
+	top:35px;
+}
+
+#logo{
+	background-image: url("../assets/logo_fake.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: 470px;
+	height: 350px;
+	margin:auto;
+	margin-left: 34%;
+	padding-bottom: -500px;
+	top:-40px;
+	position: relative;
+}
