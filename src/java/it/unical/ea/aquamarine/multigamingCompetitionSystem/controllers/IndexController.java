@@ -5,6 +5,7 @@
  */
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.utilities.User;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -24,8 +25,22 @@ public class IndexController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model) {
+		model.addAttribute("userForm", new User());
+		model.addAttribute("loggedIn", false);
 		return "index";
 	}
 	
+	@RequestMapping(value = "/index", method = RequestMethod.POST)
+	public String userLogin(HttpServletRequest request, @ModelAttribute("userForm") User user, Model model) {
+		//you have to do something smarter!	
+//		if(user.getUsername().equals("ciccio")
+//		   && user.getPassword().equals("pasticcio")){
+//			request.getSession().setAttribute("userSession", user.getUsername());
+//		}
+		String username=user.getUsername();
+		model.addAttribute("username",username);
+		model.addAttribute("loggedIn", true);
+		return "index";
+	}
 	
 }

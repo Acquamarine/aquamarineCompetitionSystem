@@ -48,9 +48,9 @@ body {
 #menuList {
 	width:1000px;
 	margin:0;
-	position: relative;
+	position: absolute;
 	margin-left: 200px;
-	top: -250px;
+	top: 200px;
 	list-style-type: none;
 	overflow: visible;
 	height: 37px;
@@ -87,17 +87,21 @@ a {
 	border-collapse: collapse;
 }
 
-#loginButton{
+#login{
 	position:relative;
-	margin-left: 80%;
-	width: 120px;
-	height: 100px;
-	background: transparent url("../assets/login_button_01.gif") no-repeat 0;
-	background-size: contain;
-	top:-270px;
-	//opacity: 0;
-	font-style: italic;
-	font-size: .9em;
+	margin-left: 66%;
+	width: 350px;
+	height: 120px;
+	top:-290px;
+	font-style: normal;
+	text-align: center;
+	font-size: 1em;
+	color: #5fdbe2;
+	background-color: #202f3e;
+	border-style: ridge;
+	border-radius: 15%;
+	border-color: #5fdbe2;
+	opacity: 0.9;
 }
 .hidden{
 	opacity: 0;
@@ -117,4 +121,8 @@ a {
 	padding-bottom: -500px;
 	top:-40px;
 	position: relative;
+}
+
+.loginTextField{
+	width: 100px;
 }
