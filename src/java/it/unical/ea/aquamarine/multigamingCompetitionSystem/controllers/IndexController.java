@@ -5,7 +5,7 @@
  */
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.utilities.User;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,6 @@ public class IndexController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model) {
 		model.addAttribute("userForm", new User());
-		model.addAttribute("loggedIn", false);
 		return "index";
 	}
 	
