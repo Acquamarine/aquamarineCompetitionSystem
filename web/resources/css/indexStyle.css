@@ -5,17 +5,15 @@ html {
 
 body {
     margin: 0% 0% 0% 0%;
-    min-height: 2000px;
 }
 
 #main {
     //padding:2% 10% 5% 10%; 
 	//width: 1350px;
 	min-width: 85em;
-	min-height: 2000px;
+	min-height: 150em;
     margin: 0 auto;
     background-image: url("../assets/background_main2.png");
-    background-size: contain;
     background-repeat: repeat;
 
 

@@ -9,17 +9,37 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-    <!--bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="/WEB-INF/jdbc.properties" />
 
-<bean id="dataSource"
-	class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-	p:driverClassName="${jdbc.driverClassName}"
-	p:url="${jdbc.url}"
-	p:username="${jdbc.username}"
-	p:password="${jdbc.password}" /-->
+    <bean id="dataSource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+    p:driverClassName="org.hsqldb.jdbcDriver"
+    p:url="jdbc:hsqldb:MyDB"
+    p:username="sa"
+    p:password=""> 
+    </bean>
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	    <property name="dataSource" ref="dataSource" />
+	    <property name="packagesToScan" value="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence" />
+	    <property name="hibernateProperties">
+	        <props>
+	            <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+	            <prop key="hibernate.hbm2ddl.auto">create</prop>
+	            <prop key="hibernate.show_sql">true</prop>
+	        </props>
+	    </property>
+	</bean>
+	 
+         <!--
+	<bean id="userDAO" class="com.unical.application.dao.UserDaoImpl" >
+	    <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+        -->
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	    <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
-	<!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
+    <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
 
 </beans>

@@ -20,6 +20,7 @@
 						<p>	Password :<form:password class="loginTextField" path="password" /></p>
 						<p> <input type="submit" value="Login" /> </p>                    
 						</form:form>
+						<input type="submit" value="signIn"/>
 				</div>
 				<ul id="menuList">
 					<li class="menuListItems" id="firstItemOfTheMenu">
