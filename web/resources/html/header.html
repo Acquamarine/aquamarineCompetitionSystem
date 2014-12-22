@@ -1,0 +1,30 @@
+ <div id="main">
+            <div id="header">
+				<div id="logo"></div>
+				<div id="login">
+					<form:form action="MultigamingCompetitionSystem/index" method="post" commandName="userForm">
+						<p> Username :<form:input class="loginTextField" path="username" /> </p>
+						<p>	Password :<form:password class="loginTextField" path="password" /></p>
+						<p> <input type="submit" value="Login" />  </p>                    
+						</form:form>
+					<form action="MultigamingCompetitionSystem/register" method="get">
+						<input type="submit" value="SignUp" />
+					</form>
+
+				</div>
+				<ul id="menuList">
+					<li class="menuListItems" id="firstItemOfTheMenu">
+						<a href="http://www.google.com">Informazioni sul gioco</a>
+					</li>
+					<li class="menuListItems">
+						<a href="http://www.google.com">Home</a>
+					</li>
+					<li class="menuListItems">
+						<a href="http://www.google.com">Ranking</a>
+					</li >
+					<li class="menuListItems" id="lastItemOfTheMenu">
+						<a href="http://www.google.com">Contacts</a>
+					</li>
+				</ul>
+            </div>
+            <div id="content">

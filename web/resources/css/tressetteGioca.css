@@ -1,0 +1,36 @@
+#game-table{
+	margin: 50px auto;
+	//background-image: url("../assets/green.jpg");
+	background-color: rgba(0, 64, 35, 1);
+	border-radius: 5%;
+	border-width: thick;
+	width: 60em;
+	height: 45em;
+	opacity: 1;
+}
+
+#player1{
+	padding-top: 3em;
+}
+#player2{
+	padding-bottom: 3em;
+}
+#player1-avatar{
+	margin-left: 1em;
+	border-color: #ff5400;
+	border-radius: 10%;
+	background-image: url("../assets/female.jpg");
+	background-size: contain;
+	height: 5em;
+	width: 5em;
+}
+#player2-avatar{
+	margin-left:54em;
+	margin-top: 29em;
+	border-color:#ff5400;
+	border-radius: 10%;
+	background-image: url("../assets/male.png");
+	background-size: contain;
+	height: 5em;
+	width: 5em;
+}

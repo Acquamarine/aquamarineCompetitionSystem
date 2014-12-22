@@ -21,11 +21,10 @@ body {
 #content {
     margin: 0 auto;
     width: 75em;
-    background-color: #202f3e;
 	border-style: ridge;
 	border-radius: 5%;
 	border-color: #5fdbe2;
-    opacity: 0.9;
+    background-color: rgba(32, 47, 62, 0.9);
     min-height: 75em;
 }
 
