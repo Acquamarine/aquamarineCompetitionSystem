@@ -12,13 +12,16 @@
     </head>
     <body>
         <%@include file="../../resources/html/header.html" %>
-		
+		<form id="tressette_button" action="MultigamingCompetitionSystem/tressette" method="get">
+			<input type="submit" value="Tressette" />
+		</form>
 		<%@include file="../../resources/html/footer.html" %>
 		<script>
-					if (${loggedIn} === true) {
-						document.getElementById("login").innerHTML = "<h1>Welcome ${username}</h1>";
-						document.getElementById("login").style.height = "100px";
-					}
+			if (${loggedIn} === true) {
+			<% String name = (String) request.getAttribute("username");%>
+				//document.getElementById("login").innerHTML = "<h1>Welcome"+ <% name; %> +"</h1>";
+				document.getElementById("login").style.height = "100px";
+			}
 		</script>
     </body>
 </html>
