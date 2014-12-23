@@ -1,6 +1,7 @@
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard"%>
 <%@page import="java.util.List"%>
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
 
@@ -30,7 +31,7 @@
 			</div>
 			<div id="cards-on-table">
 				<div id="remaining-cards">
-					
+
 				</div>
 			</div>
 			<div id="player2">
@@ -58,26 +59,21 @@
 				toAppend.className = "li-cards";
 				document.getElementById("player1-cards-list").appendChild(toAppend);
 			}
-                        
-                        <%NeapolitanHand myHand = (NeapolitanHand) request.getAttribute("myHand");
-                        List<NeapolitanCard> myCards = myHand.getHandCards();
-                        int counter = 1;%>
-			for (i = 0; i < 10; i++) {
-				divToAppend = document.createElement("a");
-				divToAppend.setAttribute("href","./");
-                                var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/"+"<%= myCards.get(counter)%>"+".png";
-                                <%counter=counter+1;%>;
-                                                                
-				divToAppend.innerHTML="<img  class='player2_cards_img' src="+cardPath+" />";
-                                //divToAppend.innerHTML="<img  class='player2_cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/1_clubs.png'/>";
-				divToAppend.id = "player2-card" + i;
-				divToAppend.className = "player2-cards";
-				toAppend = document.createElement("li");
-				toAppend.innerHTML = <%=counter%>;
-				toAppend.appendChild(divToAppend);
-				toAppend.className = "li-cards";
-				document.getElementById("player2-cards-list").appendChild(toAppend);
-			}
+
 		</script>
-    </body>
+	<c:forEach items = "${cards}"  var = "card" >
+		<script>
+			divToAppend = document.createElement("a");
+			divToAppend.setAttribute("href", "./");
+			var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/${card.toString()}.png";
+			divToAppend.innerHTML = "<img  class='player2_cards_img' src=" + cardPath + " />";
+			divToAppend.id = "player2-card" + i;
+			divToAppend.className = "player2-cards";
+			toAppend = document.createElement("li");
+			toAppend.appendChild(divToAppend);
+			toAppend.className = "li-cards";
+			document.getElementById("player2-cards-list").appendChild(toAppend);
+		</script>
+	</c:forEach>
+</body>
 </html>

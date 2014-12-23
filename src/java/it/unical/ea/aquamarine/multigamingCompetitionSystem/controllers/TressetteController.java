@@ -5,9 +5,13 @@
  */
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +36,9 @@ public class TressetteController {
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
 		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
-		model.addAttribute("myHand", playerGame.getHands().get(me));
+		NeapolitanHand myHand = playerGame.getHands().get(me);
+		List<NeapolitanCard> cards = myHand.getHandCards();
+		model.addAttribute("cards",cards);
 		model.addAttribute("userForm", new User());
 		return "/tressette/gioca";
 	}
