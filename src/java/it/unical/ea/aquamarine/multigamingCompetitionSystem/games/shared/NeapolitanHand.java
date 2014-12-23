@@ -33,5 +33,9 @@ public class NeapolitanHand {
 	public boolean hasSeed(int seed) {
 		return handCards.stream().anyMatch((card) -> (handCards!=null && seed == card.getSeed()));
 	}
+
+	public List<NeapolitanCard> getHandCards() {
+		return handCards;
+	}
 	
 }

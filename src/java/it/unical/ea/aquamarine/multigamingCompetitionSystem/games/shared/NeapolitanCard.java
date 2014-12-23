@@ -21,4 +21,26 @@ public class NeapolitanCard {
 		return number;
 	}
 
+	@Override
+	public String toString() {
+		String seedString = "";
+		switch(seed) {
+			case 0:
+				seedString = "cups";
+				break;
+			case 1:
+				seedString = "coins";
+				break;
+			case 2:
+				seedString = "clubs";
+				break;
+			case 3:
+				seedString = "swords";
+				break;
+		}
+		return number+"_"+seedString;
+	}
+	
+	
+
 }

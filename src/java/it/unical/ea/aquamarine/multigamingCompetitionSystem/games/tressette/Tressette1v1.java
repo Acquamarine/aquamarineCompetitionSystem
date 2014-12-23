@@ -13,10 +13,9 @@ import java.util.Queue;
 
 public class Tressette1v1 implements ITressette{
 	
-	private List<Player> players;
-	private Map<String, Player> playersMap = new HashMap<>();
-	private Map<String, Player> followingPlayer = new HashMap<>();
-	private Player turnPlayer;
+	private List<String> players;
+	private Map<String, String> followingPlayer = new HashMap<>();
+	private String turnPlayer;
 	private Map<String, NeapolitanHand> hands = new HashMap<>();
 	private Map<String, NeapolitanCard> lastPickedCards = new HashMap<>();;
 	private Queue<NeapolitanCard> deck;
@@ -24,26 +23,30 @@ public class Tressette1v1 implements ITressette{
 	private List<NeapolitanCard> table = new ArrayList<>();
 	private boolean gameComplete = false;
 
-	public Tressette1v1(List<Player> players) {
+	public Tressette1v1(List<String> players) {
 		this.players = players;
-		for(Player player:players) {
-			playersMap.put(player.getId(), player);
-			hands.put(player.getId(), new NeapolitanHand());
-			lastPickedCards.put(player.getId(), null);
-			takenCards.put(player.getId(), new LinkedList<>());
+		for(String player:players) {
+			hands.put(player, new NeapolitanHand());
+			lastPickedCards.put(player, null);
+			takenCards.put(player, new LinkedList<>());
 			
 			
 		}
-		followingPlayer.put(players.get(0).getId(), players.get(1));
-		followingPlayer.put(players.get(1).getId(), players.get(0));
+		followingPlayer.put(players.get(0), players.get(1));
+		followingPlayer.put(players.get(1), players.get(0));
 		deck = SharedFunctions.getShuffledNeapolitanDeck();
+		players.stream().forEach((player) -> {
+			for(int i=0;i<10;i++) {
+				hands.get(player).addCard(deck.poll());
+			}
+		});
 		turnPlayer = players.iterator().next();
 	}
 	
 
 	@Override
 	public boolean playCard(String playerId, NeapolitanCard card) {
-		if(playersMap.get(playerId) == turnPlayer) {
+		if(playerId == turnPlayer) {
 			if(hands.get(playerId).playCard(card) && isCardAllowed(card)) {
 				table.add(card);
 				if(table.size() == 1) {
@@ -73,8 +76,8 @@ public class Tressette1v1 implements ITressette{
 	}
 
 	private void handComplete() {
-		Player handWinner = computeHandWinner();
-		takenCards.get(handWinner.getId()).addAll(table);
+		String handWinner = computeHandWinner();
+		takenCards.get(handWinner).addAll(table);
 		table.clear();
 		lastPickedCards.clear();
 		if(!deck.isEmpty()) {
@@ -83,11 +86,11 @@ public class Tressette1v1 implements ITressette{
 		turnPlayer = handWinner;
 	}
 
-	private Player computeHandWinner() {
+	private String computeHandWinner() {
 		if(strongerCard(table.get(1), table.get(0))) {
 			return turnPlayer;
 		}
-		return followingPlayer.get(turnPlayer.getId());
+		return followingPlayer.get(turnPlayer);
 	}
 
 	private boolean isCardAllowed(NeapolitanCard card) {
@@ -98,7 +101,7 @@ public class Tressette1v1 implements ITressette{
 		if(card.getSeed() == tableSeed) {
 			return true;
 		}
-		return !hands.get(turnPlayer.getId()).hasSeed(tableSeed);
+		return !hands.get(turnPlayer).hasSeed(tableSeed);
 	}
 
 	private boolean strongerCard(NeapolitanCard second, NeapolitanCard first) {
@@ -122,46 +125,38 @@ public class Tressette1v1 implements ITressette{
 		gameComplete = (takenCardsNumber == 40);
 	}
 
-	private void pickCards(Player handWinner) {
+	private void pickCards(String handWinner) {
 		pickACard(handWinner);
-		pickACard(followingPlayer.get(handWinner.getId()));
+		pickACard(followingPlayer.get(handWinner));
 	}
 
-	private void pickACard(Player pickingPlayer) {
+	private void pickACard(String pickingPlayer) {
 		NeapolitanCard pickedCard = deck.poll();
-		lastPickedCards.put(pickingPlayer.getId(), pickedCard);
-		hands.get(pickingPlayer.getId()).addCard(pickedCard);
+		lastPickedCards.put(pickingPlayer, pickedCard);
+		hands.get(pickingPlayer).addCard(pickedCard);
 	}
 
-	public List<Player> getPlayers() {
+	public List<String> getPlayers() {
 		return players;
 	}
 
-	public void setPlayers(List<Player> players) {
+	public void setPlayers(List<String> players) {
 		this.players = players;
 	}
 
-	public Map<String, Player> getPlayersMap() {
-		return playersMap;
-	}
-
-	public void setPlayersMap(Map<String, Player> playersMap) {
-		this.playersMap = playersMap;
-	}
-
-	public Map<String, Player> getFollowingPlayer() {
+	public Map<String, String> getFollowingPlayer() {
 		return followingPlayer;
 	}
 
-	public void setFollowingPlayer(Map<String, Player> followingPlayer) {
+	public void setFollowingPlayer(Map<String, String> followingPlayer) {
 		this.followingPlayer = followingPlayer;
 	}
 
-	public Player getTurnPlayer() {
+	public String getTurnPlayer() {
 		return turnPlayer;
 	}
 
-	public void setTurnPlayer(Player turnPlayer) {
+	public void setTurnPlayer(String turnPlayer) {
 		this.turnPlayer = turnPlayer;
 	}
 

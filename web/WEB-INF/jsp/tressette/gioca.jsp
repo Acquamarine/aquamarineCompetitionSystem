@@ -1,3 +1,6 @@
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard"%>
+<%@page import="java.util.List"%>
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
 
@@ -46,7 +49,7 @@
 		<%@include file="../../../resources/html/footer.html" %>
 
 		<script>
-			for (i = 0; i < 13; i++) {
+			for (i = 0; i < 10; i++) {
 				divToAppend = document.createElement("div");
 				divToAppend.id = "player1-card" + i;
 				divToAppend.className = "player1-cards";
@@ -55,9 +58,14 @@
 				toAppend.className = "li-cards";
 				document.getElementById("player1-cards-list").appendChild(toAppend);
 			}
-			for (i = 0; i < 13; i++) {
+                        
+                        <%NeapolitanHand myHand = (NeapolitanHand) request.getAttribute("myHand");
+                        List<NeapolitanCard> myCards = myHand.getHandCards();
+                        int counter = 0;%>
+			for (i = 0; i < 10; i++) {
 				divToAppend = document.createElement("a");
 				divToAppend.setAttribute("href","./");
+                                var cardPath = '/MultigamingCompetitionSystem/assets/'+<%= myCards.get(counter++)%>+'.png'
 				divToAppend.innerHTML="<img  class='player2_cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/asso_bastoni.png'/>";
 				divToAppend.id = "player2-card" + i;
 				divToAppend.className = "player2-cards";
