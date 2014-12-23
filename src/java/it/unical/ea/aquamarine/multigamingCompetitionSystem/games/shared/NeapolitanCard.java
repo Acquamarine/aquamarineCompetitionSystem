@@ -7,5 +7,18 @@ public class NeapolitanCard {
 	public static int SWORDS=3;
 	private int seed;
 	private int number;
-	
+
+	public NeapolitanCard(int seed, int number) {
+		this.seed = seed;
+		this.number = number;
+	}
+
+	public int getSeed() {
+		return seed;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
 }

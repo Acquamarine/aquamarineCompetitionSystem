@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NeapolitanHand {
-	private List<NeapolitanCard> handCards  = new ArrayList<>(3);
+	private List<NeapolitanCard> handCards;
+
+	public NeapolitanHand() {
+		handCards = new ArrayList<>(10);
+	}
 	
-	public void addCard(NeapolitanCard card) {
+	public int addCard(NeapolitanCard card) {
 		for(int i=0;i<handCards.size();i++) {
 			if(handCards.get(i) == null) {
 				handCards.set(i, card);
+				return i;
 			}
 		}
+		return -1;
 	}
 	
 	public boolean playCard(NeapolitanCard card) {
@@ -22,6 +28,10 @@ public class NeapolitanHand {
 			}
 		}
  		return false;
+	}
+
+	public boolean hasSeed(int seed) {
+		return handCards.stream().anyMatch((card) -> (handCards!=null && seed == card.getSeed()));
 	}
 	
 }
