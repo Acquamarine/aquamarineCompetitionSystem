@@ -8,6 +8,9 @@ public class NeapolitanHand {
 
 	public NeapolitanHand() {
 		handCards = new ArrayList<>(10);
+		for(int i=0;i<10;i++) {
+			handCards.add(null);
+		}
 	}
 	
 	public int addCard(NeapolitanCard card) {

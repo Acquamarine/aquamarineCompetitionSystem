@@ -61,15 +61,19 @@
                         
                         <%NeapolitanHand myHand = (NeapolitanHand) request.getAttribute("myHand");
                         List<NeapolitanCard> myCards = myHand.getHandCards();
-                        int counter = 0;%>
+                        int counter = 1;%>
 			for (i = 0; i < 10; i++) {
 				divToAppend = document.createElement("a");
 				divToAppend.setAttribute("href","./");
-                                var cardPath = '/MultigamingCompetitionSystem/assets/'+<%= myCards.get(counter++)%>+'.png'
-				divToAppend.innerHTML="<img  class='player2_cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/asso_bastoni.png'/>";
+                                var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/"+"<%= myCards.get(counter)%>"+".png";
+                                <%counter=counter+1;%>;
+                                                                
+				divToAppend.innerHTML="<img  class='player2_cards_img' src="+cardPath+" />";
+                                //divToAppend.innerHTML="<img  class='player2_cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/1_clubs.png'/>";
 				divToAppend.id = "player2-card" + i;
 				divToAppend.className = "player2-cards";
 				toAppend = document.createElement("li");
+				toAppend.innerHTML = <%=counter%>;
 				toAppend.appendChild(divToAppend);
 				toAppend.className = "li-cards";
 				document.getElementById("player2-cards-list").appendChild(toAppend);

@@ -29,8 +29,6 @@ public class Tressette1v1 implements ITressette{
 			hands.put(player, new NeapolitanHand());
 			lastPickedCards.put(player, null);
 			takenCards.put(player, new LinkedList<>());
-			
-			
 		}
 		followingPlayer.put(players.get(0), players.get(1));
 		followingPlayer.put(players.get(1), players.get(0));
@@ -46,7 +44,7 @@ public class Tressette1v1 implements ITressette{
 
 	@Override
 	public boolean playCard(String playerId, NeapolitanCard card) {
-		if(playerId == turnPlayer) {
+		if(playerId.equals(turnPlayer)) {
 			if(hands.get(playerId).playCard(card) && isCardAllowed(card)) {
 				table.add(card);
 				if(table.size() == 1) {

@@ -15,9 +15,9 @@ public class OrderedNeapolitanDeck {
 	}
 	public OrderedNeapolitanDeck() {
 		for(int i=0;i<40;i++) {
-			int nextSeed = i/4;
+			int nextSeed = i/10;
 			int nextNumber = i%10+1;
-			deck.set(i,new NeapolitanCard(nextSeed, nextNumber));
+			deck.add(i,new NeapolitanCard(nextSeed, nextNumber));
 		}
 	}
 	
