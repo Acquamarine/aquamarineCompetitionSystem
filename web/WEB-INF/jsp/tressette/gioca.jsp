@@ -26,7 +26,9 @@
 				</div>
 			</div>
 			<div id="cards-on-table">
-
+				<div id="remaining-cards">
+					
+				</div>
 			</div>
 			<div id="player2">
 				<div id="player2-cards">
@@ -47,16 +49,18 @@
 			for (i = 0; i < 13; i++) {
 				divToAppend = document.createElement("div");
 				divToAppend.id = "player1-card" + i;
-				divToAppend.className = "player-cards";
+				divToAppend.className = "player1-cards";
 				toAppend = document.createElement("li");
 				toAppend.appendChild(divToAppend);
 				toAppend.className = "li-cards";
 				document.getElementById("player1-cards-list").appendChild(toAppend);
 			}
 			for (i = 0; i < 13; i++) {
-				divToAppend = document.createElement("div");
+				divToAppend = document.createElement("a");
+				divToAppend.setAttribute("href","./");
+				divToAppend.innerHTML="<img  class='player2_cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/asso_bastoni.png'/>";
 				divToAppend.id = "player2-card" + i;
-				divToAppend.className = "player-cards";
+				divToAppend.className = "player2-cards";
 				toAppend = document.createElement("li");
 				toAppend.appendChild(divToAppend);
 				toAppend.className = "li-cards";

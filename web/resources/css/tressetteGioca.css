@@ -10,11 +10,11 @@
 }
 
 #player1{
-	padding-top: 3em;
+	padding-top: 0.5em;
 }
 #player2{
 	padding-bottom: 3em;
-	margin-top: 15em;
+	margin-top: 5em;
 }
 #player1-avatar{
 	margin-left: 1em;
@@ -42,18 +42,33 @@
 	
 }
 #player2-cards-list{
-	margin-left: -1em;
+	margin-left: -2em;
 	list-style-type: none;
 	overflow: visible;
 	
 }
-.player-cards{
-/*	border-color: #ff5400;
-	border-style: solid;
-	border-radius: 5%;*/
+.player1-cards{
 	width: 5em;
 	height: 6em;
 	margin-left: -0.5em;
+	background-image: url(../assets/carte_napoletane/Dorso.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	opacity: 1;
+}
+.player2-cards{
+	display: block;
+	width: 5em;
+	height: 6em;
+	margin-right: 0em;
+}
+
+.player2_cards_img{
+	width: 4.7em;
+	height: 7em;
+	border: 0;
+
+	
 }
 
 li{
@@ -63,85 +78,7 @@ li{
 	position: relative;
 	
 }
-#player1-card0{
-	background-image: url(../assets/carte_napoletane/tre_bastoni.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card1{
-	background-image: url(../assets/carte_napoletane/asso_bastoni.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card2{
-	background-image: url(../assets/carte_napoletane/re_coppe.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card3{
-	background-image: url(../assets/carte_napoletane/due_spade.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card4{
-	background-image: url(../assets/carte_napoletane/cavaliere_bastoni.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card5{
-	background-image: url(../assets/carte_napoletane/cinque_denari.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card6{
-	background-image: url(../assets/carte_napoletane/sei_coppe.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card7{
-	background-image: url(../assets/carte_napoletane/donna_spade.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card8{
-	background-image: url(../assets/carte_napoletane/quattro_denari.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card9{
-	background-image: url(../assets/carte_napoletane/sette_spade.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card10{
-	background-image: url(../assets/carte_napoletane/re_bastoni.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card11{
-	background-image: url(../assets/carte_napoletane/asso_coppe.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player1-card12{
-	background-image: url(../assets/carte_napoletane/quattro_bastoni.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
-}
-#player2-card0{
+/*#player2-card0{
 	background-image: url(../assets/carte_napoletane/tre_denari.png);
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -218,7 +155,7 @@ li{
 	background-size: contain;
 	background-repeat: no-repeat;
 	opacity: 1;
-}
+}*/
 
 #player1_info{
 	list-style-type: none;
@@ -236,3 +173,15 @@ li{
 	font-family: "Adobe Garamond Pro",Garamond,Baskerville,"Baskerville Old Face","Hoefler Text","Times New Roman",serif;
 	font-size: 1.3em;
 }
+
+#remaining-cards{
+	background-image: url(../assets/carte_napoletane/Dorso.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	opacity: 1;
+	margin-left: 3em;
+	width: 5em;
+	height: 6em;
+	margin-top:5em;
+}
+
