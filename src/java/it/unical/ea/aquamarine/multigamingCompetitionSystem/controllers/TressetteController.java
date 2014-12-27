@@ -12,10 +12,13 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tres
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -41,5 +44,14 @@ public class TressetteController {
 		model.addAttribute("cards",cards);
 		model.addAttribute("userForm", new User());
 		return "/tressette/gioca";
+	}
+	
+	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")
+	public String makeMove(@RequestParam("cardId") String cardId, Model m){
+		NeapolitanCard toPlay = new NeapolitanCard(cardId);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio");
+		boolean played =  playerGame.playCard("ciccio", toPlay);
+		m.addAttribute("played", played);
+		return "/tressette/playCard";
 	}
 }

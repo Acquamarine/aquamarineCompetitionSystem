@@ -12,6 +12,23 @@
 		<link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css"/>
 		<link href="/MultigamingCompetitionSystem/css/tressetteGioca.css" rel="stylesheet" type="text/css"/>
         <title>Gioca a Tressette!</title>
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(".player2-cards").click(function () {
+					$.ajax({
+						url: "./gioca",
+						data: {
+							cardId: this.id
+						},
+						success: function (data) {
+							console.log(data);
+							// $("#weather-temp").html("<strong>" + data + "</strong> degrees");
+						}
+					});
+				});
+			});
+		</script>
     </head>
     <body>
         <%@include file="../../../resources/html/header.html" %>
@@ -61,19 +78,19 @@
 			}
 
 		</script>
-	<c:forEach items = "${cards}"  var = "card" >
 		<script>
-			divToAppend = document.createElement("a");
+			<c:forEach items = "${cards}"  var = "card" >
+			divToAppend = document.createElement("div");
 			divToAppend.setAttribute("href", "./");
 			var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/${card.toString()}.png";
 			divToAppend.innerHTML = "<img  class='player2_cards_img' src=" + cardPath + " />";
-			divToAppend.id = "player2-card" + i;
+			divToAppend.id = "${card.toString()}";
 			divToAppend.className = "player2-cards";
 			toAppend = document.createElement("li");
 			toAppend.appendChild(divToAppend);
 			toAppend.className = "li-cards";
 			document.getElementById("player2-cards-list").appendChild(toAppend);
+			</c:forEach>
 		</script>
-	</c:forEach>
-</body>
+	</body>
 </html>

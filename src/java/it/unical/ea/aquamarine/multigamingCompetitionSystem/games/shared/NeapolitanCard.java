@@ -13,6 +13,26 @@ public class NeapolitanCard {
 		this.number = number;
 	}
 
+	public NeapolitanCard(String card){
+		String splitting[] = card.split("_");
+		number = Integer.parseInt(splitting[0]);
+		
+		switch(splitting[1]) {
+			case "cups":
+				seed = 0;
+				break;
+			case "coins":
+				seed = 1;
+				break;
+			case "clubs":
+				seed = 2;
+				break;
+			case "swords":
+				seed = 3;
+				break;
+		}
+	}
+	
 	public int getSeed() {
 		return seed;
 	}
@@ -39,6 +59,25 @@ public class NeapolitanCard {
 				break;
 		}
 		return number+"_"+seedString;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null){
+			return false;
+		}
+		if(getClass() != obj.getClass()){
+			return false;
+		}
+		final NeapolitanCard other = (NeapolitanCard) obj;
+		if(this.seed != other.seed){
+			return false;
+		}
+		if(this.number != other.number){
+			return false;
+		}
+		return true;
 	}
 	
 	
