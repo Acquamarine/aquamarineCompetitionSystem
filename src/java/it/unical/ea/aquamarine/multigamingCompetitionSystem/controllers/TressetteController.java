@@ -14,6 +14,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import org.glassfish.json.JsonProviderImpl;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,11 +39,13 @@ public class TressetteController {
 		return "/tressette";
 	}
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET)
-	public String play(Model model) {
-		String me = "ciccio"; //TODO get from session
+	public String play(Model model, HttpServletRequest request) {
+		String me = "ciccio7"; //TODO get from session
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
 		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		//TODO move to login
+		request.getSession().setAttribute("user", me);
 		NeapolitanHand myHand = playerGame.getHands().get(me);
 		List<NeapolitanCard> cards = myHand.getHandCards();
 		model.addAttribute("cards",cards);
@@ -53,8 +56,8 @@ public class TressetteController {
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")	
 	public @ResponseBody String makeMove(@RequestParam("cardId") String cardId, Model m){
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio");
-		TressetteRoundSummary summary =  playerGame.playCard("ciccio", toPlay);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio7");
+		TressetteRoundSummary summary =  playerGame.playCard("ciccio7", toPlay);
 		JSONObject json = new JSONObject();
 		try {
 			json.put("played", summary.isCardPlayed());
@@ -69,5 +72,10 @@ public class TressetteController {
 			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return json.toString();
+	}
+	
+	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "waiting")	
+	public @ResponseBody JSONObject opponentMove(){
+		
 	}
 }

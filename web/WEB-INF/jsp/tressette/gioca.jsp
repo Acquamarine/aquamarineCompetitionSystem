@@ -14,20 +14,30 @@
         <title>Gioca a Tressette!</title>
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script>
-			$(document).ready(function () {                                
+			$(document).ready(function () {
 				$(".player2-cards").click(function () {
-                                        var parentId = this.parentNode.id;
+					var parentId = this.parentNode.id;
 					$.ajax({
 						url: "./gioca",
 						data: {
 							cardId: parentId
 						},
 						success: function (data) {
-                                                        obj = JSON.parse(data);
-                                                        if(obj.played) {
-                                                            $('#'+parentId).remove();
-                                                        }
-							console.log(data);
+							obj = JSON.parse(data);
+							if (obj.played) {
+								$('#' + parentId).remove();
+								$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + parentId + ".png'/>");
+								if (obj.round === 0 || obj.winner !== session.getAttribute("user")) {
+									$.ajax({
+						url: "./gioca",
+						data: {
+							waiting: true
+						},
+						success: function (data) {
+										console.log(data);
+								}
+							}
+						}
 							// $("#weather-temp").html("<strong>" + data + "</strong> degrees");
 						}
 					});
@@ -52,9 +62,23 @@
 				</div>
 			</div>
 			<div id="cards-on-table">
-				<div id="remaining-cards">
+				<ul id="cards-on-table-list">
+					<li class="table-card">
+						<div id="deck">
 
-				</div>
+						</div>
+					</li>
+					<li class="table-card">
+						<div class= "played-cards" id="card-played-0">
+
+						</div>
+					</li>
+					<li class="table-card">
+						<div class= "played-cards" id="card-played-1">
+
+						</div>
+					</li>
+				</ul>
 			</div>
 			<div id="player2">
 				<div id="player2-cards">
@@ -88,7 +112,7 @@
 			divToAppend = document.createElement("div");
 			divToAppend.setAttribute("href", "./");
 			var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/${card.toString()}.png";
-			divToAppend.innerHTML = "<img  class='player2_cards_img' src=" + cardPath + " />";
+			divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
 			divToAppend.className = "player2-cards";
 			toAppend = document.createElement("li");
 			toAppend.id = "${card.toString()}";
