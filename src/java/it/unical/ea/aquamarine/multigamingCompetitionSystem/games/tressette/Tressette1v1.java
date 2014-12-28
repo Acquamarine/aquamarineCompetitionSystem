@@ -43,22 +43,26 @@ public class Tressette1v1 implements ITressette{
 	
 
 	@Override
-	public boolean playCard(String playerId, NeapolitanCard card) {
+	public TressetteRoundSummary playCard(String playerId, NeapolitanCard card) {
+		TressetteRoundSummary summary = new TressetteRoundSummary();
 		if(playerId.equals(turnPlayer)) {
 			if(hands.get(playerId).playCard(card) && isCardAllowed(card)) {
+				summary.setRound(table.size());
 				table.add(card);
 				if(table.size() == 1) {
 					turnPlayer = followingPlayer.get(playerId);		
 				}
 				else {
-					handComplete();
+					handComplete(summary);
 					checkGameComplete();
 				}
-				return true;
+				summary.setCardPlayed(true);
+				return summary;
 			}
 			
 		}
-		return false;
+		summary.setCardPlayed(false);
+		return summary;
 		
 	}
 
@@ -73,13 +77,15 @@ public class Tressette1v1 implements ITressette{
 		return returningMap;
 	}
 
-	private void handComplete() {
+	private void handComplete(TressetteRoundSummary summary) {
 		String handWinner = computeHandWinner();
+		summary.setRoundWinner(handWinner);
 		takenCards.get(handWinner).addAll(table);
 		table.clear();
 		lastPickedCards.clear();
 		if(!deck.isEmpty()) {
 			pickCards(handWinner);		
+			summary.setPickedCards(lastPickedCards);
 		}
 		turnPlayer = handWinner;
 	}
@@ -190,6 +196,11 @@ public class Tressette1v1 implements ITressette{
 			return 1;
 		}
 		return 0;
+	}
+
+	@Override
+	public String getMatchedPlayer(String player) {
+		return followingPlayer.get(player);
 	}
 	
 }

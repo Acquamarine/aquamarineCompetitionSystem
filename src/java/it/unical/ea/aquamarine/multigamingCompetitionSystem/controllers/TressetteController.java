@@ -9,10 +9,14 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.Neapoli
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteRoundSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
-import java.util.ArrayList;
 import java.util.List;
-import org.springframework.http.HttpRequest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.glassfish.json.JsonProviderImpl;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,12 +50,24 @@ public class TressetteController {
 		return "/tressette/gioca";
 	}
 	
-	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")
-	public String makeMove(@RequestParam("cardId") String cardId, Model m){
+	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")	
+	public @ResponseBody String makeMove(@RequestParam("cardId") String cardId, Model m){
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio");
-		boolean played =  playerGame.playCard("ciccio", toPlay);
-		m.addAttribute("played", played);
-		return "/tressette/playCard";
+		TressetteRoundSummary summary =  playerGame.playCard("ciccio", toPlay);
+		JSONObject json = new JSONObject();
+		try {
+			json.put("played", summary.isCardPlayed());
+			json.put("round", summary.getRound());
+			if(summary.getRound() == 1) {
+				String winner = summary.getRoundWinner();
+				json.put("winner", winner);
+				json.put("picked0", summary.getPickedCards().get(winner));
+				json.put("picked1", summary.getPickedCards().get(playerGame.getMatchedPlayer(winner)));
+			}
+		} catch (JSONException ex) {
+			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return json.toString();
 	}
 }

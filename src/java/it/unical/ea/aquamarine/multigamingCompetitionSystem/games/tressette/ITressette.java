@@ -5,8 +5,9 @@ import java.util.Map;
 
 public interface ITressette {
 	
-	public boolean playCard(String playerId, NeapolitanCard card);
+	public TressetteRoundSummary playCard(String playerId, NeapolitanCard card);
 	public Map<String, Integer> getFinalScores();
+	public String getMatchedPlayer(String player);
 	
 	
 }
