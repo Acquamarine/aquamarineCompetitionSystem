@@ -40,7 +40,7 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET)
 	public String play(Model model, HttpServletRequest request) {
-		String me = "ciccio6"; //TODO get from session
+		String me = "ciccio4"; //TODO get from session
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
 		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
@@ -54,16 +54,17 @@ public class TressetteController {
 	}
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")
-	public void makeMove(@RequestParam("cardId") String cardId, Model m) {
+	public void makeMove(@RequestParam("cardId") String cardId, Model model) {
+		model.addAttribute("userForm", new User());
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio6");
-		playerGame.playCard("ciccio6", toPlay);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio4");
+		playerGame.playCard("ciccio4", toPlay);
 	}
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "eventIndex")
 	public @ResponseBody
 	String askForEvent(@RequestParam("eventIndex") int eventIndex) {
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio6");
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio4");
 		//TODO be sureto ask for events only if the game has been created
 		TressetteRoundSummary summary = playerGame.getSummary(eventIndex);
 		JSONObject json = new JSONObject();

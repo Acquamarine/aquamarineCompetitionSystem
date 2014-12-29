@@ -29,8 +29,8 @@
             });
         </script>
         <script>
-            function eventHandler() {
-                var index = 0;
+            var index = 0;
+            function eventHandler() {                
                 $.ajax({
                     url: "./gioca",
                     data: {
