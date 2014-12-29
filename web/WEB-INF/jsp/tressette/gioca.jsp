@@ -42,9 +42,12 @@
                             obj = JSON.parse(data);
                             if ("${user}" === obj.actionPlayer) {
                                 $('#' + obj.card).remove();
-                                $('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
                                 // $("#weather-temp").html("<strong>" + data + "</strong> degrees");
                             }
+                            else {
+                                $('.player1-cards').first().remove();
+                            }
+                            $('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
                         }
                         eventHandler();
                     }

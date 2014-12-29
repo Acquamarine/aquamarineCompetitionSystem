@@ -40,7 +40,7 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET)
 	public String play(Model model, HttpServletRequest request) {
-		String me = "ciccio4"; //TODO get from session
+		String me = (String) request.getSession().getAttribute("username"); //TODO get from session
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
 		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
@@ -54,17 +54,19 @@ public class TressetteController {
 	}
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")
-	public void makeMove(@RequestParam("cardId") String cardId, Model model) {
-		model.addAttribute("userForm", new User());
+	public void makeMove(@RequestParam("cardId") String cardId, Model model, HttpServletRequest request) {
+                String me = (String) request.getSession().getAttribute("username");
+		//model.addAttribute("userForm", new User());
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio4");
-		playerGame.playCard("ciccio4", toPlay);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		playerGame.playCard(me, toPlay);
 	}
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "eventIndex")
 	public @ResponseBody
-	String askForEvent(@RequestParam("eventIndex") int eventIndex) {
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio4");
+	String askForEvent(@RequestParam("eventIndex") int eventIndex, HttpServletRequest request) {
+                String me = (String) request.getSession().getAttribute("username");
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		//TODO be sureto ask for events only if the game has been created
 		TressetteRoundSummary summary = playerGame.getSummary(eventIndex);
 		JSONObject json = new JSONObject();

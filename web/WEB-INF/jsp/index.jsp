@@ -18,8 +18,7 @@
 		<%@include file="../../resources/html/footer.html" %>
 		<script>
 			if (${loggedIn} === true) {
-                            <% String name = (String) request.getAttribute("username");%>
-                            document.getElementById("login").innerHTML = "<h1>Welcome"+<%= name%>+"</h1>";
+                            document.getElementById("login").innerHTML = "<h1>Welcome ${username}</h1>";
                             document.getElementById("login").style.height = "100px";
 			}
 		</script>
