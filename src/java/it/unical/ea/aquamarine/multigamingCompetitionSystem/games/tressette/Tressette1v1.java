@@ -21,7 +21,9 @@ public class Tressette1v1 implements ITressette{
 	private Queue<NeapolitanCard> deck;
 	private Map<String, List<NeapolitanCard>> takenCards = new HashMap<>();;
 	private List<NeapolitanCard> table = new ArrayList<>();
+	private final SummaryManager summaryManager = new SummaryManager();
 	private boolean gameComplete = false;
+	
 
 	public Tressette1v1(List<String> players) {
 		this.players = players;
@@ -46,9 +48,11 @@ public class Tressette1v1 implements ITressette{
 	public TressetteRoundSummary playCard(String playerId, NeapolitanCard card) {
 		TressetteRoundSummary summary = new TressetteRoundSummary();
 		if(playerId.equals(turnPlayer)) {
+			summary.setActionPlayer(turnPlayer);
 			if(hands.get(playerId).playCard(card) && isCardAllowed(card)) {
 				summary.setRound(table.size());
 				table.add(card);
+				summary.setCard(card.toString());
 				if(table.size() == 1) {
 					turnPlayer = followingPlayer.get(playerId);		
 				}
@@ -57,6 +61,7 @@ public class Tressette1v1 implements ITressette{
 					checkGameComplete();
 				}
 				summary.setCardPlayed(true);
+				addEventSummary(summary);
 				return summary;
 			}
 			
@@ -201,6 +206,14 @@ public class Tressette1v1 implements ITressette{
 	@Override
 	public String getMatchedPlayer(String player) {
 		return followingPlayer.get(player);
+	}
+
+	public TressetteRoundSummary getSummary(int eventIndex) {
+		return summaryManager.getSummary(eventIndex);
+	}
+
+	private void addEventSummary(TressetteRoundSummary summary) {
+		summaryManager.addSummary(summary);
 	}
 	
 }

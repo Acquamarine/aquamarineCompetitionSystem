@@ -7,6 +7,16 @@ public class TressetteRoundSummary {
 	private boolean cardPlayed;
 	private int round;
 	private String roundWinner;
+	private String actionPlayer;
+	private String card;
+
+	public String getActionPlayer() {
+		return actionPlayer;
+	}
+
+	public void setActionPlayer(String actionPlayer) {
+		this.actionPlayer = actionPlayer;
+	}
 	private Map<String, NeapolitanCard> pickedCards;
 
 	public TressetteRoundSummary() {
@@ -43,6 +53,15 @@ public class TressetteRoundSummary {
 	public void setPickedCards(Map<String, NeapolitanCard> pickedCards) {
 		this.pickedCards = pickedCards;
 	}
+
+	public String getCard() {
+		return card;
+	}
+
+	public void setCard(String card) {
+		this.card = card;
+	}
+
 
 	
 	

@@ -29,18 +29,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author Denise
  */
-
 @Controller
 public class TressetteController {
-	
+
 	@RequestMapping(value = "/tressette", method = RequestMethod.GET)
 	public String index(Model model) {
 		model.addAttribute("userForm", new User());
 		return "/tressette";
 	}
+
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET)
 	public String play(Model model, HttpServletRequest request) {
-		String me = "ciccio7"; //TODO get from session
+		String me = "ciccio6"; //TODO get from session
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
 		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
@@ -48,21 +48,31 @@ public class TressetteController {
 		request.getSession().setAttribute("user", me);
 		NeapolitanHand myHand = playerGame.getHands().get(me);
 		List<NeapolitanCard> cards = myHand.getHandCards();
-		model.addAttribute("cards",cards);
+		model.addAttribute("cards", cards);
 		model.addAttribute("userForm", new User());
 		return "/tressette/gioca";
 	}
-	
-	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")	
-	public @ResponseBody String makeMove(@RequestParam("cardId") String cardId, Model m){
+
+	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")
+	public void makeMove(@RequestParam("cardId") String cardId, Model m) {
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio7");
-		TressetteRoundSummary summary =  playerGame.playCard("ciccio7", toPlay);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio6");
+		playerGame.playCard("ciccio6", toPlay);
+	}
+
+	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "eventIndex")
+	public @ResponseBody
+	String askForEvent(@RequestParam("eventIndex") int eventIndex) {
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch("ciccio6");
+		//TODO be sureto ask for events only if the game has been created
+		TressetteRoundSummary summary = playerGame.getSummary(eventIndex);
 		JSONObject json = new JSONObject();
 		try {
 			json.put("played", summary.isCardPlayed());
+			json.put("card", summary.getCard());
+			json.put("actionPlayer", summary.getActionPlayer());
 			json.put("round", summary.getRound());
-			if(summary.getRound() == 1) {
+			if (summary.getRound() == 1) {
 				String winner = summary.getRoundWinner();
 				json.put("winner", winner);
 				json.put("picked0", summary.getPickedCards().get(winner));
@@ -73,9 +83,5 @@ public class TressetteController {
 		}
 		return json.toString();
 	}
-	
-	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "waiting")	
-	public @ResponseBody JSONObject opponentMove(){
-		
-	}
+
 }
