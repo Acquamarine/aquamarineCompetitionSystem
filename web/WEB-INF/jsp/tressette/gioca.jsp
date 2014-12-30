@@ -29,6 +29,10 @@
 			});
         </script>
         <script>
+			function removeCardsFromTable() {
+				$('#card-played-0').children("img").remove();
+				$('#card-played-1').children("img").remove();
+			}
 			var index = 0;
 			function eventHandler() {
 				$.ajax({
@@ -48,6 +52,37 @@
 								$('.player1-cards').first().remove();
 							}
 							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
+							console.log(obj.round);
+							if (obj.round === 1) {
+								setTimeout(function () {
+									$('#card-played-0').children("img").remove();
+									$('#card-played-1').children("img").remove();
+								}, 1000);
+
+								setTimeout(function () {
+									$('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.picked0 + ".png'/>");
+								}, 2000);
+
+								setTimeout(function () {
+									$('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png'/>");
+									if ("${user}" === obj.winner && $('#'+obj.picked0)===null) {
+										externalDivToAppend = document.createElement("div");
+										externalDivToAppend.className = "player2-cards-container";
+										divToAppend = document.createElement("div");
+										var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.picked0 + ".png";
+										divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
+										divToAppend.className = "player2-cards";
+										toAppend = document.createElement("li");
+										toAppend.id = obj.picked0;
+										externalDivToAppend.appendChild(divToAppend);
+										toAppend.appendChild(externalDivToAppend);
+										toAppend.className = "li-cards";
+										document.getElementById("player2-cards-list").appendChild(toAppend);
+									}
+								}, 3000);
+
+
+							}
 						}
 						eventHandler();
 					}
@@ -78,7 +113,7 @@
                 <ul id="cards-on-table-list">
                     <li class="table-card">
                         <div id="deck">
-
+							<img class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png"/>
                         </div>
                     </li>
                     <li class="table-card">

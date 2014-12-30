@@ -12,7 +12,7 @@
     </head>
     <body>
         <%@include file="../../resources/html/header.html" %>
-		<form id="gioca_button" action="MultigamingCompetitionSystem/tressette/gioca" method="get">
+		<form id="gioca_button" action="/MultigamingCompetitionSystem/tressette/gioca" method="get">
 			<input type="submit" value="Tressette" />
 		</form>
 		<%@include file="../../resources/html/footer.html" %>

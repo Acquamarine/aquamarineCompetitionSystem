@@ -106,10 +106,7 @@ li{
 }
 
 #deck{
-	background-image: url(../assets/carte_napoletane/Dorso.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	opacity: 1;
+	
 	margin-left: 3em;
 	width: 6.5em;
 	height: 7.5em;
