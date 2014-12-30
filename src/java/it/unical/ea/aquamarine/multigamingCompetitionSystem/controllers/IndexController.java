@@ -35,10 +35,7 @@ public class IndexController {
 		//model.addAttribute("username",username);
 		//model.addAttribute("loggedIn", true);
 		String subPage = page.substring(29);
-                if(subPage.equals("")) {
-                    return "index";
-                }
-		return subPage;
+		return "index";
 	}
 
 }
