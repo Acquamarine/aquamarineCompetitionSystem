@@ -6,7 +6,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css"/>
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <title>Tressette</title>
+		
     </head>
     <body>
         <%@include file="../../resources/html/header.html" %>

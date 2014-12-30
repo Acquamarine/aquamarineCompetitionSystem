@@ -8,34 +8,34 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexController {
-	
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Model model) {
-                model.addAttribute("loggedIn", false);
+	@RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
+	public String index(Model model,HttpServletRequest request) {
+		if(request.getSession().getAttribute("loggedIn") == null){
+			request.getSession().setAttribute("loggedIn", false);
+		}
 		model.addAttribute("userForm", new User());
 		return "index";
 	}
-	
-	@RequestMapping(value = "/index", method = RequestMethod.POST)
-	public String userLogin(HttpServletRequest request, @ModelAttribute("userForm") User user, Model model) {
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST, params = "page")
+	public String userLogin(HttpServletRequest request, @ModelAttribute("userForm") User user, @RequestParam("page") String page) {
 		//you have to do something smarter!	
 //		if(user.getUsername().equals("ciccio")
 //		   && user.getPassword().equals("pasticcio")){
 //			request.getSession().setAttribute("userSession", user.getUsername());
 //		}
-		String username=user.getUsername();
-                request.getSession().setAttribute("username", user.getUsername());
-                request.getSession().setAttribute("loggedIn", true);
+		String username = user.getUsername();
+		request.getSession().setAttribute("username", user.getUsername());
+		request.getSession().setAttribute("loggedIn", true);
 		//model.addAttribute("username",username);
 		//model.addAttribute("loggedIn", true);
-		return "index";
+		String subPage = page.substring(29);
+		return subPage;
 	}
-	
-	
+
 }

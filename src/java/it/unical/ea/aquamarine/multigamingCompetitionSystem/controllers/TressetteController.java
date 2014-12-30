@@ -32,9 +32,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TressetteController {
 
-	@RequestMapping(value = "/tressette", method = RequestMethod.GET)
-	public String index(Model model) {
+	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST})
+	public String index(Model model, HttpServletRequest request) {
 		model.addAttribute("userForm", new User());
+		if(request.getSession().getAttribute("loggedIn") == null){
+			request.getSession().setAttribute("loggedIn", false);
+		}
 		return "/tressette";
 	}
 
@@ -55,7 +58,7 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")
 	public void makeMove(@RequestParam("cardId") String cardId, Model model, HttpServletRequest request) {
-                String me = (String) request.getSession().getAttribute("username");
+		String me = (String) request.getSession().getAttribute("username");
 		//model.addAttribute("userForm", new User());
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
@@ -65,23 +68,23 @@ public class TressetteController {
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "eventIndex")
 	public @ResponseBody
 	String askForEvent(@RequestParam("eventIndex") int eventIndex, HttpServletRequest request) {
-                String me = (String) request.getSession().getAttribute("username");
+		String me = (String) request.getSession().getAttribute("username");
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		//TODO be sureto ask for events only if the game has been created
 		TressetteRoundSummary summary = playerGame.getSummary(eventIndex);
 		JSONObject json = new JSONObject();
-		try {
+		try{
 			json.put("played", summary.isCardPlayed());
 			json.put("card", summary.getCard());
 			json.put("actionPlayer", summary.getActionPlayer());
 			json.put("round", summary.getRound());
-			if (summary.getRound() == 1) {
+			if(summary.getRound() == 1){
 				String winner = summary.getRoundWinner();
 				json.put("winner", winner);
 				json.put("picked0", summary.getPickedCards().get(winner));
 				json.put("picked1", summary.getPickedCards().get(playerGame.getMatchedPlayer(winner)));
 			}
-		} catch (JSONException ex) {
+		}catch(JSONException ex){
 			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return json.toString();

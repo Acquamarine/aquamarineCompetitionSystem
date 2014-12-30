@@ -1,11 +1,14 @@
 </div>           
-        </div>
-		<script>
-					if (${loggedIn} === true) {
-						document.getElementById("login").innerHTML = "<h1>Welcome ${username}</h1>";
-						document.getElementById("login").style.height = "100px";
-					}
-                                        else {
-                                            document.getElementById("login").innerHTML = '<form:form action="MultigamingCompetitionSystem/index" method="post" commandName="userForm"><p> Username :<form:input class="loginTextField" path="username" /> </p><p>   Password :<form:password class="loginTextField" path="password" /></p><p> <input type="submit" value="Login" />  </p></form:form><form action="MultigamingCompetitionSystem/register" method="get"><input type="submit" value="SignUp" /></form>';
-                                        }
-		</script>
+</div>
+<script>
+	if (${loggedIn} === true) {
+	document.getElementById("login").innerHTML = "<h1>Welcome ${username}</h1>";
+			document.getElementById("login").style.height = "100px";
+	}
+	else {
+	var pathLoc = window.location.pathname;
+			console.log(pathLoc);
+			document.getElementById("login").innerHTML = '<form:form id="login-form" action="" method="post" commandName="userForm"><p> Username :<form:input class="loginTextField" path="username" /> </p><p>   Password :<form:password class="loginTextField" path="password" /></p><p> <input type="submit" value="Login" />  </p></form:form><form action="MultigamingCompetitionSystem/register" method="get"><input type="submit" value="SignUp" /></form>';
+			$("#login-form").attr("action", "/MultigamingCompetitionSystem/login?page=" + window.location.pathname);
+	}
+</script>
