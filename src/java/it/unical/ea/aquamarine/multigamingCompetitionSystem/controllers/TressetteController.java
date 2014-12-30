@@ -41,7 +41,7 @@ public class TressetteController {
 		return "/tressette";
 	}
 
-	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET)
+	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST})
 	public String play(Model model, HttpServletRequest request) {
 		String me = (String) request.getSession().getAttribute("username"); //TODO get from session
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
