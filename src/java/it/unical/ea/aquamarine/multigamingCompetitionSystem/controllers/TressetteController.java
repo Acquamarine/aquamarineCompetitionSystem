@@ -82,8 +82,10 @@ public class TressetteController {
 			if(summary.getRound() == 1){
 				String winner = summary.getRoundWinner();
 				json.put("winner", winner);
+				String looser = playerGame.getMatchedPlayer(winner);
+				json.put("looser",looser);
 				json.put("picked0", summary.getPickedCards().get(winner));
-				json.put("picked1", summary.getPickedCards().get(playerGame.getMatchedPlayer(winner)));
+				json.put("picked1", summary.getPickedCards().get((looser)));
 			}
 		}catch(JSONException ex){
 			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);

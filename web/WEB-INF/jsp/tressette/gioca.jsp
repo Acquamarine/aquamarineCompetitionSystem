@@ -53,7 +53,7 @@
 						toAppend.appendChild(externalDivToAppend);
 						toAppend.className = "li-cards";
 						document.getElementById("player2-cards-list").appendChild(toAppend);
-					} else if ($('#' + card).length === 0) {
+					} else if (player !== "${user}") {
 						divToAppend = document.createElement("div");
 						divToAppend.id = "player1-card" + i;
 						divToAppend.className = "player1-cards";
@@ -90,7 +90,9 @@
 									$('#card-played-1').children("img").remove();
 								}, 1000);
 								distributeCard(obj.picked0,obj.winner);
-								setTimeout("distributeCard(obj.picked1,'')", 2000);
+								console.log(obj.winner);
+								console.log(obj.looser);
+								setTimeout("distributeCard(obj.picked1,obj.looser)", 2000);
 
 
 
