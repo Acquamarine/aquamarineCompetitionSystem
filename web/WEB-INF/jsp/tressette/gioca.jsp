@@ -14,26 +14,31 @@
         <title>Gioca a Tressette!</title>
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script>
-			$(document).ready(function () {
-				$(".player2-cards").click(function () {
-					var parentId = this.parentNode.parentNode.id;
-					$.ajax({
-						url: "./gioca",
-						data: {
-							cardId: parentId
-						},
-						success: function (data) {
-						}
-					});
+			function cardsClick() {
+				var parentId = this.id;
+				console.log(parentId);
+				$.ajax({
+					url: "./gioca",
+					data: {
+						cardId: parentId
+					},
+					success: function (data) {
+					}
 				});
+			}
+			$(document).ready(function () {
+				$(".player2-cards").click(cardsClick);
 			});
-        </script>
-        <script>
+
+			$(window).bind('beforeunload',function(){
+			<% request.getSession().setAttribute("eventIndex", (int)request.getSession().getAttribute("eventIndex")-1); %>
+			});
+
 			function removeCardsFromTable() {
 				$('#card-played-0').children("img").remove();
 				$('#card-played-1').children("img").remove();
 			}
-			function distributeCard(card,player) {
+			function distributeCard(card, player) {
 				setTimeout(function () {
 					$('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'/>");
 				}, 2000);
@@ -47,15 +52,15 @@
 						var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png";
 						divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
 						divToAppend.className = "player2-cards";
+						divToAppend.id=card;
 						toAppend = document.createElement("li");
-						toAppend.id = card;
 						externalDivToAppend.appendChild(divToAppend);
 						toAppend.appendChild(externalDivToAppend);
 						toAppend.className = "li-cards";
 						document.getElementById("player2-cards-list").appendChild(toAppend);
+						$('#'+card).click(cardsClick);
 					} else if (player !== "${user}") {
 						divToAppend = document.createElement("div");
-						divToAppend.id = "player1-card" + i;
 						divToAppend.className = "player1-cards";
 						toAppend = document.createElement("li");
 						toAppend.appendChild(divToAppend);
@@ -64,7 +69,8 @@
 					}
 				}, 3000);
 			}
-			var index = 0;
+			var index = ${eventIndex};
+			console.log(index);
 			function eventHandler() {
 				$.ajax({
 					url: "./gioca",
@@ -76,22 +82,22 @@
 							index++;
 							obj = JSON.parse(data);
 							if ("${user}" === obj.actionPlayer) {
-								$('#' + obj.card).remove();
+								$('#' + obj.card).parent("div").parent("li").remove();
 								// $("#weather-temp").html("<strong>" + data + "</strong> degrees");
 							}
 							else {
-								$('.player1-cards').first().remove();
+								$('.li-cards').first().remove();
 							}
 							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
-							console.log(obj.round);
+							//console.log(obj.round);
 							if (obj.round === 1) {
 								setTimeout(function () {
 									$('#card-played-0').children("img").remove();
 									$('#card-played-1').children("img").remove();
 								}, 1000);
-								distributeCard(obj.picked0,obj.winner);
-								console.log(obj.winner);
-								console.log(obj.looser);
+								distributeCard(obj.picked0, obj.winner);
+								//console.log(obj.winner);
+								//console.log(obj.looser);
 								setTimeout("distributeCard(obj.picked1,obj.looser)", 2000);
 
 
@@ -160,7 +166,6 @@
         <script>
 			for (i = 0; i < 10; i++) {
 				divToAppend = document.createElement("div");
-				divToAppend.id = "player1-card" + i;
 				divToAppend.className = "player1-cards";
 				toAppend = document.createElement("li");
 				toAppend.appendChild(divToAppend);
@@ -180,7 +185,7 @@
 				divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
 				divToAppend.className = "player2-cards";
 				toAppend = document.createElement("li");
-				toAppend.id = "${card.toString()}";
+				divToAppend.id = "${card.toString()}";
 				externalDivToAppend.appendChild(divToAppend);
 				toAppend.appendChild(externalDivToAppend);
 				toAppend.className = "li-cards";
