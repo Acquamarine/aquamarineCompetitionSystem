@@ -24,8 +24,14 @@ public class NeapolitanHand {
 	}
 	
 	public boolean playCard(NeapolitanCard card) {
+		if(card!=null) {
+			System.out.println(card);
+		}
+		else {
+			System.out.println("card is null");
+		}
 		for(int i=0;i<handCards.size();i++) {
-			if(handCards.get(i).equals( card)) {
+			if(handCards.get(i)!=null && handCards.get(i).equals( card)) {
 				handCards.set(i, null);
 				return true;
 			}
