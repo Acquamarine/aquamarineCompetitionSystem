@@ -30,8 +30,11 @@
 				$(".player2-cards").click(cardsClick);
 			});
 
-			$(window).bind('beforeunload',function(){
-			<% request.getSession().setAttribute("eventIndex", (int)request.getSession().getAttribute("eventIndex")-1); %>
+			$(window).bind('beforeunload', function () {
+			<% int previousIndex = (int) request.getSession().getAttribute("eventIndex");
+				if(previousIndex > 0){
+					request.getSession().setAttribute("eventIndex", previousIndex - 1);
+				}%>
 			});
 
 			function removeCardsFromTable() {
@@ -52,13 +55,13 @@
 						var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png";
 						divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
 						divToAppend.className = "player2-cards";
-						divToAppend.id=card;
+						divToAppend.id = card;
 						toAppend = document.createElement("li");
 						externalDivToAppend.appendChild(divToAppend);
 						toAppend.appendChild(externalDivToAppend);
 						toAppend.className = "li-cards";
 						document.getElementById("player2-cards-list").appendChild(toAppend);
-						$('#'+card).click(cardsClick);
+						$('#' + card).click(cardsClick);
 					} else if (player !== "${user}") {
 						divToAppend = document.createElement("div");
 						divToAppend.className = "player1-cards";
