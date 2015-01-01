@@ -23,4 +23,8 @@ public class SummaryManager {
 		eventsSummaries.add(summary);
 		this.notifyAll();
 	}
+
+	boolean areThereSummaries() {
+		return !eventsSummaries.isEmpty();
+	}
 }

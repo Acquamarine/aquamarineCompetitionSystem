@@ -41,9 +41,6 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST})
 	public String play(Model model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("eventIndex") == null){
-			request.getSession().setAttribute("eventIndex", 0);
-		}
 		if(request.getSession().getAttribute("loggedIn") == null){
 			request.getSession().setAttribute("loggedIn", false);
 		}
@@ -51,6 +48,9 @@ public class TressetteController {
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
 		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		if(!playerGame.areThereSummaries()|| request.getSession().getAttribute("eventIndex")==null){
+			request.getSession().setAttribute("eventIndex", 0);
+		}
 		//TODO move to login
 		request.getSession().setAttribute("user", me);
 		NeapolitanHand myHand = playerGame.getHands().get(me);
@@ -62,7 +62,7 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")
 	public void makeMove(@RequestParam("cardId") String cardId, Model model, HttpServletRequest request) {
-		
+
 		String me = (String) request.getSession().getAttribute("username");
 		//model.addAttribute("userForm", new User());
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
@@ -91,6 +91,7 @@ public class TressetteController {
 				json.put("looser", looser);
 				json.put("picked0", summary.getPickedCards().get(winner));
 				json.put("picked1", summary.getPickedCards().get((looser)));
+				json.put("deck", summary.getCardsInDeck());
 			}
 		}catch(JSONException ex){
 			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);

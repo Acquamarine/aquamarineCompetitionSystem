@@ -32,7 +32,7 @@
 
 			$(window).bind('beforeunload', function () {
 			<% int previousIndex = (int) request.getSession().getAttribute("eventIndex");
-				if(previousIndex > 0){
+				if(previousIndex > 0 && previousIndex%2!=0){
 					request.getSession().setAttribute("eventIndex", previousIndex - 1);
 				}%>
 			});
@@ -41,7 +41,7 @@
 				$('#card-played-0').children("img").remove();
 				$('#card-played-1').children("img").remove();
 			}
-			function distributeCard(card, player) {
+			function distributeCard(card, player,deck) {
 				setTimeout(function () {
 					$('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'/>");
 				}, 2000);
@@ -70,11 +70,15 @@
 						toAppend.className = "li-cards";
 						document.getElementById("player1-cards-list").appendChild(toAppend);
 					}
+					console.log(deck);
+						//$('#deck-image').text(deck);
+					
 				}, 3000);
 			}
 			var index = ${eventIndex};
 			console.log(index);
 			function eventHandler() {
+				console.log(index);
 				$.ajax({
 					url: "./gioca",
 					data: {
@@ -98,13 +102,17 @@
 									$('#card-played-0').children("img").remove();
 									$('#card-played-1').children("img").remove();
 								}, 1000);
-								distributeCard(obj.picked0, obj.winner);
-								//console.log(obj.winner);
-								//console.log(obj.looser);
-								setTimeout("distributeCard(obj.picked1,obj.looser)", 2000);
+								console.log(obj.deck);
+								if ($('#deck').length) {
+									distributeCard(obj.picked0, obj.winner,obj.deck-1);
+									console.log($('#deck-image').text);
+									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
+								
+								}
+								if (obj.deck === 0) {
+									$('#deck').remove();
 
-
-
+								}
 							}
 						}
 						eventHandler();
@@ -136,7 +144,7 @@
                 <ul id="cards-on-table-list">
                     <li class="table-card">
                         <div id="deck">
-							<img class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png"/>
+							<img id="deck-image" class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png">20</img>
                         </div>
                     </li>
                     <li class="table-card">

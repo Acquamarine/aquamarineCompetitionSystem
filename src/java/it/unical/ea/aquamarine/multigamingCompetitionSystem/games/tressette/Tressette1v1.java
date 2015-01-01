@@ -59,6 +59,7 @@ public class Tressette1v1 implements ITressette{
 				else {
 					handComplete(summary);
 					checkGameComplete();
+					summary.setCardsInDeck(deck.size());
 				}
 				summary.setCardPlayed(true);
 				addEventSummary(summary);
@@ -91,6 +92,7 @@ public class Tressette1v1 implements ITressette{
 		if(!deck.isEmpty()) {
 			pickCards(handWinner);		
 			summary.setPickedCards(lastPickedCards);
+			
 		}
 		turnPlayer = handWinner;
 	}
@@ -216,4 +218,7 @@ public class Tressette1v1 implements ITressette{
 		summaryManager.addSummary(summary);
 	}
 	
+	public boolean areThereSummaries(){
+		return summaryManager.areThereSummaries();
+	}
 }
