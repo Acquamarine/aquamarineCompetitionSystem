@@ -33,7 +33,6 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST})
 	public String index(Model model, HttpServletRequest request) {
-		model.addAttribute("userForm", new User());
 		if(request.getSession().getAttribute("loggedIn") == null){
 			request.getSession().setAttribute("loggedIn", false);
 		}
@@ -42,6 +41,9 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST})
 	public String play(Model model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("loggedIn") == null){
+			request.getSession().setAttribute("loggedIn", false);
+		}
 		String me = (String) request.getSession().getAttribute("username"); //TODO get from session
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
 		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
@@ -80,8 +82,10 @@ public class TressetteController {
 			if(summary.getRound() == 1){
 				String winner = summary.getRoundWinner();
 				json.put("winner", winner);
+				String looser = playerGame.getMatchedPlayer(winner);
+				json.put("looser",looser);
 				json.put("picked0", summary.getPickedCards().get(winner));
-				json.put("picked1", summary.getPickedCards().get(playerGame.getMatchedPlayer(winner)));
+				json.put("picked1", summary.getPickedCards().get((looser)));
 			}
 		}catch(JSONException ex){
 			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);

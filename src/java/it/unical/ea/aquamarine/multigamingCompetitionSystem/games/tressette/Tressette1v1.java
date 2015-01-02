@@ -49,7 +49,7 @@ public class Tressette1v1 implements ITressette{
 		TressetteRoundSummary summary = new TressetteRoundSummary();
 		if(playerId.equals(turnPlayer)) {
 			summary.setActionPlayer(turnPlayer);
-			if(hands.get(playerId).playCard(card) && isCardAllowed(card)) {
+			if(isCardAllowed(card) && hands.get(playerId).playCard(card) ) {
 				summary.setRound(table.size());
 				table.add(card);
 				summary.setCard(card.toString());

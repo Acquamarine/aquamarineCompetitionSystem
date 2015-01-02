@@ -128,3 +128,11 @@ a {
 	margin-left: 14em;
 	margin-top: 7em;
 }
+
+input{
+	cursor: pointer;
+}
+
+#login-button{
+	margin-top: 3em;
+}

@@ -6,9 +6,7 @@
 			document.getElementById("login").style.height = "100px";
 	}
 	else {
-	var pathLoc = window.location.pathname;
-			console.log(pathLoc);
-			document.getElementById("login").innerHTML = '<form:form id="login-form" action="" method="post" commandName="userForm"><p> Username :<form:input class="loginTextField" path="username" /> </p><p>   Password :<form:password class="loginTextField" path="password" /></p><p> <input type="submit" value="Login" />  </p></form:form><form action="MultigamingCompetitionSystem/register" method="get"><input type="submit" value="SignUp" /></form>';
-			$("#login-form").attr("action", "/MultigamingCompetitionSystem/login?page=" + window.location.pathname);
+		document.getElementById("login").innerHTML ='<form id="login-button" action="" method="post"><input type="submit" value="Login" /></form>';
+		$("#login-button").attr("action", "/MultigamingCompetitionSystem/login?page=" + window.location.pathname);
 	}
 </script>

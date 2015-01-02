@@ -29,57 +29,71 @@
             });
         </script>
         <script>
-            function removeCardsFromTable() {
-                $('#card-played-0').children("img").remove();
-                $('#card-played-1').children("img").remove();
-            }
-            var index = 0;
-            function eventHandler() {
-                $.ajax({
-                    url: "./gioca",
-                    data: {
-                        eventIndex: index
-                    },
-                    success: function (data) {
-                        if (data !== "") {
-                            index++;
-                            obj = JSON.parse(data);
-                            if ("${user}" === obj.actionPlayer) {
-                                $('#' + obj.card).remove();
-                                // $("#weather-temp").html("<strong>" + data + "</strong> degrees");
-                            }
-                            else {
-                                $('.player1-cards').first().remove();
-                            }
-                            $('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
-                            console.log(obj.round);
-                            if (obj.round === 1) {
-                                setTimeout(function () {
-                                    $('#card-played-0').children("img").remove();
-                                    $('#card-played-1').children("img").remove();
-                                }, 1000);
+			function removeCardsFromTable() {
+				$('#card-played-0').children("img").remove();
+				$('#card-played-1').children("img").remove();
+			}
+			function distributeCard(card,player) {
+				setTimeout(function () {
+					$('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'/>");
+				}, 2000);
 
-                                setTimeout(function () {
-                                    $('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.picked0 + ".png'/>");
-                                }, 2000);
+				setTimeout(function () {
+					$('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png'/>");
+					if (player === "${user}" && $('#' + card).length === 0) {
+						externalDivToAppend = document.createElement("div");
+						externalDivToAppend.className = "player2-cards-container";
+						divToAppend = document.createElement("div");
+						var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png";
+						divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
+						divToAppend.className = "player2-cards";
+						toAppend = document.createElement("li");
+						toAppend.id = card;
+						externalDivToAppend.appendChild(divToAppend);
+						toAppend.appendChild(externalDivToAppend);
+						toAppend.className = "li-cards";
+						document.getElementById("player2-cards-list").appendChild(toAppend);
+					} else if (player !== "${user}") {
+						divToAppend = document.createElement("div");
+						divToAppend.id = "player1-card" + i;
+						divToAppend.className = "player1-cards";
+						toAppend = document.createElement("li");
+						toAppend.appendChild(divToAppend);
+						toAppend.className = "li-cards";
+						document.getElementById("player1-cards-list").appendChild(toAppend);
+					}
+				}, 3000);
+			}
+			var index = 0;
+			function eventHandler() {
+				$.ajax({
+					url: "./gioca",
+					data: {
+						eventIndex: index
+					},
+					success: function (data) {
+						if (data !== "") {
+							index++;
+							obj = JSON.parse(data);
+							if ("${user}" === obj.actionPlayer) {
+								$('#' + obj.card).remove();
+								// $("#weather-temp").html("<strong>" + data + "</strong> degrees");
+							}
+							else {
+								$('.player1-cards').first().remove();
+							}
+							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
+							console.log(obj.round);
+							if (obj.round === 1) {
+								setTimeout(function () {
+									$('#card-played-0').children("img").remove();
+									$('#card-played-1').children("img").remove();
+								}, 1000);
+								distributeCard(obj.picked0,obj.winner);
+								console.log(obj.winner);
+								console.log(obj.looser);
+								setTimeout("distributeCard(obj.picked1,obj.looser)", 2000);
 
-                                setTimeout(function () {
-                                    $('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png'/>");
-                                    if ("${user}" === obj.winner && $('#' + obj.picked0) === null) {
-                                        externalDivToAppend = document.createElement("div");
-                                        externalDivToAppend.className = "player2-cards-container";
-                                        divToAppend = document.createElement("div");
-                                        var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.picked0 + ".png";
-                                        divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
-                                        divToAppend.className = "player2-cards";
-                                        toAppend = document.createElement("li");
-                                        toAppend.id = obj.picked0;
-                                        externalDivToAppend.appendChild(divToAppend);
-                                        toAppend.appendChild(externalDivToAppend);
-                                        toAppend.className = "li-cards";
-                                        document.getElementById("player2-cards-list").appendChild(toAppend);
-                                    }
-                                }, 3000);
 
 
                             }
@@ -104,7 +118,7 @@
                 <ul id="player1_info">
                     <li id="player1-avatar">
                     </li>
-                    <li class="player_other_info"> {player1_name}  Points: {player1_points}</li>
+                    <li class="player_other_info"> {player}  Points: {player1_points}</li>
                 </ul>
                 <div id="player1-cards">
                     <ul id="player1-cards-list">
@@ -138,7 +152,7 @@
 
                     </ul>
                     <ul id="player2_info">
-                        <li class="player_other_info"> {player2_name}  Points: {player2_points}</li>
+                        <li class="player_other_info"> ${user}  Points: {player2_points}</li>
                         <li id="player2-avatar">
                         </li>
                     </ul>
