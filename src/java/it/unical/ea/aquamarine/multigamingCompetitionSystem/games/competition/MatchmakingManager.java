@@ -105,6 +105,10 @@ public class MatchmakingManager {
 		matchmakingThread.start();
 	}
 
+	public Map<String, CompetitorsQueue> getQueues() {
+		return queues;
+	}
+
 	private class MatchmakingTrigger implements Runnable {
 
 		@Override

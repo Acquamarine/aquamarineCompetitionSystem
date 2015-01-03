@@ -18,6 +18,7 @@ public class CompetitorsQueue {
 			sameEloSet = new HashSet<>();
 		}
 		sameEloSet.add(competitor);
+		queuedCompetitors.put(competitor.getCompetitor().getElo(), sameEloSet);
 	}
 	
 	public void removeCompetitor(QueuedCompetitor competitor) {

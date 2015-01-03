@@ -1,8 +1,12 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,7 +44,7 @@ public class MatchmakingManagerTest {
 		String game = "Tressette";
 		String player = "Ciccio";
 		ICompetitor competitor = new Player(player);
-		MatchmakingManager instance = MatchmakingManager.getInstance();
+		MatchmakingManager instance = new MatchmakingManager();
 		instance.addToQueue(game, competitor);
 		assertEquals(instance.getQueuedCompetitorsMap().get(competitor).getCompetitor().getId(),player);
 	}
@@ -52,28 +56,13 @@ public class MatchmakingManagerTest {
 	public void testRemoveFromQueue() {
 		System.out.println("addToQueue");
 		String game = "Tressette";
-		String player = "Ciccio";
+		String player = "ciccio";
 		ICompetitor competitor = new Player(player);
-		MatchmakingManager instance = MatchmakingManager.getInstance();
+		MatchmakingManager instance = new MatchmakingManager();
 		instance.addToQueue(game, competitor);
-		assertEquals(instance.getQueuedCompetitorsMap().get(competitor).getCompetitor().getId(),player);
 		instance.removeFromQueue(game, competitor);
 		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
-	 * Test of getQueuedCompetitorsMap method, of class MatchmakingManager.
-	 */
-	@Test
-	public void testGetQueuedCompetitorsMap() {
-		System.out.println("getQueuedCompetitorsMap");
-		MatchmakingManager instance = new MatchmakingManager();
-		HashMap<ICompetitor, QueuedCompetitor> expResult = null;
-		HashMap<ICompetitor, QueuedCompetitor> result = instance.getQueuedCompetitorsMap();
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		assertTrue(instance.getQueuedCompetitorsMap().isEmpty());
 	}
 
 	/**
@@ -94,10 +83,20 @@ public class MatchmakingManagerTest {
 	@Test
 	public void testStartQueuesThread() {
 		System.out.println("startQueuesThread");
+		MultigamingBlManager.getInstance().addGameManager("Tressette", new TressetteGameManager());
 		MatchmakingManager instance = new MatchmakingManager();
 		instance.startQueuesThread();
+		String game = "Tressette";
+		instance.addToQueue(game, new Player("ciccio"));
+		instance.addToQueue(game, new Player("pippo"));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException ex) {
+			Logger.getLogger(MatchmakingManagerTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
 		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		assertTrue(instance.getQueues().get(game).getQueuedCompetitors().size() == 0);
 	}
 	
 }

@@ -19,16 +19,13 @@ public class TressetteGameManager implements GameManager {
 		return instance;
 	}
 	
-	private TressetteGameManager() {
-		//TODO use matchmaking algorithms
-		matchedPlayers.put("ciccio","pippo");
-		matchedPlayers.put("pippo","ciccio");
+	public TressetteGameManager() {
 	}
 	
 	@Override
 	public synchronized void startMatch(ICompetitor user1, ICompetitor user2) {
 		//TODO all checks
-		if(activeMatches.get(user1)!=null) {
+		if(activeMatches.get(user1.getId())!=null) {
 			return;
 		}
 		List<String> players = new ArrayList<>();
