@@ -48,14 +48,22 @@ public class TressetteController {
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
 		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
-		if(!playerGame.areThereSummaries()|| request.getSession().getAttribute("eventIndex")==null){
+		String matchedPlayer = playerGame.getMatchedPlayer(me);
+		if(!playerGame.areThereSummaries() || request.getSession().getAttribute("eventIndex") == null){
 			request.getSession().setAttribute("eventIndex", 0);
+		}
+		if(request.getSession().getAttribute("deck")==null || !playerGame.areThereSummaries()){
+			request.getSession().setAttribute("deck", 20);
 		}
 		//TODO move to login
 		request.getSession().setAttribute("user", me);
+		request.getSession().setAttribute("matched", matchedPlayer);
 		NeapolitanHand myHand = playerGame.getHands().get(me);
+		NeapolitanHand matchedPlayerHand = playerGame.getHands().get(matchedPlayer);
 		List<NeapolitanCard> cards = myHand.getHandCards();
+		List<NeapolitanCard> matchedPlayerCards = matchedPlayerHand.getHandCards();
 		model.addAttribute("cards", cards);
+		model.addAttribute("matchedPlayerCards", matchedPlayerCards);
 		model.addAttribute("userForm", new User());
 		return "/tressette/gioca";
 	}
@@ -89,21 +97,25 @@ public class TressetteController {
 				json.put("winner", winner);
 				String looser = playerGame.getMatchedPlayer(winner);
 				json.put("looser", looser);
-				json.put("picked0", summary.getPickedCards().get(winner));
-				json.put("picked1", summary.getPickedCards().get((looser)));
-				json.put("deck", summary.getCardsInDeck());
+				if(summary.getPickedCards() != null){
+					json.put("picked0", summary.getPickedCards().get(winner));
+					json.put("picked1", summary.getPickedCards().get((looser)));
+					json.put("deck", summary.getCardsInDeck());
+				}
+				request.getSession().setAttribute("deck", summary.getCardsInDeck());
 			}
 		}catch(JSONException ex){
 			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return json.toString();
 	}
-	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET,RequestMethod.POST}, params = "competitor")
-	public void putCompetitorInQueue(@RequestParam("competitor") String competitor){
-		
+
+	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST}, params = "competitor")
+	public void putCompetitorInQueue(@RequestParam("competitor") String competitor) {
 	}
-	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET,RequestMethod.POST}, params = {"inQueue","competitor"})
-	public void getMatch(@RequestParam("competitor") String competitor){
-		
+
+	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST}, params = {"inQueue", "competitor"})
+	public void getMatch(@RequestParam("competitor") String competitor) {
+
 	}
 }
