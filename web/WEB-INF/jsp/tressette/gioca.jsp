@@ -14,26 +14,34 @@
         <title>Gioca a Tressette!</title>
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script>
-            $(document).ready(function () {
-                $(".player2-cards").click(function () {
-                    var parentId = this.parentNode.parentNode.id;
-                    $.ajax({
-                        url: "./gioca",
-                        data: {
-                            cardId: parentId
-                        },
-                        success: function (data) {
-                        }
-                    });
-                });
-            });
-        </script>
-        <script>
+			function cardsClick() {
+				var parentId = this.id;
+				console.log(parentId);
+				$.ajax({
+					url: "./gioca",
+					data: {
+						cardId: parentId
+					},
+					success: function (data) {
+					}
+				});
+			}
+			$(document).ready(function () {
+				$(".player2-cards").click(cardsClick);
+			});
+
+			$(window).bind('beforeunload', function () {
+			<% int previousIndex = (int) request.getSession().getAttribute("eventIndex");
+				if(previousIndex > 0 && previousIndex%2!=0){
+					request.getSession().setAttribute("eventIndex", previousIndex - 1);
+				}%>
+			});
+
 			function removeCardsFromTable() {
 				$('#card-played-0').children("img").remove();
 				$('#card-played-1').children("img").remove();
 			}
-			function distributeCard(card,player) {
+			function distributeCard(card, player,deck) {
 				setTimeout(function () {
 					$('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'/>");
 				}, 2000);
@@ -47,25 +55,30 @@
 						var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png";
 						divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
 						divToAppend.className = "player2-cards";
+						divToAppend.id = card;
 						toAppend = document.createElement("li");
-						toAppend.id = card;
 						externalDivToAppend.appendChild(divToAppend);
 						toAppend.appendChild(externalDivToAppend);
 						toAppend.className = "li-cards";
 						document.getElementById("player2-cards-list").appendChild(toAppend);
+						$('#' + card).click(cardsClick);
 					} else if (player !== "${user}") {
 						divToAppend = document.createElement("div");
-						divToAppend.id = "player1-card" + i;
 						divToAppend.className = "player1-cards";
 						toAppend = document.createElement("li");
 						toAppend.appendChild(divToAppend);
 						toAppend.className = "li-cards";
 						document.getElementById("player1-cards-list").appendChild(toAppend);
 					}
+					console.log(deck);
+						//$('#deck-image').text(deck);
+					
 				}, 3000);
 			}
-			var index = 0;
+			var index = ${eventIndex};
+			console.log(index);
 			function eventHandler() {
+				console.log(index);
 				$.ajax({
 					url: "./gioca",
 					data: {
@@ -76,39 +89,39 @@
 							index++;
 							obj = JSON.parse(data);
 							if ("${user}" === obj.actionPlayer) {
-								$('#' + obj.card).remove();
+								$('#' + obj.card).parent("div").parent("li").remove();
 								// $("#weather-temp").html("<strong>" + data + "</strong> degrees");
 							}
 							else {
-								$('.player1-cards').first().remove();
+								$('.li-cards').first().remove();
 							}
 							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
-							console.log(obj.round);
+							//console.log(obj.round);
 							if (obj.round === 1) {
 								setTimeout(function () {
 									$('#card-played-0').children("img").remove();
 									$('#card-played-1').children("img").remove();
 								}, 1000);
-								distributeCard(obj.picked0,obj.winner);
-								console.log(obj.winner);
-								console.log(obj.looser);
-								setTimeout("distributeCard(obj.picked1,obj.looser)", 2000);
+								console.log(obj.deck);
+								if ($('#deck').length) {
+									distributeCard(obj.picked0, obj.winner,obj.deck-1);
+									console.log($('#deck-image').text);
+									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
+								
+								}
+								if (obj.deck === 0) {
+									$('#deck').remove();
 
-
-
-                            }
-                        }
-                        eventHandler();
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log("ajax timeout");
-                        eventHandler();
-                    }
-                });
-            }
-            $(document).ready(function () {
-                eventHandler();
-            });
+								}
+							}
+						}
+						eventHandler();
+					}
+				});
+			}
+			$(document).ready(function () {
+				eventHandler();
+			});
         </script>
     </head>
     <body>
@@ -131,7 +144,7 @@
                 <ul id="cards-on-table-list">
                     <li class="table-card">
                         <div id="deck">
-                            <img class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png"/>
+							<img id="deck-image" class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png">20</img>
                         </div>
                     </li>
                     <li class="table-card">
@@ -162,34 +175,33 @@
         <%@include file="../../../resources/html/footer.html" %>
 
         <script>
-            for (i = 0; i < 10; i++) {
-                divToAppend = document.createElement("div");
-                divToAppend.id = "player1-card" + i;
-                divToAppend.className = "player1-cards";
-                toAppend = document.createElement("li");
-                toAppend.appendChild(divToAppend);
-                toAppend.className = "li-cards";
-                document.getElementById("player1-cards-list").appendChild(toAppend);
-            }
+			for (i = 0; i < 10; i++) {
+				divToAppend = document.createElement("div");
+				divToAppend.className = "player1-cards";
+				toAppend = document.createElement("li");
+				toAppend.appendChild(divToAppend);
+				toAppend.className = "li-cards";
+				document.getElementById("player1-cards-list").appendChild(toAppend);
+			}
 
         </script>
         <script>
-                <c:forEach items = "${cards}"  var = "card" >
-            if ("${card}" !== "") {
-                externalDivToAppend = document.createElement("div");
-                externalDivToAppend.className = "player2-cards-container";
-                divToAppend = document.createElement("div");
-                divToAppend.setAttribute("href", "./");
-                var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/${card.toString()}.png";
-                divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
-                divToAppend.className = "player2-cards";
-                toAppend = document.createElement("li");
-                toAppend.id = "${card.toString()}";
-                externalDivToAppend.appendChild(divToAppend);
-                toAppend.appendChild(externalDivToAppend);
-                toAppend.className = "li-cards";
-                document.getElementById("player2-cards-list").appendChild(toAppend);
-            }
+            <c:forEach items = "${cards}"  var = "card" >
+			if ("${card}" !== "") {
+				externalDivToAppend = document.createElement("div");
+				externalDivToAppend.className = "player2-cards-container";
+				divToAppend = document.createElement("div");
+				divToAppend.setAttribute("href", "./");
+				var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/${card.toString()}.png";
+				divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
+				divToAppend.className = "player2-cards";
+				toAppend = document.createElement("li");
+				divToAppend.id = "${card.toString()}";
+				externalDivToAppend.appendChild(divToAppend);
+				toAppend.appendChild(externalDivToAppend);
+				toAppend.className = "li-cards";
+				document.getElementById("player2-cards-list").appendChild(toAppend);
+			}
             </c:forEach>
         </script>
     </body>

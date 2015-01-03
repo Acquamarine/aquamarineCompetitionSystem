@@ -48,6 +48,9 @@ public class TressetteController {
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
 		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		if(!playerGame.areThereSummaries()|| request.getSession().getAttribute("eventIndex")==null){
+			request.getSession().setAttribute("eventIndex", 0);
+		}
 		//TODO move to login
 		request.getSession().setAttribute("user", me);
 		NeapolitanHand myHand = playerGame.getHands().get(me);
@@ -59,6 +62,7 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")
 	public void makeMove(@RequestParam("cardId") String cardId, Model model, HttpServletRequest request) {
+
 		String me = (String) request.getSession().getAttribute("username");
 		//model.addAttribute("userForm", new User());
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
@@ -69,6 +73,7 @@ public class TressetteController {
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "eventIndex")
 	public @ResponseBody
 	String askForEvent(@RequestParam("eventIndex") int eventIndex, HttpServletRequest request) {
+		request.getSession().setAttribute("eventIndex", eventIndex);
 		String me = (String) request.getSession().getAttribute("username");
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		//TODO be sureto ask for events only if the game has been created
@@ -83,9 +88,10 @@ public class TressetteController {
 				String winner = summary.getRoundWinner();
 				json.put("winner", winner);
 				String looser = playerGame.getMatchedPlayer(winner);
-				json.put("looser",looser);
+				json.put("looser", looser);
 				json.put("picked0", summary.getPickedCards().get(winner));
 				json.put("picked1", summary.getPickedCards().get((looser)));
+				json.put("deck", summary.getCardsInDeck());
 			}
 		}catch(JSONException ex){
 			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);

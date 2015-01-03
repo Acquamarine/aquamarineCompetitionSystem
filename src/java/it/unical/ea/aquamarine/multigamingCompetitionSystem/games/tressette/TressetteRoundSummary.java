@@ -9,6 +9,7 @@ public class TressetteRoundSummary {
 	private String roundWinner;
 	private String actionPlayer;
 	private String card;
+	private int cardsInDeck;
 
 	public String getActionPlayer() {
 		return actionPlayer;
@@ -60,6 +61,14 @@ public class TressetteRoundSummary {
 
 	public void setCard(String card) {
 		this.card = card;
+	}
+
+	void setCardsInDeck(int size) {
+		this.cardsInDeck=size;
+	}
+
+	public int getCardsInDeck() {
+		return cardsInDeck;
 	}
 
 
