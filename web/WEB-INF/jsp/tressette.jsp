@@ -42,6 +42,12 @@
 
 				$.ajax({
 					url: "tressette/gioca",
+					success: function (data) {
+					}
+				});
+
+				$.ajax({
+					url: "tressette/gioca",
 					data: {
 						competitor: "${username}"
 					},
@@ -55,11 +61,11 @@
 						competitor: "${username}"
 					},
 					success: function (data) {
-						window.location.href="/MultigamingCompetitionSystem/tressette/gioca";
+						window.location.href = "/MultigamingCompetitionSystem/tressette/gioca";
 					}
 				});
-				
-				
+
+
 			}
 			$('#put-in-queue').click(insertInQueue);
 		</script>

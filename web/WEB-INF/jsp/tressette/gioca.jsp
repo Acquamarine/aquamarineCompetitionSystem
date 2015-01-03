@@ -32,7 +32,7 @@
 
 			$(window).bind('beforeunload', function () {
 			<% int previousIndex = (int) request.getSession().getAttribute("eventIndex");
-				if(previousIndex > 0 && previousIndex%2!=0){
+				if(previousIndex > 0 && previousIndex % 2 != 0){
 					request.getSession().setAttribute("eventIndex", previousIndex - 1);
 				}%>
 			});
@@ -41,7 +41,7 @@
 				$('#card-played-0').children("img").remove();
 				$('#card-played-1').children("img").remove();
 			}
-			function distributeCard(card, player,deck) {
+			function distributeCard(card, player, deck) {
 				setTimeout(function () {
 					$('#deck').html("<img id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'/>");
 				}, 2000);
@@ -70,9 +70,11 @@
 						toAppend.className = "li-cards";
 						document.getElementById("player1-cards-list").appendChild(toAppend);
 					}
-					console.log(deck);
-					$('#deck-image').text(deck);
-					
+					if (deck === 0 && $('#deck').length) {
+						$('#deck').remove();
+
+					}
+
 				}, 3000);
 			}
 			var index = ${eventIndex};
@@ -90,10 +92,11 @@
 							obj = JSON.parse(data);
 							if ("${user}" === obj.actionPlayer) {
 								$('#' + obj.card).parent("div").parent("li").remove();
-								// $("#weather-temp").html("<strong>" + data + "</strong> degrees");
+								setTimeout($('#card-played-1').html("${matched} tocca a te!"), 1000);
 							}
 							else {
 								$('.li-cards').first().remove();
+								setTimeout($('#card-played-1').html("${user} tocca a te!"), 1000);
 							}
 							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
 							//console.log(obj.round);
@@ -102,17 +105,12 @@
 									$('#card-played-0').children("img").remove();
 									$('#card-played-1').children("img").remove();
 								}, 1000);
-								console.log(obj.deck);
 								if ($('#deck').length) {
-									distributeCard(obj.picked0, obj.winner,obj.deck-1);
+									distributeCard(obj.picked0, obj.winner, obj.deck + 1);
 									console.log($('#deck-image').text);
 									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
-								
 								}
-								if (obj.deck === 0) {
-									$('#deck').remove();
-
-								}
+								setTimeout($('#card-played-0').html(obj.winner+" tocca a te!"), 3000);
 							}
 						}
 						eventHandler();
@@ -131,7 +129,7 @@
                 <ul id="player1_info">
                     <li id="player1-avatar">
                     </li>
-                    <li class="player_other_info"> {player}  Points: {player1_points}</li>
+                    <li class="player_other_info"> ${matched}  Points: {player1_points}</li>
                 </ul>
                 <div id="player1-cards">
                     <ul id="player1-cards-list">
@@ -144,7 +142,7 @@
                 <ul id="cards-on-table-list">
                     <li class="table-card">
                         <div id="deck">
-							<img id="deck-image" class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png">20</img>
+							<img id="deck-image" class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png"></img>${deck}
                         </div>
                     </li>
                     <li class="table-card">
@@ -175,7 +173,7 @@
         <%@include file="../../../resources/html/footer.html" %>
 
         <script>
-			for (i = 0; i < 10; i++) {
+			for (i = 0; i < ${matchedPlayerCards.size()}; i++) {
 				divToAppend = document.createElement("div");
 				divToAppend.className = "player1-cards";
 				toAppend = document.createElement("li");
