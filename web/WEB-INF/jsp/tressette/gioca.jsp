@@ -43,11 +43,11 @@
 			}
 			function distributeCard(card, player,deck) {
 				setTimeout(function () {
-					$('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'/>");
+					$('#deck').html("<img id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'/>");
 				}, 2000);
 
 				setTimeout(function () {
-					$('#deck').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png'/>");
+					$('#deck').html("<img  id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png'/>");
 					if (player === "${user}" && $('#' + card).length === 0) {
 						externalDivToAppend = document.createElement("div");
 						externalDivToAppend.className = "player2-cards-container";
@@ -71,7 +71,7 @@
 						document.getElementById("player1-cards-list").appendChild(toAppend);
 					}
 					console.log(deck);
-						//$('#deck-image').text(deck);
+					$('#deck-image').text(deck);
 					
 				}, 3000);
 			}

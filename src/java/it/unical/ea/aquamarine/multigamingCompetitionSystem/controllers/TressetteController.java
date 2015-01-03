@@ -98,5 +98,12 @@ public class TressetteController {
 		}
 		return json.toString();
 	}
-
+	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET,RequestMethod.POST}, params = "competitor")
+	public void putCompetitorInQueue(@RequestParam("competitor") String competitor){
+		
+	}
+	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET,RequestMethod.POST}, params = {"inQueue","competitor"})
+	public void getMatch(@RequestParam("competitor") String competitor){
+		
+	}
 }
