@@ -6,3 +6,44 @@
 #tressette-img{
 	margin-left: 28em;
 }
+
+.tressette-li{
+	text-align: center;
+	list-style: none;
+	display: table-cell;
+	float: none;
+	position: relative;
+	border-collapse: collapse;
+	width: 200px;
+	padding-right: 5em;
+	
+}
+
+#tressette-ul{
+	margin-left: 20em;
+	list-style-type: none;
+	overflow: visible;
+	height: 37px;
+	display: table;
+}
+
+#put-in-queue{
+	cursor: pointer;
+	font-size: 1.1em;
+}
+#custom-match{
+	cursor: pointer;
+	font-size: 1.1em;
+}
+
+#loading{
+	width: 4em;
+	height: 4em;
+	margin-left: 35em;
+}
+
+#undo-queue{
+	margin-left: 40em;
+	width: 4em;
+	height: 4em;
+}

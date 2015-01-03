@@ -4,6 +4,8 @@ html {
 
 
 body {
+	color: #5fdbe2;
+	font-family: "Adobe Garamond Pro",Garamond,Baskerville,"Baskerville Old Face","Hoefler Text","Times New Roman",serif;
     margin: 0% 0% 0% 0%;
 }
 
@@ -69,9 +71,8 @@ body {
 
 
 
-a {
+.menu-link {
 	color: #5fdbe2;
-	font-family: "Adobe Garamond Pro",Garamond,Baskerville,"Baskerville Old Face","Hoefler Text","Times New Roman",serif;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -136,3 +137,5 @@ input{
 #login-button{
 	margin-top: 3em;
 }
+
+
