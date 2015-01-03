@@ -27,6 +27,6 @@
         <welcome-file>redirect.jsp</welcome-file>
     </welcome-file-list>
     <listener>
-        <listener-class>it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager</listener-class>
+        <listener-class>it.unical.ea.aquamarine.multigamingCompetitionSystem.core.ApplicationManager</listener-class>
     </listener>
 </web-app>

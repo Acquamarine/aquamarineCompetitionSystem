@@ -113,6 +113,7 @@ public class MatchmakingManager {
 
 		@Override
 		public void run() {
+			System.out.println("matchmaking is running");
 			while (true) {
 				possiblyCreateMatches();
 				try {

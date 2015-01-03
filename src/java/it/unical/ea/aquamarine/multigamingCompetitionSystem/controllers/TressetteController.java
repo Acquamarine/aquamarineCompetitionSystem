@@ -5,6 +5,7 @@
  */
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.MatchmakingManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
@@ -46,10 +47,7 @@ public class TressetteController {
 			request.getSession().setAttribute("loggedIn", false);
 		}
 		String me = (String) request.getSession().getAttribute("username"); //TODO get from session
-		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
-		if(TressetteGameManager.getInstance().getPlayerMatch(me) == null){
-			TressetteGameManager.getInstance().startMatch(new Player(me), new Player(otherPlayer));
-		}
+		//TODO input validation
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		String matchedPlayer = playerGame.getMatchedPlayer(me);
 		if(!playerGame.areThereSummaries() || request.getSession().getAttribute("eventIndex") == null){
@@ -76,17 +74,6 @@ public class TressetteController {
 
 		String me = (String) request.getSession().getAttribute("username");
 		//model.addAttribute("userForm", new User());
-		NeapolitanCard toPlay = new NeapolitanCard(cardId);
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
-		playerGame.playCard(me, toPlay);
-	}
-
-	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "queueUp")
-	public void queueUp(@RequestParam("cardId") String cardId, Model model, HttpServletRequest request) {
-
-		String me = (String) request.getSession().getAttribute("username");
-		//model.addAttribute("userForm", new User());
-
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		playerGame.playCard(me, toPlay);
@@ -124,12 +111,13 @@ public class TressetteController {
 		return json.toString();
 	}
 
-	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST}, params = "competitor")
+	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = "competitor")
 	public void putCompetitorInQueue(@RequestParam("competitor") String competitor) {
+		MatchmakingManager.getInstance().addToQueue("tressette1v1", new Player(competitor));
 	}
 
-	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST}, params = {"inQueue", "competitor"})
+	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = {"inQueue", "competitor"})
 	public void getMatch(@RequestParam("competitor") String competitor) {
-
+		TressetteGameManager.getInstance().waitForMatch(competitor);
 	}
 }

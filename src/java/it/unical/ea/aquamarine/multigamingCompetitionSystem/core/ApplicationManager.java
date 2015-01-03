@@ -19,7 +19,7 @@ public class ApplicationManager implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		MultigamingBlManager.getInstance().startQueues();
-		MultigamingBlManager.getInstance().addGameManager("Tressette1v1", TressetteGameManager.getInstance());
+		MultigamingBlManager.getInstance().addGameManager("tressette1v1", TressetteGameManager.getInstance());
 	}
 
 	@Override
