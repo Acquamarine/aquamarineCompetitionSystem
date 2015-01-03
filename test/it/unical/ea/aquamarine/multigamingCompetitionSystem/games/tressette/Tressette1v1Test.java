@@ -54,7 +54,6 @@ public class Tressette1v1Test {
 		players.add("pippo");
 		Tressette1v1 instance = new Tressette1v1(players);
 		assertEquals(10, instance.getHands().get("ciccio").getHandCards().size());
-		// TODO review the generated test code and remove the default call to fail.
 	}
 
 
