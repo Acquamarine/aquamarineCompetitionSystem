@@ -92,7 +92,6 @@ public class Tressette1v1 implements ITressette{
 		if(!deck.isEmpty()) {
 			pickCards(handWinner);		
 			summary.setPickedCards(lastPickedCards);
-			
 		}
 		turnPlayer = handWinner;
 	}

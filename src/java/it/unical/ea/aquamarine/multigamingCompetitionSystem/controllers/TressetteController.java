@@ -5,6 +5,7 @@
  */
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
@@ -46,7 +47,7 @@ public class TressetteController {
 		}
 		String me = (String) request.getSession().getAttribute("username"); //TODO get from session
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
-		TressetteGameManager.getInstance().startMatch(me, otherPlayer);
+		TressetteGameManager.getInstance().startMatch(new Player(me), new Player(otherPlayer));
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		if(!playerGame.areThereSummaries()|| request.getSession().getAttribute("eventIndex")==null){
 			request.getSession().setAttribute("eventIndex", 0);
@@ -65,6 +66,17 @@ public class TressetteController {
 
 		String me = (String) request.getSession().getAttribute("username");
 		//model.addAttribute("userForm", new User());
+		NeapolitanCard toPlay = new NeapolitanCard(cardId);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		playerGame.playCard(me, toPlay);
+	}
+	
+	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "queueUp")
+	public void queueUp(@RequestParam("cardId") String cardId, Model model, HttpServletRequest request) {
+
+		String me = (String) request.getSession().getAttribute("username");
+		//model.addAttribute("userForm", new User());
+		
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		playerGame.playCard(me, toPlay);
