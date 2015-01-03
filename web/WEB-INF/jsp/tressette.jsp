@@ -41,23 +41,29 @@
 				$("#choose-match").html("<img id='loading' src='/MultigamingCompetitionSystem/assets/loading.gif'>Loading</img> <form id='undo-queue'> <input type='submit' value='Annulla' enabled='false'/> </form>");
 
 				$.ajax({
-				 url: "tressette/gioca",
-				 data: {
-				 competitor: "${username}"
-				 },
-				 success: function (data) {
-				 }
-				 });
-				 $.ajax({
-				 url: "tressette/gioca",
-				 data: {
-				 inQueue: true,
-				 competitor: "${username}"
-				 },
-				 success: function (data) {
-				 window.location.href="/MultigamingCompetitionSystem/tressette/gioca";
-				 }
-				 });
+					url: "tressette/gioca",
+					success: function (data) {
+					}
+				});
+
+				$.ajax({
+					url: "tressette/gioca",
+					data: {
+						competitor: "${username}"
+					},
+					success: function (data) {
+					}
+				});
+				$.ajax({
+					url: "tressette/gioca",
+					data: {
+						inQueue: true,
+						competitor: "${username}"
+					},
+					success: function (data) {
+						window.location.href = "/MultigamingCompetitionSystem/tressette/gioca";
+					}
+				});
 
 
 			}

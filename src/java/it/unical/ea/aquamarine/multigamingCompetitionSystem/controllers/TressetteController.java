@@ -47,13 +47,15 @@ public class TressetteController {
 		}
 		String me = (String) request.getSession().getAttribute("username"); //TODO get from session
 		String otherPlayer = TressetteGameManager.getInstance().getMatchedWith(me);
-		TressetteGameManager.getInstance().startMatch(new Player(me), new Player(otherPlayer));
+		if(TressetteGameManager.getInstance().getPlayerMatch(me) == null){
+			TressetteGameManager.getInstance().startMatch(new Player(me), new Player(otherPlayer));
+		}
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		String matchedPlayer = playerGame.getMatchedPlayer(me);
 		if(!playerGame.areThereSummaries() || request.getSession().getAttribute("eventIndex") == null){
 			request.getSession().setAttribute("eventIndex", 0);
 		}
-		if(request.getSession().getAttribute("deck")==null || !playerGame.areThereSummaries()){
+		if(request.getSession().getAttribute("deck") == null || !playerGame.areThereSummaries()){
 			request.getSession().setAttribute("deck", 20);
 		}
 		//TODO move to login
@@ -78,13 +80,13 @@ public class TressetteController {
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		playerGame.playCard(me, toPlay);
 	}
-	
+
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "queueUp")
 	public void queueUp(@RequestParam("cardId") String cardId, Model model, HttpServletRequest request) {
 
 		String me = (String) request.getSession().getAttribute("username");
 		//model.addAttribute("userForm", new User());
-		
+
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
 		playerGame.playCard(me, toPlay);

@@ -92,10 +92,11 @@
 							obj = JSON.parse(data);
 							if ("${user}" === obj.actionPlayer) {
 								$('#' + obj.card).parent("div").parent("li").remove();
-								// $("#weather-temp").html("<strong>" + data + "</strong> degrees");
+								setTimeout($('#card-played-1').html("${matched} tocca a te!"), 1000);
 							}
 							else {
 								$('.li-cards').first().remove();
+								setTimeout($('#card-played-1').html("${user} tocca a te!"), 1000);
 							}
 							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
 							//console.log(obj.round);
@@ -108,9 +109,8 @@
 									distributeCard(obj.picked0, obj.winner, obj.deck + 1);
 									console.log($('#deck-image').text);
 									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
-
-
 								}
+								setTimeout($('#card-played-0').html(obj.winner+" tocca a te!"), 3000);
 							}
 						}
 						eventHandler();
