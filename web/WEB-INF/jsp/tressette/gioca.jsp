@@ -27,10 +27,14 @@
 						$('#cards-on-table').children().remove();
 						console.log(obj);
 						var elements = obj.results;
-						for(element in elements){
+						var i = 0;
+						for (element in elements) {
 							console.log(element + " " + elements[element]);
 							externalDivToAppend = document.createElement("div");
-							externalDivToAppend.innerHTML=" "+ element +" Point " + elements[element];
+							externalDivToAppend.className = "finalScore";
+							externalDivToAppend.id = "finalScore" + i;
+							i++;
+							externalDivToAppend.innerHTML = " " + element + " Points " + elements[element];
 							document.getElementById('cards-on-table').appendChild(externalDivToAppend);
 						}
 						//$('#player1-other-info').html(${user} + " Points " + obj.results['${user}']);
@@ -59,6 +63,7 @@
 				if(previousIndex > 0 && previousIndex % 2 != 0){
 					request.getSession().setAttribute("eventIndex", previousIndex - 1);
 				}%>
+				request.getSession().setAttribute("reloaded", true);
 			});
 
 			function removeCardsFromTable() {
@@ -67,11 +72,11 @@
 			}
 			function distributeCard(card, player, deck) {
 				setTimeout(function () {
-					$('#deck').html("<img id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'/>");
+					$('#deck').html("<img id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'>" + deck + "</img>");
 				}, 2000);
 
 				setTimeout(function () {
-					$('#deck').html("<img  id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png'/>");
+					$('#deck').html("<img  id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png'/>" + deck + "</img>");
 					if (player === "${user}" && $('#' + card).length === 0) {
 						externalDivToAppend = document.createElement("div");
 						externalDivToAppend.className = "player2-cards-container";
@@ -96,8 +101,6 @@
 					}
 					if (deck === 0 && $('#deck').length) {
 						$('#deck').remove();
-					} else if (deck !== 0) {
-						$('#deck-image').html(deck);
 					}
 
 				}, 3000);
@@ -107,49 +110,58 @@
 			function eventHandler() {
 				console.log(index);
 				$.ajax({
-					url: "./gioca",
-					data: {
+				url: "./gioca",
+						data: {
 						eventIndex: index
-					},
-					success: function (data) {
-						if (data !== "") {
-							index++;
-							obj = JSON.parse(data);
-							if ("${user}" === obj.actionPlayer) {
-								$('#' + obj.card).parent("div").parent("li").remove();
-								setTimeout($('#card-played-1').html("${matched} tocca a te!"), 1000);
-							}
-							else {
-								$('.li-cards').first().remove();
-								setTimeout($('#card-played-1').html("${user} tocca a te!"), 1000);
-							}
-							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
-							//console.log(obj.round);
-							if (obj.round === 1) {
-								setTimeout(function () {
-									$('#card-played-0').children("img").remove();
-									$('#card-played-1').children("img").remove();
-								}, 1000);
-								if ($('#deck').length) {
-									distributeCard(obj.picked0, obj.winner, obj.deck + 1);
-									console.log($('#deck-image').text);
-									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
+						},
+						success: function (data) {
+							if (data !== "") {
+								index++;
+								obj = JSON.parse(data);
+								if ("${user}" === obj.actionPlayer) {
+									$('#' + obj.card).parent("div").parent("li").remove();
 								}
-								setTimeout($('#card-played-0').html(obj.winner + " tocca a te!"), 3000);
+								else {
+									if (request.getSession().getAttribute("reloaded") === false) {
+										$('.li-cards').first().remove();
+									} else {
+										request.getSession().setAttribute("reloaded", false);
+									}
+									$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
+									//console.log(obj.round);
+									if (obj.round === 1) {
+										setTimeout(function () {
+											$('#card-played-0').children("img").remove();
+											$('#card-played-1').children("img").remove();
+										}, 1000);
+										if ($('#deck').length) {
+											distributeCard(obj.picked0, obj.winner, obj.deck + 1);
+											console.log($('#deck-image').text);
+											setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
+
+										}
+									}
+								}
+								if (obj.gameover) {
+									gameComplete();
+								} else {
+									if (obj.round === 1) {
+										$('#turn').html(obj.winner + ' tocca a te!');
+									} else if ("${user}" === obj.actionPlayer) {
+										$('#turn').html('${matched} tocca a te!');
+									} else {
+										$('#turn').html('${user} tocca a te!');
+									}
+									eventHandler();
+								}
+								}
 							}
-						}
-						if (obj.gameover) {
-							gameComplete();
-						} else {
-							eventHandler();
-						}
-					}
-				});
-			}
-			$(document).ready(function () {
+					);
+				}
+				$(document).ready(function () {
 				eventHandler();
-			});
-        </script>
+			}
+			);        </script>
     </head>
     <body>
         <%@include file="../../../resources/html/header.html" %>
@@ -184,6 +196,11 @@
 
                         </div>
                     </li>
+                    <li class="table-card">
+                        <div class= "played-cards" id="turn">
+							${turn} tocca a te!
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div id="player2">
@@ -202,7 +219,11 @@
         <%@include file="../../../resources/html/footer.html" %>
 
         <script>
-			for (i = 0; i < ${matchedPlayerCards.size()}; i++) {
+					if (${deck} === 0 && $('#deck').length) {
+				$('#deck').remove();
+			}
+			<c:forEach items = "${matchedPlayerCards}"  var = "card" >
+			if ("${card}" !== "") {
 				divToAppend = document.createElement("div");
 				divToAppend.className = "player1-cards";
 				toAppend = document.createElement("li");
@@ -210,6 +231,7 @@
 				toAppend.className = "li-cards";
 				document.getElementById("player1-cards-list").appendChild(toAppend);
 			}
+			</c:forEach>
 
         </script>
         <script>

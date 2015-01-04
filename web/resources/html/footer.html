@@ -2,8 +2,8 @@
 </div>
 <script>
 	if (${loggedIn} === true) {
-	document.getElementById("login").innerHTML = "<h1>Welcome ${username}</h1>";
-			document.getElementById("login").style.height = "100px";
+	document.getElementById("login").innerHTML = "<h1>Welcome ${username}</h1> <form id='logout-button' method='post'> <input type=submit value='Logout'/></form>" ;
+		$("#logout-button").attr("action", "/MultigamingCompetitionSystem/login?logout=true&page=" + window.location.pathname);
 	}
 	else {
 		document.getElementById("login").innerHTML ='<form id="login-button" action="" method="post"><input type="submit" value="Login" /></form>';

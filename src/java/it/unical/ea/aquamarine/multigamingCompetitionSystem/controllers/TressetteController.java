@@ -67,6 +67,8 @@ public class TressetteController {
 		model.addAttribute("cards", cards);
 		model.addAttribute("matchedPlayerCards", matchedPlayerCards);
 		model.addAttribute("userForm", new User());
+		String turnPlayer = playerGame.getTurnPlayer();
+		model.addAttribute("turn",turnPlayer);
 		return "/tressette/gioca";
 	}
 
