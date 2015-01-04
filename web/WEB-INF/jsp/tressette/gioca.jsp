@@ -14,7 +14,7 @@
         <title>Gioca a Tressette!</title>
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script>
-			function gameComplete(){
+			function gameComplete() {
 				$.ajax({
 					url: "./gioca",
 					data: {
@@ -24,9 +24,17 @@
 						obj = JSON.parse(data);
 						$('#player1-cards').remove();
 						$('#player2-cards').remove();
-						$('#cards-on-table').remove();
-						$('#player1-other-info').html($('#player1-other-info').html+" "+obj.player1Points);
-						$('#player2-other-info').html($('#player2-other-info').html+" "+obj.player2Points);
+						$('#cards-on-table').children().remove();
+						console.log(obj);
+						var elements = obj.results;
+						for(element in elements){
+							console.log(element + " " + elements[element]);
+							externalDivToAppend = document.createElement("div");
+							externalDivToAppend.innerHTML=" "+ element +" Point " + elements[element];
+							document.getElementById('cards-on-table').appendChild(externalDivToAppend);
+						}
+						//$('#player1-other-info').html(${user} + " Points " + obj.results['${user}']);
+						//$('#player2-other-info').html(${matched} + " Points " + obj.results['${matched}']);
 					}
 				});
 			}
@@ -88,7 +96,8 @@
 					}
 					if (deck === 0 && $('#deck').length) {
 						$('#deck').remove();
-
+					} else if (deck !== 0) {
+						$('#deck-image').html(deck);
 					}
 
 				}, 3000);
@@ -130,9 +139,9 @@
 							}
 						}
 						if (obj.gameover) {
-							
-						}else{
-						eventHandler();
+							gameComplete();
+						} else {
+							eventHandler();
 						}
 					}
 				});
@@ -183,11 +192,11 @@
 
                     </ul>
                 </div>
-                    <ul id="player2_info">
-                        <li class="player_other_info"> ${user}</li>
-                        <li id="player2-avatar">
-                        </li>
-                    </ul>
+				<ul id="player2_info">
+					<li class="player_other_info"> ${user}</li>
+					<li id="player2-avatar">
+					</li>
+				</ul>
             </div>
         </div>
         <%@include file="../../../resources/html/footer.html" %>

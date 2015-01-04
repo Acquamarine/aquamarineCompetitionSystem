@@ -62,6 +62,7 @@ public class Tressette1v1 implements ITressette{
 					summary.setCardsInDeck(deck.size());
 				}
 				summary.setCardPlayed(true);
+				summary.setGameOver(gameComplete);
 				addEventSummary(summary);
 				return summary;
 			}

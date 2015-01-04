@@ -14,6 +14,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tres
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteRoundSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -93,6 +94,7 @@ public class TressetteController {
 			json.put("card", summary.getCard());
 			json.put("actionPlayer", summary.getActionPlayer());
 			json.put("round", summary.getRound());
+			json.put("gameover", summary.isGameOver());
 			if(summary.getRound() == 1){
 				String winner = summary.getRoundWinner();
 				json.put("winner", winner);
@@ -123,7 +125,16 @@ public class TressetteController {
 	
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "gameComplete")
 	public @ResponseBody
-	String gameComplete() {
-		return null;
+	String gameComplete(HttpServletRequest request) {
+		String me = (String) request.getSession().getAttribute("username");
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		Map<String, Integer> finalScores = playerGame.getFinalScores();
+		JSONObject json = new JSONObject();
+		try{
+			json.put("results", finalScores);
+		}catch(JSONException ex){
+			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return json.toString();
 	}
 }
