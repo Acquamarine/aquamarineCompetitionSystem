@@ -10,6 +10,7 @@ public class TressetteRoundSummary {
 	private String actionPlayer;
 	private String card;
 	private int cardsInDeck;
+	private boolean gameOver = false;
 
 	public String getActionPlayer() {
 		return actionPlayer;
@@ -71,7 +72,13 @@ public class TressetteRoundSummary {
 		return cardsInDeck;
 	}
 
+	public boolean isGameOver() {
+		return gameOver;
+	}
 
-	
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
 	
 }

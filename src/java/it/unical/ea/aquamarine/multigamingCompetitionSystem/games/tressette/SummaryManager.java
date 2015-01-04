@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 public class SummaryManager {
 	private final List<TressetteRoundSummary> eventsSummaries = new ArrayList<>();
+	private TressetteResultsSummary resultsSummary;
 
 	public synchronized TressetteRoundSummary getSummary(int eventIndex) {
 		while(eventsSummaries.size()<=eventIndex) {
@@ -22,6 +23,14 @@ public class SummaryManager {
 	public synchronized void addSummary(TressetteRoundSummary summary) {
 		eventsSummaries.add(summary);
 		this.notifyAll();
+	}
+
+	public void setResultsSummary(TressetteResultsSummary resultsSummary) {
+		this.resultsSummary = resultsSummary;
+	}
+	
+	public TressetteResultsSummary getResults() {
+		return resultsSummary;
 	}
 
 	boolean areThereSummaries() {
