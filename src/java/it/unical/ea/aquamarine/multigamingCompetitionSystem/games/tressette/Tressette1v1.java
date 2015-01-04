@@ -133,6 +133,9 @@ public class Tressette1v1 implements ITressette{
 		int takenCardsNumber = 0;
 		takenCardsNumber = takenCards.values().stream().map((taken) -> taken.size()).reduce(takenCardsNumber, Integer::sum);
 		gameComplete = (takenCardsNumber == 40);
+		if(gameComplete) {
+			summaryManager.setResultsSummary(new TressetteResultsSummary(getFinalScores()));
+		}
 	}
 
 	private void pickCards(String handWinner) {
@@ -207,6 +210,10 @@ public class Tressette1v1 implements ITressette{
 	@Override
 	public String getMatchedPlayer(String player) {
 		return followingPlayer.get(player);
+	}
+	
+	public TressetteResultsSummary getResults() {
+		return summaryManager.getResults();
 	}
 
 	public TressetteRoundSummary getSummary(int eventIndex) {
