@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
+import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -57,4 +58,17 @@ public class IndexController {
 		return "redirect:"+page;
 	}
 
+	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"logout","page"})
+	public String logout(HttpServletRequest request, @RequestParam("page") String page) {
+		Enumeration<String> attributeNames = request.getSession().getAttributeNames();
+		while(attributeNames.hasMoreElements()){
+			String attribute = attributeNames.nextElement();
+			request.getSession().removeAttribute(attribute);
+		}
+		String subPage = page.substring(29);
+		if(subPage==null){
+			subPage="index";
+		}
+		return "redirect:"+subPage;
+	}
 }
