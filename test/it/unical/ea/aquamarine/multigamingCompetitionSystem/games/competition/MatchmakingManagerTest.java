@@ -4,7 +4,6 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetit
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;

@@ -23,7 +23,7 @@ public class MatchmakingManager {
 
 	public synchronized void addToQueue(String game, ICompetitor competitor) {
 		if (queues.get(game) == null) {
-			queues.put(game, new CompetitorsQueue());
+			queues.put(game, new CompetitorsQueue(game));
 		}
 		QueuedCompetitor queuedCompetitor = new QueuedCompetitor(competitor);
 		queues.get(game).addCompetitor(queuedCompetitor);
@@ -44,9 +44,9 @@ public class MatchmakingManager {
 	public synchronized void possiblyCreateMatches() {
 		for (String game : queues.keySet()) {
 			TreeMap<Integer, Set<QueuedCompetitor>> queuedCompetitorsTree = queues.get(game).getQueuedCompetitors();
-			Iterator<Map.Entry<Integer, Set<QueuedCompetitor>>> entryIterator = queuedCompetitorsTree.entrySet().iterator();
-			while(entryIterator.hasNext()) {
-				Set<QueuedCompetitor> sameEloSet = entryIterator.next().getValue();
+			Integer iteratingValue = queuedCompetitorsTree.firstKey();
+			while(iteratingValue!=null) {
+				Set<QueuedCompetitor> sameEloSet = queuedCompetitorsTree.get(iteratingValue);
 				Iterator<QueuedCompetitor> it = sameEloSet.iterator();
 				while(sameEloSet.size()>1) {
 					QueuedCompetitor first = it.next();
@@ -56,23 +56,23 @@ public class MatchmakingManager {
 					createMatch(game, first, second);
 				}
 				if(sameEloSet.isEmpty()) {
-					entryIterator.remove();
+					queuedCompetitorsTree.remove(iteratingValue);
 				}
 				else {
 					QueuedCompetitor candidate = sameEloSet.iterator().next();
 					long queueStartTime = candidate.getQueueStartTime();
 					int queueTime = (int) (System.currentTimeMillis() - queueStartTime);
 					int eloRange = queueTime/1000 * ELO_EXPANSION_PER_SECOND;
-					Map.Entry<Integer, Set<QueuedCompetitor>> lowerEntry = queuedCompetitorsTree.lowerEntry(candidate.getCompetitor().getElo());
-					Map.Entry<Integer, Set<QueuedCompetitor>> higherEntry = queuedCompetitorsTree.higherEntry(candidate.getCompetitor().getElo());
+					Map.Entry<Integer, Set<QueuedCompetitor>> lowerEntry = queuedCompetitorsTree.lowerEntry(candidate.getCompetitor().getElo(game));
+					Map.Entry<Integer, Set<QueuedCompetitor>> higherEntry = queuedCompetitorsTree.higherEntry(candidate.getCompetitor().getElo(game));
 					Map.Entry<Integer, Set<QueuedCompetitor>> bestEntry = null;
 					int minimum = Integer.MAX_VALUE;
-					if(lowerEntry != null && candidate.getCompetitor().getElo() - lowerEntry.getKey() < minimum) {
-						minimum = candidate.getCompetitor().getElo() - lowerEntry.getKey();
+					if(lowerEntry != null && candidate.getCompetitor().getElo(game) - lowerEntry.getKey() < minimum) {
+						minimum = candidate.getCompetitor().getElo(game) - lowerEntry.getKey();
 						bestEntry = lowerEntry;
 					}
-					if(higherEntry != null && candidate.getCompetitor().getElo() - higherEntry.getKey() < minimum) {
-						minimum = higherEntry.getKey() - candidate.getCompetitor().getElo();
+					if(higherEntry != null && candidate.getCompetitor().getElo(game) - higherEntry.getKey() < minimum) {
+						minimum = higherEntry.getKey() - candidate.getCompetitor().getElo(game);
 						bestEntry = higherEntry;
 					}
 					
@@ -86,11 +86,11 @@ public class MatchmakingManager {
 							}
 							createMatch(game, matched, candidate);
 							sameEloSet.clear();
-							entryIterator.remove();
+							queuedCompetitorsTree.remove(iteratingValue);
 						}
 					}
 				}
-					
+				iteratingValue = queuedCompetitorsTree.higherKey(iteratingValue);					
 			}
 		}
 

@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 public class TressetteGameManager implements GameManager {
 	private static TressetteGameManager instance;
 	private Map<String, Tressette1v1> activeMatches = new HashMap<>();
+	private Map<String, Tressette1v1> completedMatches = new HashMap<>();
 	private Map<String, Condition> conditionsMap = new HashMap<>();
 	private Map<String, String> matchedPlayers = new HashMap<>();
 	private Lock lock = new ReentrantLock();
@@ -71,12 +72,22 @@ public class TressetteGameManager implements GameManager {
 		return activeMatches.get(player);
 	}
 	
-	public Tressette1v1 getPlayerMatch(String player) {
+	public Tressette1v1 getPlayerCompletedMatch(String player) {
+		return completedMatches.get(player);
+	}
+	
+	public Tressette1v1 getPlayerActiveMatch(String player) {
 		return activeMatches.get(player);
 	}
 
 	public String getMatchedWith(String player) {
 		return matchedPlayers.get(player);
+	}
+
+	public void gameCompletion(Tressette1v1 tressetteGame) {
+		completedMatches.put(tressetteGame.getPlayers().get(0), tressetteGame);
+		completedMatches.put(tressetteGame.getPlayers().get(1), tressetteGame);
+		
 	}
 	
 }
