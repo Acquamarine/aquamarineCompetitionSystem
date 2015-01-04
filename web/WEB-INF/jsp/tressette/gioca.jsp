@@ -14,6 +14,22 @@
         <title>Gioca a Tressette!</title>
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script>
+			function gameComplete(){
+				$.ajax({
+					url: "./gioca",
+					data: {
+						gameComplete: true
+					},
+					success: function (data) {
+						obj = JSON.parse(data);
+						$('#player1-cards').remove();
+						$('#player2-cards').remove();
+						$('#cards-on-table').remove();
+						$('#player1-other-info').html($('#player1-other-info').html+" "+obj.player1Points);
+						$('#player2-other-info').html($('#player2-other-info').html+" "+obj.player2Points);
+					}
+				});
+			}
 			function cardsClick() {
 				var parentId = this.id;
 				console.log(parentId);
@@ -110,10 +126,14 @@
 									console.log($('#deck-image').text);
 									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
 								}
-								setTimeout($('#card-played-0').html(obj.winner+" tocca a te!"), 3000);
+								setTimeout($('#card-played-0').html(obj.winner + " tocca a te!"), 3000);
 							}
 						}
+						if (obj.gameover) {
+							
+						}else{
 						eventHandler();
+						}
 					}
 				});
 			}
@@ -129,7 +149,7 @@
                 <ul id="player1_info">
                     <li id="player1-avatar">
                     </li>
-                    <li class="player_other_info"> ${matched}  Points: {player1_points}</li>
+                    <li class="player_other_info"> ${matched}</li>
                 </ul>
                 <div id="player1-cards">
                     <ul id="player1-cards-list">
@@ -162,12 +182,12 @@
                     <ul id="player2-cards-list">
 
                     </ul>
+                </div>
                     <ul id="player2_info">
-                        <li class="player_other_info"> ${user}  Points: {player2_points}</li>
+                        <li class="player_other_info"> ${user}</li>
                         <li id="player2-avatar">
                         </li>
                     </ul>
-                </div>
             </div>
         </div>
         <%@include file="../../../resources/html/footer.html" %>

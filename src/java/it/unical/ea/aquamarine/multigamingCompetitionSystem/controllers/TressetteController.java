@@ -120,4 +120,10 @@ public class TressetteController {
 	public void getMatch(@RequestParam("competitor") String competitor) {
 		TressetteGameManager.getInstance().waitForMatch(competitor);
 	}
+	
+	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "gameComplete")
+	public @ResponseBody
+	String gameComplete() {
+		return null;
+	}
 }
