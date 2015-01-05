@@ -110,59 +110,59 @@
 			function eventHandler() {
 				console.log(index);
 				$.ajax({
-				url: "./gioca",
-						data: {
+					url: "./gioca",
+					data: {
 						eventIndex: index
-						},
-						success: function (data) {
-							if (data !== "") {
-								index++;
-								obj = JSON.parse(data);
-								if ("${user}" === obj.actionPlayer) {
-									$('#' + obj.card).parent("div").parent("li").remove();
-								}
-								else {
-									reloaded = request.getSession().getAttribute("reloaded");
-									if (reloaded===null || reloaded === false) {
-										$('.li-cards').first().remove();
-									} else {
-										request.getSession().setAttribute("reloaded", false);
-									}
-									$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
-									//console.log(obj.round);
-									if (obj.round === 1) {
-										setTimeout(function () {
-											$('#card-played-0').children("img").remove();
-											$('#card-played-1').children("img").remove();
-										}, 1000);
-										if ($('#deck').length) {
-											distributeCard(obj.picked0, obj.winner, obj.deck + 1);
-											console.log($('#deck-image').text);
-											setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
-
-										}
-									}
-								}
-								if (obj.gameover) {
-									gameComplete();
+					},
+					success: function (data) {
+						if (data !== "") {
+							index++;
+							obj = JSON.parse(data);
+							if ("${user}" === obj.actionPlayer) {
+								$('#' + obj.card).parent("div").parent("li").remove();
+							}
+							else {
+								reloaded = <%= request.getSession().getAttribute("reloaded")%>;
+								if (reloaded === null || reloaded === false) {
+									$('.li-cards').first().remove();
 								} else {
-									if (obj.round === 1) {
-										$('#turn').html(obj.winner + ' tocca a te!');
-									} else if ("${user}" === obj.actionPlayer) {
-										$('#turn').html('${matched} tocca a te!');
-									} else {
-										$('#turn').html('${user} tocca a te!');
-									}
-									eventHandler();
+									<%request.getSession().setAttribute("reloaded", false);%>
 								}
 							}
+							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
+							//console.log(obj.round);
+							if (obj.round === 1) {
+								setTimeout(function () {
+									$('#card-played-0').children("img").remove();
+									$('#card-played-1').children("img").remove();
+								}, 1000);
+								if ($('#deck').length) {
+									distributeCard(obj.picked0, obj.winner, obj.deck + 1);
+									console.log($('#deck-image').text);
+									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
+
+								}
 							}
-					);
-				}
-				$(document).ready(function () {
-				eventHandler();
+							if (obj.gameover) {
+								gameComplete();
+							} else {
+								if (obj.round === 1) {
+									$('#turn').html(obj.winner + ' tocca a te!');
+								} else if ("${user}" === obj.actionPlayer) {
+									$('#turn').html('${matched} tocca a te!');
+								} else {
+									$('#turn').html('${user} tocca a te!');
+								}
+								eventHandler();
+							}
+						}
+					}
+				});
 			}
-			);</script>
+			$(document).ready(function () {
+				eventHandler();
+			});
+		</script>
     </head>
     <body>
         <%@include file="../../../resources/html/header.html" %>
@@ -220,7 +220,7 @@
         <%@include file="../../../resources/html/footer.html" %>
 
         <script>
-					if (${deck} === 0 && $('#deck').length) {
+			if (${deck} === 0 && $('#deck').length) {
 				$('#deck').remove();
 			}
 			<c:forEach items = "${matchedPlayerCards}"  var = "card" >
@@ -234,7 +234,7 @@
 			}
 			</c:forEach>
 
-        </script>
+		</script>
         <script>
             <c:forEach items = "${cards}"  var = "card" >
 			if ("${card}" !== "") {
@@ -253,6 +253,6 @@
 				document.getElementById("player2-cards-list").appendChild(toAppend);
 			}
             </c:forEach>
-        </script>
+		</script>
     </body>
 </html>
