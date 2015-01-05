@@ -62,8 +62,8 @@
 			<% int previousIndex = (int) request.getSession().getAttribute("eventIndex");
 				if(previousIndex > 0 && previousIndex % 2 != 0){
 					request.getSession().setAttribute("eventIndex", previousIndex - 1);
+					request.getSession().setAttribute("reloaded", true);
 				}%>
-				request.getSession().setAttribute("reloaded", true);
 			});
 
 			function removeCardsFromTable() {
@@ -122,7 +122,8 @@
 									$('#' + obj.card).parent("div").parent("li").remove();
 								}
 								else {
-									if (request.getSession().getAttribute("reloaded") === false) {
+									reloaded = request.getSession().getAttribute("reloaded");
+									if (reloaded===null || reloaded === false) {
 										$('.li-cards').first().remove();
 									} else {
 										request.getSession().setAttribute("reloaded", false);
@@ -154,14 +155,14 @@
 									}
 									eventHandler();
 								}
-								}
+							}
 							}
 					);
 				}
 				$(document).ready(function () {
 				eventHandler();
 			}
-			);        </script>
+			);</script>
     </head>
     <body>
         <%@include file="../../../resources/html/header.html" %>
