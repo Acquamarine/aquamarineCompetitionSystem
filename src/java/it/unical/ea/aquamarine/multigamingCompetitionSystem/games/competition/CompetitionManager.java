@@ -2,6 +2,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,13 @@ public class CompetitionManager {
 	}
 
 	public ICompetitor getCompetitor(String competitor) {
+		if(competitor.equals("pippo")) {
+			Player player = new Player(competitor);
+			player.updateElo(Tressette1v1.class.getCanonicalName(), 1500);
+			activeCompetitors.put(competitor, player);
+			return player;
+		}
+			
 		activeCompetitors.putIfAbsent(competitor, new Player(competitor));
 		return activeCompetitors.get(competitor);
 	}

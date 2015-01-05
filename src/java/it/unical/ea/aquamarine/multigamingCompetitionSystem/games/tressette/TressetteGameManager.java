@@ -87,6 +87,8 @@ public class TressetteGameManager implements GameManager {
 	public void gameCompletion(Tressette1v1 tressetteGame) {
 		completedMatches.put(tressetteGame.getPlayers().get(0), tressetteGame);
 		completedMatches.put(tressetteGame.getPlayers().get(1), tressetteGame);
+		activeMatches.remove(tressetteGame.getPlayers().get(0));
+		activeMatches.remove(tressetteGame.getPlayers().get(1));
 		
 	}
 	

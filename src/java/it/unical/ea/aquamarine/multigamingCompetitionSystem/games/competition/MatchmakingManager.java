@@ -44,7 +44,10 @@ public class MatchmakingManager {
 	public synchronized void possiblyCreateMatches() {
 		for (String game : queues.keySet()) {
 			TreeMap<Integer, Set<QueuedCompetitor>> queuedCompetitorsTree = queues.get(game).getQueuedCompetitors();
-			Integer iteratingValue = queuedCompetitorsTree.firstKey();
+			Integer iteratingValue = null;
+			if(!queuedCompetitorsTree.isEmpty()) {
+				iteratingValue = queuedCompetitorsTree.firstKey();
+			}
 			while(iteratingValue!=null) {
 				Set<QueuedCompetitor> sameEloSet = queuedCompetitorsTree.get(iteratingValue);
 				Iterator<QueuedCompetitor> it = sameEloSet.iterator();
