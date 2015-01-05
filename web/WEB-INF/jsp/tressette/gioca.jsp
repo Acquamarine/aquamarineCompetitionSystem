@@ -107,7 +107,7 @@
 			}
 			var index = ${eventIndex};
 			console.log(index);
-			function eventHandler() {
+			function eventHandler(reloaded) {
 				console.log(index);
 				$.ajax({
 					url: "./gioca",
@@ -122,12 +122,10 @@
 								$('#' + obj.card).parent("div").parent("li").remove();
 							}
 							else {
-								reloaded = <%= request.getSession().getAttribute("reloaded")%>;
+								console.log(reloaded);
 								if (reloaded === null || reloaded === false) {
 									$('.li-cards').first().remove();
-								} else {
-									<%request.getSession().setAttribute("reloaded", false);%>
-								}
+								} 
 							}
 							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
 							//console.log(obj.round);
@@ -153,14 +151,14 @@
 								} else {
 									$('#turn').html('${user} tocca a te!');
 								}
-								eventHandler();
+								eventHandler(false);
 							}
 						}
 					}
 				});
 			}
 			$(document).ready(function () {
-				eventHandler();
+				eventHandler(<%=request.getSession().getAttribute("reloaded")%>);
 			});
 		</script>
     </head>
