@@ -5,6 +5,7 @@
  */
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.MatchmakingManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
@@ -49,7 +50,7 @@ public class TressetteController {
 		}
 		String me = (String) request.getSession().getAttribute("username"); //TODO get from session
 		//TODO input validation
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
 		String matchedPlayer = playerGame.getMatchedPlayer(me);
 		if(!playerGame.areThereSummaries() || request.getSession().getAttribute("eventIndex") == null){
 			request.getSession().setAttribute("eventIndex", 0);
@@ -78,7 +79,7 @@ public class TressetteController {
 		String me = (String) request.getSession().getAttribute("username");
 		//model.addAttribute("userForm", new User());
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
 		playerGame.playCard(me, toPlay);
 	}
 
@@ -87,7 +88,7 @@ public class TressetteController {
 	String askForEvent(@RequestParam("eventIndex") int eventIndex, HttpServletRequest request) {
 		request.getSession().setAttribute("eventIndex", eventIndex);
 		String me = (String) request.getSession().getAttribute("username");
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
 		//TODO be sureto ask for events only if the game has been created
 		TressetteRoundSummary summary = playerGame.getSummary(eventIndex);
 		JSONObject json = new JSONObject();
@@ -117,7 +118,7 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = "competitor")
 	public void putCompetitorInQueue(@RequestParam("competitor") String competitor) {
-		MatchmakingManager.getInstance().addToQueue("tressette1v1", new Player(competitor));
+		MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getCanonicalName(), CompetitionManager.getInstance().getCompetitor(competitor)); //new Player(competitor)
 	}
 
 	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = {"inQueue", "competitor"})
@@ -129,7 +130,7 @@ public class TressetteController {
 	public @ResponseBody
 	String gameComplete(HttpServletRequest request) {
 		String me = (String) request.getSession().getAttribute("username");
-		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerMatch(me);
+		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerCompletedMatch(me);
 		Map<String, Integer> finalScores = playerGame.getFinalScores();
 		JSONObject json = new JSONObject();
 		try{

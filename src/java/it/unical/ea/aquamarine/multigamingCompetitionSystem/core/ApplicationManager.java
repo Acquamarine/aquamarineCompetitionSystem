@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.core;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -19,7 +20,7 @@ public class ApplicationManager implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		MultigamingBlManager.getInstance().startQueues();
-		MultigamingBlManager.getInstance().addGameManager("tressette1v1", TressetteGameManager.getInstance());
+		MultigamingBlManager.getInstance().addGameManager(Tressette1v1.class.getCanonicalName(), TressetteGameManager.getInstance());
 	}
 
 	@Override

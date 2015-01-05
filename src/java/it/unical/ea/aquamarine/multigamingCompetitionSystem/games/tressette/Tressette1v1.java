@@ -1,5 +1,6 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
@@ -20,6 +21,7 @@ public class Tressette1v1 implements ITressette{
 	private Map<String, NeapolitanCard> lastPickedCards = new HashMap<>();;
 	private Queue<NeapolitanCard> deck;
 	private Map<String, List<NeapolitanCard>> takenCards = new HashMap<>();;
+	private Map<String, Integer> finalScores = new HashMap<>();;
 	private List<NeapolitanCard> table = new ArrayList<>();
 	private final SummaryManager summaryManager = new SummaryManager();
 	private boolean gameComplete = false;
@@ -47,7 +49,7 @@ public class Tressette1v1 implements ITressette{
 	@Override
 	public TressetteRoundSummary playCard(String playerId, NeapolitanCard card) {
 		TressetteRoundSummary summary = new TressetteRoundSummary();
-		if(playerId.equals(turnPlayer)) {
+		if(playerId.equals(turnPlayer) && !gameComplete) {
 			summary.setActionPlayer(turnPlayer);
 			if(isCardAllowed(card) && hands.get(playerId).playCard(card) ) {
 				summary.setRound(table.size());
@@ -59,6 +61,21 @@ public class Tressette1v1 implements ITressette{
 				else {
 					handComplete(summary);
 					checkGameComplete();
+					if(gameComplete) {
+						//remove from active matches, elo updates
+						TressetteGameManager.getInstance().gameCompletion(this);
+						computeFinalScores();
+						String winner = players.get(0);
+						String loser = players.get(1);
+						int player1Score = finalScores.get(players.get(0));
+						int player2Score = finalScores.get(players.get(1));
+						if(player1Score<player2Score) {
+							String temp = winner;
+							winner = loser;
+							loser = temp;
+						}
+						CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getCanonicalName(), winner, loser);
+					}
 					summary.setCardsInDeck(deck.size());
 				}
 				summary.setCardPlayed(true);
@@ -72,16 +89,23 @@ public class Tressette1v1 implements ITressette{
 		return summary;
 		
 	}
-
-	@Override
-	public Map<String, Integer> getFinalScores() {
-		Map<String, Integer> returningMap = new HashMap<>();
+	
+	public void computeFinalScores() {
 		takenCards.keySet().stream().forEach((player) -> {
 			int pointCounter = 0;
 			pointCounter = takenCards.get(player).stream().map((card) -> getCardValue(card)).reduce(pointCounter, Integer::sum);
-			returningMap.put(player, pointCounter/3);
+			if(turnPlayer.equals(player)) {
+				pointCounter+=3;
+			}
+			finalScores.put(player, pointCounter/3);
 		});
-		return returningMap;
+		
+	}
+	
+
+	@Override
+	public Map<String, Integer> getFinalScores() {
+		return finalScores;
 	}
 
 	private void handComplete(TressetteRoundSummary summary) {
@@ -134,9 +158,6 @@ public class Tressette1v1 implements ITressette{
 		int takenCardsNumber = 0;
 		takenCardsNumber = takenCards.values().stream().map((taken) -> taken.size()).reduce(takenCardsNumber, Integer::sum);
 		gameComplete = (takenCardsNumber == 40);
-		if(gameComplete) {
-			summaryManager.setResultsSummary(new TressetteResultsSummary(getFinalScores()));
-		}
 	}
 
 	private void pickCards(String handWinner) {
@@ -213,10 +234,6 @@ public class Tressette1v1 implements ITressette{
 		return followingPlayer.get(player);
 	}
 	
-	public TressetteResultsSummary getResults() {
-		return summaryManager.getResults();
-	}
-
 	public TressetteRoundSummary getSummary(int eventIndex) {
 		return summaryManager.getSummary(eventIndex);
 	}
