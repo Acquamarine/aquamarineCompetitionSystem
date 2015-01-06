@@ -1,8 +1,8 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +42,7 @@ public class MatchmakingManagerTest {
 		System.out.println("addToQueue");
 		String game = "Tressette";
 		String playerNick = "Ciccio";
-		Player player = new Player();
+		RegisteredUser player = new RegisteredUser();
 		player.setNickname(playerNick);
 		MatchmakingManager instance = new MatchmakingManager();
 		instance.addToQueue(game, player);
@@ -57,7 +57,7 @@ public class MatchmakingManagerTest {
 		System.out.println("addToQueue");
 		String game = "Tressette";
 		String playerNick = "ciccio";
-		Player player = new Player();
+		RegisteredUser player = new RegisteredUser();
 		player.setNickname(playerNick);
 		MatchmakingManager instance = new MatchmakingManager();
 		instance.addToQueue(game, player);
@@ -89,10 +89,10 @@ public class MatchmakingManagerTest {
 		instance.startQueuesThread();
 		String game = "Tressette";
 		String player1Nick = "ciccio";
-		Player player1 = new Player();
+		RegisteredUser player1 = new RegisteredUser();
 		player1.setNickname(player1Nick);
 		String player2Nick = "pippo";
-		Player player2 = new Player();
+		RegisteredUser player2 = new RegisteredUser();
 		player2.setNickname(player2Nick);
 		
 		instance.addToQueue(game, player1);

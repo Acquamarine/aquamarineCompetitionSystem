@@ -7,13 +7,12 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.MatchmakingManager;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteRoundSummary;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -66,7 +65,7 @@ public class TressetteController {
 		List<NeapolitanCard> matchedPlayerCards = matchedPlayerHand.getHandCards();
 		model.addAttribute("cards", cards);
 		model.addAttribute("matchedPlayerCards", matchedPlayerCards);
-		model.addAttribute("userForm", new User());
+		model.addAttribute("userForm", new RegisteredUser());
 		String turnPlayer = playerGame.getTurnPlayer();
 		model.addAttribute("turn", turnPlayer);
 		return "/tressette/gioca";

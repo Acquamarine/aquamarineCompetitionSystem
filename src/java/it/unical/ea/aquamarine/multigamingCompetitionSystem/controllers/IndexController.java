@@ -1,8 +1,11 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class IndexController {
+public class IndexController implements ApplicationContextAware{
 
+	private ApplicationContext context;
 	@RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
 	public String index(Model model,HttpServletRequest request) {
 		if(request.getSession().getAttribute("loggedIn") == null){
@@ -24,7 +28,7 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params = "page")
-	public String userLogin(ModelMap model, @ModelAttribute("userForm") User user , @RequestParam("page") String page) {
+	public String userLogin(ModelMap model, @ModelAttribute("userForm") RegisteredUser user , @RequestParam("page") String page) {
 		//you have to do something smarter!	
 //		if(user.getUsername().equals("ciccio")
 //		   && user.getPassword().equals("pasticcio")){
@@ -44,7 +48,7 @@ public class IndexController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params={"loggigIn","page"})
-	public String login(HttpServletRequest request, @ModelAttribute("userForm") User user, @RequestParam("page") String page) {
+	public String login(HttpServletRequest request, @ModelAttribute("userForm") RegisteredUser user, @RequestParam("page") String page) {
 		//you have to do something smarter!	
 //		if(user.getUsername().equals("ciccio")
 //		   && user.getPassword().equals("pasticcio")){
@@ -70,5 +74,10 @@ public class IndexController {
 			subPage="index";
 		}
 		return "redirect:"+subPage;
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext ac) throws BeansException {
+		context=ac;
 	}
 }

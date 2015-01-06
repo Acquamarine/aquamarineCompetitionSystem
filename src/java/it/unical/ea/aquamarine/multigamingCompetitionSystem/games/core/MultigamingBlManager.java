@@ -21,7 +21,7 @@ public class MultigamingBlManager {
 	}
 	
 	public void createMatch(String game, ICompetitor first, ICompetitor second) {
-		gameManagers.get(game).startMatch(first, second);
+		gameManagers.get(game).startMatch(first, second, true);//TODO switch between ranked and unranked
 	}
 
 	public void startQueues() {

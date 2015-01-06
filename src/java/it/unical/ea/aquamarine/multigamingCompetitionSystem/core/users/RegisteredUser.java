@@ -3,32 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
+package it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author Denise
  */
 @Entity
-@Table(name="User")
-public class User implements Serializable {
-	@Id
-	protected int id;
+@DiscriminatorValue("registeredUser")
+public class RegisteredUser extends AbstractCompetitor implements Serializable {
+	
 	@Column(name="username")
 	protected String username;
-	@Column(name="nickname")
-	protected String nickname;
+
 	@Column(name="password")
 	protected String password;
 	
-	public User(){
-		nickname = "";
+	@ManyToMany(mappedBy = "members")
+	 @JoinTable(name="team", joinColumns=@JoinColumn(name="member_id"), 
+    inverseJoinColumns=@JoinColumn(name="team_id"))
+	Set<Team> teams = new HashSet<>();
+	
+	public RegisteredUser(){
 		username = "";
 		password = "";
 	}
@@ -41,13 +47,6 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
 	
 	public String getPassword() {
 		return password;
@@ -57,13 +56,9 @@ public class User implements Serializable {
 		this.password = password;
 	}	
 
-	public int getId() {
-		return id;
-	}
+	
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	
 	
 	

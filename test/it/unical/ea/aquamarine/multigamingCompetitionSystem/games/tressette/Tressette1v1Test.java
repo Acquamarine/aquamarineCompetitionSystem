@@ -39,7 +39,7 @@ public class Tressette1v1Test {
 		List<String> players = new ArrayList<>();
 		players.add("ciccio");
 		players.add("pippo");
-		Tressette1v1 instance = new Tressette1v1(players);
+		Tressette1v1 instance = new Tressette1v1(players,true);
 		assertEquals(10, instance.getHands().get("ciccio").getHandCards().size());
 	}
 

@@ -3,35 +3,45 @@
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html>
-<head>
-<title>Register</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-    <link href="/MultigamingCompetitionSystem/css/register.css" rel="stylesheet" type="text/css"/>
-    <link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css"/>
-</head>
-<body>
-	
-	<%@include file="../../resources/html/header.html" %>
-	<div id="first" class="container">
+	<head>
+		<title>Register</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+		<link href="/MultigamingCompetitionSystem/css/register.css" rel="stylesheet" type="text/css"/>
+		<link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css"/>
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	</head>
+	<body>
+
+		<%@include file="../../resources/html/header.html" %>
+		<div id="first" class="container">
 			<!-- freshdesignweb top bar -->
-                
+
 			<div  class="form">
-				<form id="contactform"> 
+				<form:form id="registerform" action="/MultigamingCompetitionSystem/register?registering=true" method="post" commandName="userForm"> 
 					<p class="contact"><label for="name">Name</label></p> 
-					<input id="name" name="name" placeholder="First and last name" required="" tabindex="1" type="text"> 
+					<input id="name" name="name" placeholder="First and last name"  tabindex="1" type="text"> 
 
 					<p class="contact"><label for="email">Email</label></p> 
-					<input id="email" name="email" placeholder="example@domain.com" required="" type="email"> 
+					<input id="email" name="email" placeholder="example@domain.com"  type="email"> 
 
 					<p class="contact"><label for="username">Create a username</label></p> 
-					<input id="username" name="username" placeholder="username" required="" tabindex="2" type="text"> 
+					<div>
+						<form:input id="username" name="username" placeholder="username" required="" tabindex="2" type="text" path="username"/> 
+					</div>
+					<p class="contact"><label for="username">Create a nickname</label></p> 
+
+					<div>
+						<form:input id="nickname" name="nickname" placeholder="nickname" required="" tabindex="2" type="text" path="nickname"/> 
+					</div>
 
 					<p class="contact"><label for="password">Create a password</label></p> 
-					<input type="password" id="password" name="password" required=""> 
+					<div>
+						<form:input type="password" id="password" name="password" required="" path="password" /> 
+					</div>
 					<p class="contact"><label for="repassword">Confirm your password</label></p> 
-					<input type="password" id="repassword" name="repassword" required=""> 
+					<input type="password" id="repassword" name="repassword" required=""/> 
 
 					<fieldset>
 						<label>Birthday</label>
@@ -66,11 +76,51 @@
 					<p class="contact"><label for="phone">Mobile phone</label></p> 
 					<input id="phone" name="phone" placeholder="phone number" required="" type="text"> <br>
 					<input class="buttom" name="submit" id="submit" tabindex="5" value="Sign me up!" type="submit"> 	 
-				</form> 
+				</form:form> 
 			</div>      
 		</div>
-	<%@include file="../../resources/html/footer.html" %>
+		<%@include file="../../resources/html/footer.html" %>
+		<script>
+			var W3CDOM = (document.getElementsByTagName && document.createElement);
+			function writeError(obj, message) {
+				console.log(obj.id);
+				console.log(message);
+				validForm = false;
+				if (obj.hasError)
+					return;
+				if (W3CDOM) {
+					obj.onchange = removeError;
+					var sp = document.createElement('p');
+					sp.className = 'error';
+					sp.id=obj.id+'error';
+					sp.appendChild(document.createTextNode(message));
+					obj.parentNode.appendChild(sp);
+					obj.hasError = sp;
+				}
+				else {
+					errorstring += obj.name + ': ' + message + '\n';
+					obj.hasError = true;
+				}
 
-</body>
+			}
+
+			function removeError()
+			{
+				$('#'+this.id+'error').remove();
+				this.hasError = null;
+				this.onchange = null;
+			}
+
+			if (${passwordWrong}) {
+				writeError(document.getElementById('password'), 'The two passwords are not the same');
+			}
+			if (${nickUnavailable}) {
+				writeError(document.getElementById('nickname'), 'The nickname is not available');
+			}
+			if (${userUnavailable}) {
+				writeError(document.getElementById('username'), 'The username is not available');
+			}
+		</script>
+	</body>
 </html>
 

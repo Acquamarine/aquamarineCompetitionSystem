@@ -31,7 +31,7 @@ public class TressetteGameManager implements GameManager {
 	}
 	
 	@Override
-	public void startMatch(ICompetitor user1, ICompetitor user2) {
+	public void startMatch(ICompetitor user1, ICompetitor user2, boolean rankedMatch) {
 		//TODO all checks
 		if(activeMatches.get(user1.getNickname())!=null) {
 			return;
@@ -39,7 +39,7 @@ public class TressetteGameManager implements GameManager {
 		List<String> players = new ArrayList<>();
 		players.add(user1.getNickname());
 		players.add(user2.getNickname());
-		Tressette1v1 match = new Tressette1v1(players);
+		Tressette1v1 match = new Tressette1v1(players, rankedMatch);
 		lock.lock();
 		try {
 			activeMatches.put(user1.getNickname(), match);

@@ -1,7 +1,6 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.SharedFunctions;
@@ -12,24 +11,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-public class Tressette1v1 implements ITressette{
-	
+public class Tressette1v1 implements ITressette {
+
 	private List<String> players;
 	private Map<String, String> followingPlayer = new HashMap<>();
 	private String turnPlayer;
 	private Map<String, NeapolitanHand> hands = new HashMap<>();
-	private Map<String, NeapolitanCard> lastPickedCards = new HashMap<>();;
+	private Map<String, NeapolitanCard> lastPickedCards = new HashMap<>();
+	;
 	private Queue<NeapolitanCard> deck;
-	private Map<String, List<NeapolitanCard>> takenCards = new HashMap<>();;
-	private Map<String, Integer> finalScores = new HashMap<>();;
+	private Map<String, List<NeapolitanCard>> takenCards = new HashMap<>();
+	;
+	private Map<String, Integer> finalScores = new HashMap<>();
+	;
 	private List<NeapolitanCard> table = new ArrayList<>();
 	private final SummaryManager summaryManager = new SummaryManager();
 	private boolean gameComplete = false;
-	
+	private boolean rankedMatch;
 
-	public Tressette1v1(List<String> players) {
+	public Tressette1v1(List<String> players, boolean rankedMatch) {
 		this.players = players;
-		for(String player:players) {
+		for(String player : players){
 			hands.put(player, new NeapolitanHand());
 			lastPickedCards.put(player, null);
 			takenCards.put(player, new LinkedList<>());
@@ -38,30 +40,29 @@ public class Tressette1v1 implements ITressette{
 		followingPlayer.put(players.get(1), players.get(0));
 		deck = SharedFunctions.getShuffledNeapolitanDeck();
 		players.stream().forEach((player) -> {
-			for(int i=0;i<10;i++) {
+			for(int i = 0; i < 10; i++){
 				hands.get(player).addCard(deck.poll());
 			}
 		});
 		turnPlayer = players.iterator().next();
+		this.rankedMatch = rankedMatch;
 	}
-	
 
 	@Override
 	public TressetteRoundSummary playCard(String playerId, NeapolitanCard card) {
 		TressetteRoundSummary summary = new TressetteRoundSummary();
-		if(playerId.equals(turnPlayer) && !gameComplete) {
+		if(playerId.equals(turnPlayer) && !gameComplete){
 			summary.setActionPlayer(turnPlayer);
-			if(isCardAllowed(card) && hands.get(playerId).playCard(card) ) {
+			if(isCardAllowed(card) && hands.get(playerId).playCard(card)){
 				summary.setRound(table.size());
 				table.add(card);
 				summary.setCard(card.toString());
-				if(table.size() == 1) {
-					turnPlayer = followingPlayer.get(playerId);		
-				}
-				else {
+				if(table.size() == 1){
+					turnPlayer = followingPlayer.get(playerId);
+				}else{
 					handComplete(summary);
 					checkGameComplete();
-					if(gameComplete) {
+					if(gameComplete){
 						//remove from active matches, elo updates
 						TressetteGameManager.getInstance().gameCompletion(this);
 						computeFinalScores();
@@ -69,12 +70,14 @@ public class Tressette1v1 implements ITressette{
 						String loser = players.get(1);
 						int player1Score = finalScores.get(players.get(0));
 						int player2Score = finalScores.get(players.get(1));
-						if(player1Score<player2Score) {
+						if(player1Score < player2Score){
 							String temp = winner;
 							winner = loser;
 							loser = temp;
 						}
-						CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getCanonicalName(), winner, loser);
+						if(rankedMatch){
+							CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getCanonicalName(), winner, loser);
+						}
 					}
 					summary.setCardsInDeck(deck.size());
 				}
@@ -83,25 +86,24 @@ public class Tressette1v1 implements ITressette{
 				addEventSummary(summary);
 				return summary;
 			}
-			
+
 		}
 		summary.setCardPlayed(false);
 		return summary;
-		
+
 	}
-	
+
 	public void computeFinalScores() {
 		takenCards.keySet().stream().forEach((player) -> {
 			int pointCounter = 0;
 			pointCounter = takenCards.get(player).stream().map((card) -> getCardValue(card)).reduce(pointCounter, Integer::sum);
-			if(turnPlayer.equals(player)) {
-				pointCounter+=3;
+			if(turnPlayer.equals(player)){
+				pointCounter += 3;
 			}
-			finalScores.put(player, pointCounter/3);
+			finalScores.put(player, pointCounter / 3);
 		});
-		
+
 	}
-	
 
 	@Override
 	public Map<String, Integer> getFinalScores() {
@@ -114,42 +116,42 @@ public class Tressette1v1 implements ITressette{
 		takenCards.get(handWinner).addAll(table);
 		table.clear();
 		lastPickedCards.clear();
-		if(!deck.isEmpty()) {
-			pickCards(handWinner);		
+		if(!deck.isEmpty()){
+			pickCards(handWinner);
 			summary.setPickedCards(lastPickedCards);
 		}
 		turnPlayer = handWinner;
 	}
 
 	private String computeHandWinner() {
-		if(strongerCard(table.get(1), table.get(0))) {
+		if(strongerCard(table.get(1), table.get(0))){
 			return turnPlayer;
 		}
 		return followingPlayer.get(turnPlayer);
 	}
 
 	private boolean isCardAllowed(NeapolitanCard card) {
-		if(table.isEmpty()) {
+		if(table.isEmpty()){
 			return true;
 		}
-		int tableSeed  = table.iterator().next().getSeed();
-		if(card.getSeed() == tableSeed) {
+		int tableSeed = table.iterator().next().getSeed();
+		if(card.getSeed() == tableSeed){
 			return true;
 		}
 		return !hands.get(turnPlayer).hasSeed(tableSeed);
 	}
 
 	private boolean strongerCard(NeapolitanCard second, NeapolitanCard first) {
-		if(first.getSeed() != second.getSeed()) {
+		if(first.getSeed() != second.getSeed()){
 			return false;
 		}
 		int valueFirst = first.getNumber();
-		if(valueFirst <=3) {
-			valueFirst*=11;
+		if(valueFirst <= 3){
+			valueFirst *= 11;
 		}
 		int valueSecond = second.getNumber();
-		if(valueSecond <=3) {
-			valueSecond*=11;
+		if(valueSecond <= 3){
+			valueSecond *= 11;
 		}
 		return valueSecond > valueFirst;
 	}
@@ -218,12 +220,12 @@ public class Tressette1v1 implements ITressette{
 	public boolean isGameComplete() {
 		return gameComplete;
 	}
-	
+
 	private int getCardValue(NeapolitanCard card) {
-		if(card.getNumber() == 1) {
+		if(card.getNumber() == 1){
 			return 3;
 		}
-		if(card.getNumber() <= 3 || card.getNumber()>=8) {
+		if(card.getNumber() <= 3 || card.getNumber() >= 8){
 			return 1;
 		}
 		return 0;
@@ -233,7 +235,7 @@ public class Tressette1v1 implements ITressette{
 	public String getMatchedPlayer(String player) {
 		return followingPlayer.get(player);
 	}
-	
+
 	public TressetteRoundSummary getSummary(int eventIndex) {
 		return summaryManager.getSummary(eventIndex);
 	}
@@ -241,8 +243,8 @@ public class Tressette1v1 implements ITressette{
 	private void addEventSummary(TressetteRoundSummary summary) {
 		summaryManager.addSummary(summary);
 	}
-	
-	public boolean areThereSummaries(){
+
+	public boolean areThereSummaries() {
 		return summaryManager.areThereSummaries();
 	}
 }

@@ -20,7 +20,7 @@
     
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 	    <property name="dataSource" ref="dataSource" />
-	    <property name="packagesToScan" value="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence" />
+	    <property name="packagesToScan" value="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users, it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence" />
 	    <property name="hibernateProperties">
 	        <props>
 	            <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
@@ -30,11 +30,11 @@
 	    </property>
 	</bean>
 	 
-         <!--
-	<bean id="userDAO" class="com.unical.application.dao.UserDaoImpl" >
+  
+	<bean id="userDAO" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.UserDAOImpl" >
 	    <property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-        -->
+    
 	
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 	    <property name="sessionFactory" ref="sessionFactory" />

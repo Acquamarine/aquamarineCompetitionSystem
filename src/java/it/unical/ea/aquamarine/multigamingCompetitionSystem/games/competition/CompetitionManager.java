@@ -1,7 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +34,7 @@ public class CompetitionManager {
 	}
 
 	public ICompetitor getCompetitor(String competitor) {
-		Player player = new Player();
+		RegisteredUser player = new RegisteredUser();
 		player.setNickname(competitor);
 		activeCompetitors.putIfAbsent(competitor, player);
 		return activeCompetitors.get(competitor);
