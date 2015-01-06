@@ -52,11 +52,10 @@ public class TressetteController {
 		//TODO input validation
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
 		String matchedPlayer = playerGame.getMatchedPlayer(me);
-		if(!playerGame.areThereSummaries() || request.getSession().getAttribute("eventIndex") == null){
+		if(!playerGame.areThereSummaries()){
 			request.getSession().setAttribute("eventIndex", 0);
-		}
-		if(request.getSession().getAttribute("deck") == null || !playerGame.areThereSummaries()){
 			request.getSession().setAttribute("deck", 20);
+			request.getSession().setAttribute("reloaded", false);
 		}
 		//TODO move to login
 		request.getSession().setAttribute("user", me);
@@ -69,7 +68,7 @@ public class TressetteController {
 		model.addAttribute("matchedPlayerCards", matchedPlayerCards);
 		model.addAttribute("userForm", new User());
 		String turnPlayer = playerGame.getTurnPlayer();
-		model.addAttribute("turn",turnPlayer);
+		model.addAttribute("turn", turnPlayer);
 		return "/tressette/gioca";
 	}
 
@@ -125,7 +124,7 @@ public class TressetteController {
 	public void getMatch(@RequestParam("competitor") String competitor) {
 		TressetteGameManager.getInstance().waitForMatch(competitor);
 	}
-	
+
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "gameComplete")
 	public @ResponseBody
 	String gameComplete(HttpServletRequest request) {
