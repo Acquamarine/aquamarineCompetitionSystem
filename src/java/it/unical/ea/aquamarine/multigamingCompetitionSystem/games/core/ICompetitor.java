@@ -1,7 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core;
 
 public interface ICompetitor {
-	public String getId();
+	public String getNickname();
 
 	public Integer getElo(String game);
 

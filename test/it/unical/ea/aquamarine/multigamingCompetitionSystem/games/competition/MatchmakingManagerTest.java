@@ -41,11 +41,12 @@ public class MatchmakingManagerTest {
 	public void testAddToQueue() {
 		System.out.println("addToQueue");
 		String game = "Tressette";
-		String player = "Ciccio";
-		ICompetitor competitor = new Player(player);
+		String playerNick = "Ciccio";
+		Player player = new Player();
+		player.setNickname(playerNick);
 		MatchmakingManager instance = new MatchmakingManager();
-		instance.addToQueue(game, competitor);
-		assertEquals(instance.getQueuedCompetitorsMap().get(competitor).getCompetitor().getId(),player);
+		instance.addToQueue(game, player);
+		assertEquals(instance.getQueuedCompetitorsMap().get(player).getCompetitor().getNickname(),playerNick);
 	}
 
 	/**
@@ -55,11 +56,12 @@ public class MatchmakingManagerTest {
 	public void testRemoveFromQueue() {
 		System.out.println("addToQueue");
 		String game = "Tressette";
-		String player = "ciccio";
-		ICompetitor competitor = new Player(player);
+		String playerNick = "ciccio";
+		Player player = new Player();
+		player.setNickname(playerNick);
 		MatchmakingManager instance = new MatchmakingManager();
-		instance.addToQueue(game, competitor);
-		instance.removeFromQueue(game, competitor);
+		instance.addToQueue(game, player);
+		instance.removeFromQueue(game, player);
 		// TODO review the generated test code and remove the default call to fail.
 		assertTrue(instance.getQueuedCompetitorsMap().isEmpty());
 	}
@@ -86,8 +88,15 @@ public class MatchmakingManagerTest {
 		MatchmakingManager instance = new MatchmakingManager();
 		instance.startQueuesThread();
 		String game = "Tressette";
-		instance.addToQueue(game, new Player("ciccio"));
-		instance.addToQueue(game, new Player("pippo"));
+		String player1Nick = "ciccio";
+		Player player1 = new Player();
+		player1.setNickname(player1Nick);
+		String player2Nick = "pippo";
+		Player player2 = new Player();
+		player2.setNickname(player2Nick);
+		
+		instance.addToQueue(game, player1);
+		instance.addToQueue(game, player2);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException ex) {

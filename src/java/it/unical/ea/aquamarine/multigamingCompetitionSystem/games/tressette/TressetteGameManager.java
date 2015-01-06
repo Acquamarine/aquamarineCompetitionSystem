@@ -33,22 +33,22 @@ public class TressetteGameManager implements GameManager {
 	@Override
 	public void startMatch(ICompetitor user1, ICompetitor user2) {
 		//TODO all checks
-		if(activeMatches.get(user1.getId())!=null) {
+		if(activeMatches.get(user1.getNickname())!=null) {
 			return;
 		}
 		List<String> players = new ArrayList<>();
-		players.add(user1.getId());
-		players.add(user2.getId());
+		players.add(user1.getNickname());
+		players.add(user2.getNickname());
 		Tressette1v1 match = new Tressette1v1(players);
 		lock.lock();
 		try {
-			activeMatches.put(user1.getId(), match);
-			activeMatches.put(user2.getId(), match);
-			if(conditionsMap.get(user1.getId())!=null) {
-				conditionsMap.get(user1.getId()).signal();
+			activeMatches.put(user1.getNickname(), match);
+			activeMatches.put(user2.getNickname(), match);
+			if(conditionsMap.get(user1.getNickname())!=null) {
+				conditionsMap.get(user1.getNickname()).signal();
 			}
-			if(conditionsMap.get(user2.getId())!=null) {
-				conditionsMap.get(user2.getId()).signal();
+			if(conditionsMap.get(user2.getNickname())!=null) {
+				conditionsMap.get(user2.getNickname()).signal();
 			}
 		} finally {
 			lock.unlock();

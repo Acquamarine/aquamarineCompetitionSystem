@@ -11,9 +11,9 @@
 
 
     <bean id="dataSource"
-    class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+    class="org.apache.commons.dbcp2.BasicDataSource"
     p:driverClassName="org.hsqldb.jdbcDriver"
-    p:url="jdbc:hsqldb:MyDB"
+    p:url="jdbc:hsqldb:mem:mydb"
     p:username="sa"
     p:password=""> 
     </bean>

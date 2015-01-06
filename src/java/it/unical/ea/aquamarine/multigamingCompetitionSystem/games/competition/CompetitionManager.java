@@ -2,13 +2,16 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Player;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CompetitionManager {
 	private static CompetitionManager instance;
-	private Map<String, ICompetitor> activeCompetitors = new HashMap<String, ICompetitor>();
+	private final Map<String, ICompetitor> activeCompetitors = new HashMap<>();
+	float HIGHER_BOUND = 2000;
+	float LOWER_BOUND = 600;
+	float HIGHER_ELO_CONSTANT = 10;
+	float LOWER_ELO_CONSTANT = 30;		
 	
 	public static CompetitionManager getInstance() {
 		if(instance == null) {
@@ -23,23 +26,33 @@ public class CompetitionManager {
 		int winnerPreviousElo = winner.getElo(game);
 		int loserPreviousElo = loser.getElo(game);
 		double eloDifference = winnerPreviousElo-loserPreviousElo;
-		double expectedResult = 1/(1+Math.pow(10,(eloDifference/400)));
-		int winnerNewElo = (int) Math.round(winnerPreviousElo + 30 * (1 - expectedResult));
-		int loserNewElo = (int) Math.round(loserPreviousElo + 30 * (0 - expectedResult));
+		double loserExpectedWinningProbability = 1/(1+Math.pow(10,(eloDifference/400)));
+		int winnerNewElo = (int) Math.round(winnerPreviousElo + getEloDynamicConstant(winnerPreviousElo) * (loserExpectedWinningProbability));
+		int loserNewElo = (int) Math.round(loserPreviousElo + getEloDynamicConstant(loserPreviousElo) * (-loserExpectedWinningProbability));
 		winner.updateElo(game, winnerNewElo);
 		loser.updateElo(game, loserNewElo);
 	}
 
 	public ICompetitor getCompetitor(String competitor) {
-		if(competitor.equals("pippo")) {
-			Player player = new Player(competitor);
-			player.updateElo(Tressette1v1.class.getCanonicalName(), 1500);
-			activeCompetitors.put(competitor, player);
-			return player;
-		}
-			
-		activeCompetitors.putIfAbsent(competitor, new Player(competitor));
+		Player player = new Player();
+		player.setNickname(competitor);
+		activeCompetitors.putIfAbsent(competitor, player);
 		return activeCompetitors.get(competitor);
+	}
+
+	private double getEloDynamicConstant(int startingElo) {
+		
+		
+		if(startingElo >= HIGHER_BOUND) {
+			return HIGHER_ELO_CONSTANT;
+		}
+		else if(startingElo<= LOWER_BOUND) {
+			return LOWER_ELO_CONSTANT;
+		}
+		double t =  (startingElo - LOWER_BOUND) / (HIGHER_BOUND - LOWER_BOUND) * (LOWER_ELO_CONSTANT-HIGHER_ELO_CONSTANT);
+		return LOWER_ELO_CONSTANT - t;
+		
+		
 	}
 	
 }

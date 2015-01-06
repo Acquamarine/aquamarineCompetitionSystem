@@ -1,21 +1,16 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.User;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Player implements ICompetitor{
+public class Player extends  User implements ICompetitor{
 
-	private String nickname;
 	private Map<String, Integer> soloQueueProfile = new HashMap<>();
 
-	public Player(String nickname) {
-		this.nickname = nickname;
-	}
-	
-	@Override
-	public String getId() {
-		return nickname;
+	public Player() {
+		super();
 	}
 
 	@Override
@@ -29,6 +24,7 @@ public class Player implements ICompetitor{
 		System.out.println(nickname + "'s elo is now "+elo);
 		soloQueueProfile.put(game, elo);
 	}
+	
 	
 	@Override
 	public int hashCode() {
@@ -46,12 +42,12 @@ public class Player implements ICompetitor{
 			return false;
 		}
 		final Player other = (Player) obj;
-		if (!Objects.equals(this.nickname, other.nickname)) {
+		if (!Objects.equals(this.id, other.id)) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	
 	
 }
