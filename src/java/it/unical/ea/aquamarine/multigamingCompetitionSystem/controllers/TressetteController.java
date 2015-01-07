@@ -50,6 +50,9 @@ public class TressetteController {
 		String me = (String) request.getSession().getAttribute("nickname"); //TODO get from session
 		//TODO input validation
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
+		if(playerGame==null) {
+			playerGame = TressetteGameManager.getInstance().getPlayerCompletedMatch(me);
+		}
 		String matchedPlayer = playerGame.getMatchedPlayer(me);
 		if(!playerGame.areThereSummaries()){
 			request.getSession().setAttribute("eventIndex", 0);

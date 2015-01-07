@@ -137,6 +137,9 @@
 								setTimeout(function () {
 									$('#card-played-0').children("img").remove();
 									$('#card-played-1').children("img").remove();
+                                                                        if (! $('#deck').length) {
+                                                                            graphicComplete=true;
+                                                                        }
 								}, 1000);
 								if ($('#deck').length) {
 									distributeCard(obj.picked0, obj.winner, obj.deck + 1, false);
@@ -145,6 +148,9 @@
 
 								}
 							}
+                                                        else {
+                                                            graphicComplete = true;
+                                                        }
 							if (obj.gameover) {
 								gameComplete();
 							} else {
