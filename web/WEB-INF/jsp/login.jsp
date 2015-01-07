@@ -16,7 +16,8 @@
         <%@include file="../../resources/html/header.html" %>
 		<div >
 			<div id="registrationSuccess"></div>
-			<form:form id="login-form" action="/MultigamingCompetitionSystem/login?loggigIn=true&page=${page}" method="post" commandName="userForm">
+			
+			<form:form id="login-form" action="" method="post" commandName="userForm">
 				<p> Username :<form:input class="loginTextField" path="username" /></p>
 				<p> Password :<form:password class="loginTextField" path="password" /></p>
 				<p> <input type="submit" value="Login" />  </p>
@@ -27,6 +28,14 @@
 			<c:if test = "${not empty registrationCompleted}" >
 			$('#registrationSuccess').html("Registration has been successful. You can now login!");
 			</c:if>
+			<c:if test = "${not empty loginFailed}" >
+			$('#registrationSuccess').html("Wrong username or password.");
+			</c:if>
+				$('#login-form').attr("action","/MultigamingCompetitionSystem/login?loggigIn=true&page=${page}");
+			<c:if test = "${empty page}" >
+				$('#login-form').attr("action","/MultigamingCompetitionSystem/login?loggigIn=true&page=/MultigamingCompetitionSystem/");
+			</c:if>
+
 
 		</script>
     </body>
