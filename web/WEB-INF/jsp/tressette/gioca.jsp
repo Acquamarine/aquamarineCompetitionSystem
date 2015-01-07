@@ -14,6 +14,7 @@
         <title>Gioca a Tressette!</title>
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script>
+			var graphicComplete = true;
 			function gameComplete() {
 				$.ajax({
 					url: "./gioca",
@@ -45,14 +46,16 @@
 			function cardsClick() {
 				var parentId = this.id;
 				console.log(parentId);
-				$.ajax({
-					url: "./gioca",
-					data: {
-						cardId: parentId
-					},
-					success: function (data) {
-					}
-				});
+				if (graphicComplete) {
+					$.ajax({
+						url: "./gioca",
+						data: {
+							cardId: parentId
+						},
+						success: function (data) {
+						}
+					});
+				}
 			}
 			$(document).ready(function () {
 				$(".player2-cards").click(cardsClick);
@@ -70,7 +73,7 @@
 				$('#card-played-0').children("img").remove();
 				$('#card-played-1').children("img").remove();
 			}
-			function distributeCard(card, player, deck) {
+			function distributeCard(card, player, deck, complete) {
 				setTimeout(function () {
 					$('#deck').html("<img id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'>" + deck + "</img>");
 				}, 2000);
@@ -102,7 +105,7 @@
 					if (deck === 0 && $('#deck').length) {
 						$('#deck').remove();
 					}
-
+					graphicComplete = complete;
 				}, 3000);
 			}
 			var index = ${eventIndex};
@@ -115,6 +118,7 @@
 						eventIndex: index
 					},
 					success: function (data) {
+						graphicComplete = false;
 						if (data !== "") {
 							index++;
 							obj = JSON.parse(data);
@@ -125,7 +129,7 @@
 								console.log(reloaded);
 								if (reloaded === null || reloaded === false) {
 									$('.li-cards').first().remove();
-								} 
+								}
 							}
 							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
 							//console.log(obj.round);
@@ -135,9 +139,9 @@
 									$('#card-played-1').children("img").remove();
 								}, 1000);
 								if ($('#deck').length) {
-									distributeCard(obj.picked0, obj.winner, obj.deck + 1);
+									distributeCard(obj.picked0, obj.winner, obj.deck + 1, false);
 									console.log($('#deck-image').text);
-									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck)", 2000);
+									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck,true)", 2000);
 
 								}
 							}
@@ -151,6 +155,7 @@
 								} else {
 									$('#turn').html('${nickname} tocca a te!');
 								}
+
 								eventHandler(false);
 							}
 						}

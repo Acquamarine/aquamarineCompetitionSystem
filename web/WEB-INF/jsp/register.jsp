@@ -62,8 +62,8 @@
 								<option value="12" >December</option>
 						</label>
 						</select>    
-						<label>Day<input class="birthday" maxlength="2" name="BirthDay"  placeholder="Day" required=""></label>
-						<label>Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year" required=""></label>
+						<label>Day<input class="birthday" maxlength="2" name="BirthDay"  placeholder="Day"></label>
+						<label>Year <input class="birthyear" maxlength="4" name="BirthYear" placeholder="Year"></label>
 					</fieldset>
 
 					<select class="select-style gender" name="gender">
@@ -73,8 +73,7 @@
 						<option value="others">Other</option>
 					</select><br><br>
 
-					<p class="contact"><label for="phone">Mobile phone</label></p> 
-					<input id="phone" name="phone" placeholder="phone number" required="" type="text"> <br>
+			<br>
 					<input class="buttom" name="submit" id="submit" tabindex="5" value="Sign me up!" type="submit"> 	 
 				</form:form> 
 			</div>      
