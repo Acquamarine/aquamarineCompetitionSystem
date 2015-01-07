@@ -47,7 +47,7 @@ public class TressetteController {
 		if(request.getSession().getAttribute("loggedIn") == null){
 			request.getSession().setAttribute("loggedIn", false);
 		}
-		String me = (String) request.getSession().getAttribute("username"); //TODO get from session
+		String me = (String) request.getSession().getAttribute("nickname"); //TODO get from session
 		//TODO input validation
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
 		String matchedPlayer = playerGame.getMatchedPlayer(me);
@@ -57,7 +57,6 @@ public class TressetteController {
 			request.getSession().setAttribute("reloaded", false);
 		}
 		//TODO move to login
-		request.getSession().setAttribute("user", me);
 		request.getSession().setAttribute("matched", matchedPlayer);
 		NeapolitanHand myHand = playerGame.getHands().get(me);
 		NeapolitanHand matchedPlayerHand = playerGame.getHands().get(matchedPlayer);
@@ -74,7 +73,7 @@ public class TressetteController {
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "cardId")
 	public void makeMove(@RequestParam("cardId") String cardId, Model model, HttpServletRequest request) {
 
-		String me = (String) request.getSession().getAttribute("username");
+		String me = (String) request.getSession().getAttribute("nickname");
 		//model.addAttribute("userForm", new User());
 		NeapolitanCard toPlay = new NeapolitanCard(cardId);
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
@@ -85,7 +84,7 @@ public class TressetteController {
 	public @ResponseBody
 	String askForEvent(@RequestParam("eventIndex") int eventIndex, HttpServletRequest request) {
 		request.getSession().setAttribute("eventIndex", eventIndex);
-		String me = (String) request.getSession().getAttribute("username");
+		String me = (String) request.getSession().getAttribute("nickname");
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
 		//TODO be sureto ask for events only if the game has been created
 		TressetteRoundSummary summary = playerGame.getSummary(eventIndex);
@@ -114,20 +113,20 @@ public class TressetteController {
 		return json.toString();
 	}
 
-	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = "competitor")
-	public void putCompetitorInQueue(@RequestParam("competitor") String competitor) {
-		MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getCanonicalName(), CompetitionManager.getInstance().getCompetitor(competitor)); //new Player(competitor)
+	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = "addToRankedQueue")
+	public void putCompetitorInQueue(HttpServletRequest request) {
+		MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getCanonicalName(), CompetitionManager.getInstance().getCompetitor((String) request.getSession().getAttribute("nickname"))); //new Player(competitor)
 	}
 
-	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = {"inQueue", "competitor"})
-	public void getMatch(@RequestParam("competitor") String competitor) {
-		TressetteGameManager.getInstance().waitForMatch(competitor);
+	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = {"inQueue"})
+	public void getMatch(HttpServletRequest request) {
+		TressetteGameManager.getInstance().waitForMatch((String) request.getSession().getAttribute("nickname"));
 	}
 
 	@RequestMapping(value = "/tressette/gioca", method = RequestMethod.GET, params = "gameComplete")
 	public @ResponseBody
 	String gameComplete(HttpServletRequest request) {
-		String me = (String) request.getSession().getAttribute("username");
+		String me = (String) request.getSession().getAttribute("nickname");
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerCompletedMatch(me);
 		Map<String, Integer> finalScores = playerGame.getFinalScores();
 		JSONObject json = new JSONObject();

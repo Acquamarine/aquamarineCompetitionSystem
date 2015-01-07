@@ -1,7 +1,8 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DaoProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.UserDAO;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,10 +35,13 @@ public class CompetitionManager {
 	}
 
 	public ICompetitor getCompetitor(String competitor) {
-		RegisteredUser player = new RegisteredUser();
-		player.setNickname(competitor);
-		activeCompetitors.putIfAbsent(competitor, player);
-		return activeCompetitors.get(competitor);
+		if(activeCompetitors.containsKey(competitor)) {
+			return activeCompetitors.get(competitor);
+		}
+		//TODO check
+		UserDAO userDAO = DaoProvider.getUserDAO();
+		return userDAO.retrieveByNick(competitor);
+		
 	}
 
 	private double getEloDynamicConstant(int startingElo) {

@@ -53,7 +53,7 @@
                 $.ajax({
                     url: "tressette",
                     data: {
-                        competitor: "${username}"
+                        addToRankedQueue: true
                     },
                     success: function (data) {
                         console.log("add in queue success");
@@ -62,8 +62,7 @@
                 $.ajax({
                     url: "tressette",
                     data: {
-                        inQueue: true,
-                        competitor: "${username}"
+                        inQueue: true
                     },
                     success: function (data) {
                         console.log("match is ready");

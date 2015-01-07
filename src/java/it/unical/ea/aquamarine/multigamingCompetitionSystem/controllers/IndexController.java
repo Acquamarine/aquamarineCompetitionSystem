@@ -56,7 +56,8 @@ public class IndexController implements ApplicationContextAware {
 		String subPage= page.substring(29);
 			
 		if(registeredUser != null && password.equals(registeredUser.getPassword())){
-			request.getSession().setAttribute("username", user.getUsername());
+			request.getSession().setAttribute("username", registeredUser.getUsername());
+			request.getSession().setAttribute("nickname", registeredUser.getNickname());
 			request.getSession().setAttribute("loggedIn", true);
 			return "redirect:" + subPage;
 		}

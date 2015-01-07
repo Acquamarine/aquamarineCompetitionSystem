@@ -30,6 +30,9 @@
 	    </property>
 	</bean>
 	 
+        <bean id="daoProvider" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DaoProvider" >
+	</bean>
+    
   
 	<bean id="userDAO" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.UserDAOImpl" >
 	    <property name="sessionFactory" ref="sessionFactory" />

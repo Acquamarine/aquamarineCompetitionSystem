@@ -77,7 +77,7 @@
 
 				setTimeout(function () {
 					$('#deck').html("<img  id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png'/>" + deck + "</img>");
-					if (player === "${user}" && $('#' + card).length === 0) {
+					if (player === "${nickname}" && $('#' + card).length === 0) {
 						externalDivToAppend = document.createElement("div");
 						externalDivToAppend.className = "player2-cards-container";
 						divToAppend = document.createElement("div");
@@ -91,7 +91,7 @@
 						toAppend.className = "li-cards";
 						document.getElementById("player2-cards-list").appendChild(toAppend);
 						$('#' + card).click(cardsClick);
-					} else if (player !== "${user}") {
+					} else if (player !== "${nickname}") {
 						divToAppend = document.createElement("div");
 						divToAppend.className = "player1-cards";
 						toAppend = document.createElement("li");
@@ -118,7 +118,7 @@
 						if (data !== "") {
 							index++;
 							obj = JSON.parse(data);
-							if ("${user}" === obj.actionPlayer) {
+							if ("${nickname}" === obj.actionPlayer) {
 								$('#' + obj.card).parent("div").parent("li").remove();
 							}
 							else {
@@ -146,10 +146,10 @@
 							} else {
 								if (obj.round === 1) {
 									$('#turn').html(obj.winner + ' tocca a te!');
-								} else if ("${user}" === obj.actionPlayer) {
+								} else if ("${nickname}" === obj.actionPlayer) {
 									$('#turn').html('${matched} tocca a te!');
 								} else {
-									$('#turn').html('${user} tocca a te!');
+									$('#turn').html('${nickname} tocca a te!');
 								}
 								eventHandler(false);
 							}
@@ -209,7 +209,7 @@
                     </ul>
                 </div>
 				<ul id="player2_info">
-					<li class="player_other_info"> ${user}</li>
+					<li class="player_other_info"> ${nickname}</li>
 					<li id="player2-avatar">
 					</li>
 				</ul>
