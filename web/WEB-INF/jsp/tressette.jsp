@@ -24,10 +24,10 @@
         <div id="choose-match">
             <ul id="tressette-ul">
                 <li class="tressette-li">
-                    <a id="put-in-queue">Mettiti in coda per una partita classificata!</a>
+                    <a id="put-in-ranked-queue">Mettiti in coda per una partita classificata!</a>
                 </li>
                 <li class="tressette-li">
-                    <a id="custom-match">Crea la tua partita personalizzata!</a>
+                    <a id="put-in-queue">Mettiti in coda per una partita di allenamento!</a>
                 </li>
             </ul>
         </div>
@@ -37,6 +37,9 @@
         <%@include file="../../resources/html/footer.html" %>
 
         <script>
+			<c:if test="${empty nickname}">
+				$('#put-in-ranked-queue').remove();
+			</c:if>
             function initMatch() {
                 $.ajax({
                     url: "tressette/gioca",
@@ -45,15 +48,12 @@
                     }
                 });
             }
-            function insertInQueue() {
+            function insertInQueue(rankedQueue) {
                 $("#choose-match").html("<img id='loading' src='/MultigamingCompetitionSystem/assets/loading.gif'>Loading</img> <form id='undo-queue'> <input type='submit' value='Annulla' enabled='false'/> </form>");
-
-
-
-                $.ajax({
+				$.ajax({
                     url: "tressette",
                     data: {
-                        addToRankedQueue: true
+                        addToRankedQueue: rankedQueue.param1
                     },
                     success: function (data) {
                         console.log("add in queue success");
@@ -73,7 +73,8 @@
 
 
             }
-            $('#put-in-queue').click(insertInQueue);
+            $('#put-in-ranked-queue').click({param1:true},insertInQueue);
+            $('#put-in-queue').click({param1:false},insertInQueue);
         </script>
     </body>
 </html>
