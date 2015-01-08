@@ -13,25 +13,22 @@ import java.util.Queue;
 
 public class Tressette1v1 implements ITressette {
 
-	private List<String> players;
-	private Map<String, String> followingPlayer = new HashMap<>();
-	private String turnPlayer;
-	private Map<String, NeapolitanHand> hands = new HashMap<>();
-	private Map<String, NeapolitanCard> lastPickedCards = new HashMap<>();
-	;
+	private List<Integer> players;
+	private Map<Integer, Integer> followingPlayer = new HashMap<>();
+	private Integer turnPlayer;
+	private Map<Integer, NeapolitanHand> hands = new HashMap<>();
+	private Map<Integer, NeapolitanCard> lastPickedCards = new HashMap<>();
 	private Queue<NeapolitanCard> deck;
-	private Map<String, List<NeapolitanCard>> takenCards = new HashMap<>();
-	;
-	private Map<String, Integer> finalScores = new HashMap<>();
-	;
+	private Map<Integer, List<NeapolitanCard>> takenCards = new HashMap<>();
+	private Map<Integer, Integer> finalScores = new HashMap<>();
 	private List<NeapolitanCard> table = new ArrayList<>();
 	private final SummaryManager summaryManager = new SummaryManager();
 	private boolean gameComplete = false;
 	private boolean rankedMatch;
 
-	public Tressette1v1(List<String> players, boolean rankedMatch) {
+	public Tressette1v1(List<Integer> players, boolean rankedMatch) {
 		this.players = players;
-		for(String player : players){
+		for(Integer player : players){
 			hands.put(player, new NeapolitanHand());
 			lastPickedCards.put(player, null);
 			takenCards.put(player, new LinkedList<>());
@@ -49,7 +46,7 @@ public class Tressette1v1 implements ITressette {
 	}
 
 	@Override
-	public TressetteRoundSummary playCard(String playerId, NeapolitanCard card) {
+	public TressetteRoundSummary playCard(Integer playerId, NeapolitanCard card) {
 		TressetteRoundSummary summary = new TressetteRoundSummary();
 		if(playerId.equals(turnPlayer) && !gameComplete){
 			summary.setActionPlayer(turnPlayer);
@@ -66,12 +63,12 @@ public class Tressette1v1 implements ITressette {
 						//remove from active matches, elo updates
 						TressetteGameManager.getInstance().gameCompletion(this);
 						computeFinalScores();
-						String winner = players.get(0);
-						String loser = players.get(1);
+						Integer winner = players.get(0);
+						Integer loser = players.get(1);
 						int player1Score = finalScores.get(players.get(0));
 						int player2Score = finalScores.get(players.get(1));
 						if(player1Score < player2Score){
-							String temp = winner;
+							Integer temp = winner;
 							winner = loser;
 							loser = temp;
 						}
@@ -106,12 +103,12 @@ public class Tressette1v1 implements ITressette {
 	}
 
 	@Override
-	public Map<String, Integer> getFinalScores() {
+	public Map<Integer, Integer> getFinalScores() {
 		return finalScores;
 	}
 
 	private void handComplete(TressetteRoundSummary summary) {
-		String handWinner = computeHandWinner();
+		Integer handWinner = computeHandWinner();
 		summary.setRoundWinner(handWinner);
 		takenCards.get(handWinner).addAll(table);
 		table.clear();
@@ -123,7 +120,7 @@ public class Tressette1v1 implements ITressette {
 		turnPlayer = handWinner;
 	}
 
-	private String computeHandWinner() {
+	private Integer computeHandWinner() {
 		if(strongerCard(table.get(1), table.get(0))){
 			return turnPlayer;
 		}
@@ -162,46 +159,46 @@ public class Tressette1v1 implements ITressette {
 		gameComplete = (takenCardsNumber == 40);
 	}
 
-	private void pickCards(String handWinner) {
+	private void pickCards(Integer handWinner) {
 		pickACard(handWinner);
 		pickACard(followingPlayer.get(handWinner));
 	}
 
-	private void pickACard(String pickingPlayer) {
+	private void pickACard(Integer pickingPlayer) {
 		NeapolitanCard pickedCard = deck.poll();
 		lastPickedCards.put(pickingPlayer, pickedCard);
 		hands.get(pickingPlayer).addCard(pickedCard);
 	}
 
-	public List<String> getPlayers() {
+	public List<Integer> getPlayers() {
 		return players;
 	}
 
-	public void setPlayers(List<String> players) {
+	public void setPlayers(List<Integer> players) {
 		this.players = players;
 	}
 
-	public Map<String, String> getFollowingPlayer() {
+	public Map<Integer, Integer> getFollowingPlayer() {
 		return followingPlayer;
 	}
 
-	public void setFollowingPlayer(Map<String, String> followingPlayer) {
+	public void setFollowingPlayer(Map<Integer, Integer> followingPlayer) {
 		this.followingPlayer = followingPlayer;
 	}
 
-	public String getTurnPlayer() {
+	public Integer getTurnPlayer() {
 		return turnPlayer;
 	}
 
-	public void setTurnPlayer(String turnPlayer) {
+	public void setTurnPlayer(Integer turnPlayer) {
 		this.turnPlayer = turnPlayer;
 	}
 
-	public Map<String, NeapolitanHand> getHands() {
+	public Map<Integer, NeapolitanHand> getHands() {
 		return hands;
 	}
 
-	public Map<String, NeapolitanCard> getLastPickedCards() {
+	public Map<Integer, NeapolitanCard> getLastPickedCards() {
 		return lastPickedCards;
 	}
 
@@ -209,7 +206,7 @@ public class Tressette1v1 implements ITressette {
 		return deck;
 	}
 
-	public Map<String, List<NeapolitanCard>> getTakenCards() {
+	public Map<Integer, List<NeapolitanCard>> getTakenCards() {
 		return takenCards;
 	}
 
@@ -232,7 +229,7 @@ public class Tressette1v1 implements ITressette {
 	}
 
 	@Override
-	public String getMatchedPlayer(String player) {
+	public Integer getMatchedPlayer(Integer player) {
 		return followingPlayer.get(player);
 	}
 

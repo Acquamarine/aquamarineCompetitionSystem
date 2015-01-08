@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class CompetitionManager {
 	private static CompetitionManager instance;
-	private final Map<String, ICompetitor> activeCompetitors = new HashMap<>();
+	private final Map<Integer, ICompetitor> activeCompetitors = new HashMap<>();
 	float HIGHER_BOUND = 2000;
 	float LOWER_BOUND = 600;
 	float HIGHER_ELO_CONSTANT = 10;
@@ -21,7 +21,7 @@ public class CompetitionManager {
 		return instance;
 	}
 	
-	public void eloUpdate(String game, String winnerId, String loserId) {
+	public void eloUpdate(String game, Integer winnerId, Integer loserId) {
 		ICompetitor winner = activeCompetitors.get(winnerId);
 		ICompetitor loser = activeCompetitors.get(loserId);
 		int winnerPreviousElo = winner.getElo(game);
@@ -34,13 +34,13 @@ public class CompetitionManager {
 		loser.updateElo(game, loserNewElo);
 	}
 
-	public ICompetitor getCompetitor(String competitor) {
+	public ICompetitor getCompetitor(Integer competitor) {
 		if(activeCompetitors.containsKey(competitor)) {
 			return activeCompetitors.get(competitor);
 		}
 		//TODO check
 		UserDAO userDAO = DaoProvider.getUserDAO();
-		return userDAO.retrieveByNick(competitor);
+		return userDAO.retrieveById(competitor);
 		
 	}
 

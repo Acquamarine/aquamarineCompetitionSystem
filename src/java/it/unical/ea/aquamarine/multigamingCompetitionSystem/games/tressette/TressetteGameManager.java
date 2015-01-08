@@ -14,10 +14,10 @@ import java.util.logging.Logger;
 
 public class TressetteGameManager implements GameManager {
 	private static TressetteGameManager instance;
-	private Map<String, Tressette1v1> activeMatches = new HashMap<>();
-	private Map<String, Tressette1v1> completedMatches = new HashMap<>();
-	private Map<String, Condition> conditionsMap = new HashMap<>();
-	private Map<String, String> matchedPlayers = new HashMap<>();
+	private Map<Integer, Tressette1v1> activeMatches = new HashMap<>();
+	private Map<Integer, Tressette1v1> completedMatches = new HashMap<>();
+	private Map<Integer, Condition> conditionsMap = new HashMap<>();
+	private Map<Integer, Integer> matchedPlayers = new HashMap<>();
 	private Lock lock = new ReentrantLock();
 
 	public static TressetteGameManager getInstance() {
@@ -33,29 +33,29 @@ public class TressetteGameManager implements GameManager {
 	@Override
 	public void startMatch(ICompetitor user1, ICompetitor user2, boolean rankedMatch) {
 		//TODO all checks
-		if(activeMatches.get(user1.getNickname())!=null) {
+		if(activeMatches.get(user1.getId())!=null) {
 			return;
 		}
-		List<String> players = new ArrayList<>();
-		players.add(user1.getNickname());
-		players.add(user2.getNickname());
+		List<Integer> players = new ArrayList<>();
+		players.add(user1.getId());
+		players.add(user2.getId());
 		Tressette1v1 match = new Tressette1v1(players, rankedMatch);
 		lock.lock();
 		try {
-			activeMatches.put(user1.getNickname(), match);
-			activeMatches.put(user2.getNickname(), match);
-			if(conditionsMap.get(user1.getNickname())!=null) {
-				conditionsMap.get(user1.getNickname()).signal();
+			activeMatches.put(user1.getId(), match);
+			activeMatches.put(user2.getId(), match);
+			if(conditionsMap.get(user1.getId())!=null) {
+				conditionsMap.get(user1.getId()).signal();
 			}
-			if(conditionsMap.get(user2.getNickname())!=null) {
-				conditionsMap.get(user2.getNickname()).signal();
+			if(conditionsMap.get(user2.getId())!=null) {
+				conditionsMap.get(user2.getId()).signal();
 			}
 		} finally {
 			lock.unlock();
 		}
 	}
 	
-	public Tressette1v1 waitForMatch(String player) {
+	public Tressette1v1 waitForMatch(Integer player) {
 		lock.lock();
 		if(activeMatches.get(player)==null) {
 			
@@ -72,15 +72,15 @@ public class TressetteGameManager implements GameManager {
 		return activeMatches.get(player);
 	}
 	
-	public Tressette1v1 getPlayerCompletedMatch(String player) {
+	public Tressette1v1 getPlayerCompletedMatch(Integer player) {
 		return completedMatches.get(player);
 	}
 	
-	public Tressette1v1 getPlayerActiveMatch(String player) {
+	public Tressette1v1 getPlayerActiveMatch(Integer player) {
 		return activeMatches.get(player);
 	}
 
-	public String getMatchedWith(String player) {
+	public Integer getMatchedWith(Integer player) {
 		return matchedPlayers.get(player);
 	}
 

@@ -36,11 +36,11 @@ public class Tressette1v1Test {
 	@Test
 	public void testHandsSize() {
 		System.out.println("test hands size");
-		List<String> players = new ArrayList<>();
-		players.add("ciccio");
-		players.add("pippo");
+		List<Integer> players = new ArrayList<>();
+		players.add(0);
+		players.add(1);
 		Tressette1v1 instance = new Tressette1v1(players,true);
-		assertEquals(10, instance.getHands().get("ciccio").getHandCards().size());
+		assertEquals(10, instance.getHands().get(0).getHandCards().size());
 	}
 
 

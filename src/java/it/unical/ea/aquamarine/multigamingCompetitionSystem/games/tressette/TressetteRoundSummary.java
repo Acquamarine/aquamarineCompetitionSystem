@@ -6,20 +6,20 @@ import java.util.Map;
 public class TressetteRoundSummary {
 	private boolean cardPlayed;
 	private int round;
-	private String roundWinner;
-	private String actionPlayer;
+	private Integer roundWinner;
+	private Integer actionPlayer;
 	private String card;
 	private int cardsInDeck;
 	private boolean gameOver = false;
+	private Map<Integer, NeapolitanCard> pickedCards;
 
-	public String getActionPlayer() {
+	public Integer getActionPlayer() {
 		return actionPlayer;
 	}
 
-	public void setActionPlayer(String actionPlayer) {
+	public void setActionPlayer(Integer actionPlayer) {
 		this.actionPlayer = actionPlayer;
 	}
-	private Map<String, NeapolitanCard> pickedCards;
 
 	public TressetteRoundSummary() {
 	}
@@ -40,19 +40,19 @@ public class TressetteRoundSummary {
 		this.round = round;
 	}
 
-	public String getRoundWinner() {
+	public Integer getRoundWinner() {
 		return roundWinner;
 	}
 
-	public void setRoundWinner(String roundWinner) {
+	public void setRoundWinner(Integer roundWinner) {
 		this.roundWinner = roundWinner;
 	}
 
-	public Map<String, NeapolitanCard> getPickedCards() {
+	public Map<Integer, NeapolitanCard> getPickedCards() {
 		return pickedCards;
 	}
 
-	public void setPickedCards(Map<String, NeapolitanCard> pickedCards) {
+	public void setPickedCards(Map<Integer, NeapolitanCard> pickedCards) {
 		this.pickedCards = pickedCards;
 	}
 

@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -79,6 +80,17 @@ public class UserDAOImpl implements UserDAO {
 		}
 		session.close();
 		return true;
+	}
+
+	@Override
+	public ICompetitor retrieveById(Integer id) {
+		Session session = sessionFactory.openSession();
+		String queryString = "from AbstractCompetitor where id = :id";
+		Query query = session.createQuery(queryString);
+		query.setParameter("id", id);
+		RegisteredUser u = (RegisteredUser) query.uniqueResult();
+		session.close();
+		return u;
 	}
 
 
