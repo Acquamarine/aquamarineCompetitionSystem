@@ -8,7 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css"/>
         <link href="/MultigamingCompetitionSystem/css/tressette.css" rel="stylesheet" type="text/css"/>
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
         <title>Tressette</title>
 
     </head>
@@ -49,11 +49,13 @@
                 });
             }
             function insertInQueue(rankedQueue) {
+                console.log(rankedQueue);
+                console.log("inserting in queue");
                 $("#choose-match").html("<img id='loading' src='/MultigamingCompetitionSystem/assets/loading.gif'>Loading</img> <form id='undo-queue'> <input type='submit' value='Annulla' enabled='false'/> </form>");
 				$.ajax({
                     url: "tressette",
                     data: {
-                        addToRankedQueue: rankedQueue.param1
+                        addToRankedQueue: rankedQueue
                     },
                     success: function (data) {
                         console.log("add in queue success");
@@ -73,8 +75,12 @@
 
 
             }
-            $('#put-in-ranked-queue').click({param1:true},insertInQueue);
-            $('#put-in-queue').click({param1:false},insertInQueue);
+            $('#put-in-ranked-queue').click(function() {
+               insertInQueue(true);
+            });
+            $('#put-in-queue').click(function() {
+               insertInQueue(false);
+            });
         </script>
     </body>
 </html>

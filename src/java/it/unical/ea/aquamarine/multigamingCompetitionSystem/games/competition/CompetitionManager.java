@@ -34,13 +34,15 @@ public class CompetitionManager {
 		loser.updateElo(game, loserNewElo);
 	}
 
-	public ICompetitor getCompetitor(Integer competitor) {
-		if(activeCompetitors.containsKey(competitor)) {
-			return activeCompetitors.get(competitor);
+	public ICompetitor getCompetitor(Integer competitorId) {
+		if(activeCompetitors.containsKey(competitorId)) {
+			return activeCompetitors.get(competitorId);
 		}
 		//TODO check
 		UserDAO userDAO = DaoProvider.getUserDAO();
-		return userDAO.retrieveById(competitor);
+		ICompetitor competitor = userDAO.retrieveById(competitorId);
+		activeCompetitors.put(competitorId, competitor);
+		return competitor;
 		
 	}
 

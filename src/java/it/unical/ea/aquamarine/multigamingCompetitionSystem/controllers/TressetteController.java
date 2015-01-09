@@ -55,6 +55,7 @@ public class TressetteController {
 			request.getSession().setAttribute("loggedIn", false);
 		}
 		Integer me = (Integer) request.getSession().getAttribute("playerId"); //TODO get from session
+		String myNickname = CompetitionManager.getInstance().getCompetitor(me).getNickname();
 		//TODO input validation
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
 		if(playerGame == null){
@@ -63,7 +64,11 @@ public class TressetteController {
 		if(playerGame == null){
 			return "redirect:/tressette";
 		}
-		Integer matchedPlayer = playerGame.getMatchedPlayer(me);
+		Integer matchedPlayerId = playerGame.getMatchedPlayer(me);
+		String matchedPlayer = CompetitionManager.getInstance().getCompetitor(matchedPlayerId).getNickname();
+		request.getSession().setAttribute(me+"", myNickname);
+		request.getSession().setAttribute(matchedPlayerId+"", matchedPlayer);
+		
 		if(!playerGame.areThereSummaries()){
 			request.getSession().setAttribute("eventIndex", 0);
 			request.getSession().setAttribute("deck", 20);
@@ -72,14 +77,14 @@ public class TressetteController {
 		//TODO move to login
 		request.getSession().setAttribute("matched", matchedPlayer);
 		NeapolitanHand myHand = playerGame.getHands().get(me);
-		NeapolitanHand matchedPlayerHand = playerGame.getHands().get(matchedPlayer);
+		NeapolitanHand matchedPlayerHand = playerGame.getHands().get(matchedPlayerId);
 		List<NeapolitanCard> cards = myHand.getHandCards();
 		List<NeapolitanCard> matchedPlayerCards = matchedPlayerHand.getHandCards();
 		model.addAttribute("cards", cards);
 		model.addAttribute("matchedPlayerCards", matchedPlayerCards);
 		model.addAttribute("userForm", new RegisteredUser());
 		Integer turnPlayer = playerGame.getTurnPlayer();
-		model.addAttribute("turn", turnPlayer);
+		model.addAttribute("turn", request.getSession().getAttribute(turnPlayer+""));
 		return "/tressette/gioca";
 	}
 
@@ -105,14 +110,15 @@ public class TressetteController {
 		try{
 			json.put("played", summary.isCardPlayed());
 			json.put("card", summary.getCard());
-			json.put("actionPlayer", summary.getActionPlayer());
+			Integer actionPlayer = summary.getActionPlayer();
+			json.put("actionPlayer", request.getSession().getAttribute(actionPlayer+""));
 			json.put("round", summary.getRound());
 			json.put("gameover", summary.isGameOver());
 			if(summary.getRound() == 1){
 				Integer winner = summary.getRoundWinner();
-				json.put("winner", winner);
+				json.put("winner", request.getSession().getAttribute(winner+""));
 				Integer looser = playerGame.getMatchedPlayer(winner);
-				json.put("looser", looser);
+				json.put("looser", request.getSession().getAttribute(looser+""));
 				if(summary.getPickedCards() != null){
 					json.put("picked0", summary.getPickedCards().get(winner));
 					json.put("picked1", summary.getPickedCards().get((looser)));
@@ -129,7 +135,7 @@ public class TressetteController {
 	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = "addToRankedQueue")
 	public void putCompetitorInQueue(HttpServletRequest request, @RequestParam("addToRankedQueue") boolean ranked) {
 		if(ranked){
-			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getCanonicalName(), CompetitionManager.getInstance().getCompetitor((String) request.getSession().getAttribute("nickname"))); //new Player(competitor)
+			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getCanonicalName(), CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
 		}else{
 			//TODO: addToUnrankedQueue
 		}

@@ -12,7 +12,7 @@
         <link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css"/>
         <link href="/MultigamingCompetitionSystem/css/tressetteGioca.css" rel="stylesheet" type="text/css"/>
         <title>Gioca a Tressette!</title>
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
         <script>
 			var graphicComplete = true;
 			function gameComplete() {

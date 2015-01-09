@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsScore;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.SharedFunctions;
@@ -99,6 +100,7 @@ public class Tressette1v1 implements ITressette {
 			}
 			finalScores.put(player, pointCounter / 3);
 		});
+		//TODO get two values score for match history
 
 	}
 
@@ -243,5 +245,15 @@ public class Tressette1v1 implements ITressette {
 
 	public boolean areThereSummaries() {
 		return summaryManager.areThereSummaries();
+	}
+
+	@Override
+	public TwoCompetitorsScore getTwoValuesFinalScore(String competitor) {
+		TwoCompetitorsScore score = new TwoCompetitorsScore();
+		score.setPlayer1(players.get(0));
+		score.setPlayer2(players.get(1));
+		score.setPlayer1Score(finalScores.get(score.getPlayer1()));
+		score.setPlayer2Score(finalScores.get(score.getPlayer2()));
+		return score;
 	}
 }
