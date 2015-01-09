@@ -10,47 +10,43 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css">
+		<link href="/MultigamingCompetitionSystem/css/ranking.css" rel="stylesheet" type="text/css">
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     </head>
     <body>
         <%@include file="../../resources/html/header.html" %>
-		<table id="ranking" width="100%">
+		<table class="ranking-table" id="ranking">
 			<tr>
-				<td>Rank</td>
-				<td>Tier</td> 
-				<td>Player</td>
-				<td>Elo</td>
-				<td>Won Matches</td>
-				<td>Lose Matches</td>
-				<td>Percentage of won Matches</td>
+				<th class="ranking-heading ranking-table">Rank</th>
+				<th class="ranking-heading ranking-table">Tier</th> 
+				<th class="ranking-heading ranking-table">Player</th>
+				<th class="ranking-heading ranking-table">Elo</th>
+				<th class="ranking-heading ranking-table">Won Matches</th>
+				<th class="ranking-heading ranking-table">Lose Matches</th>
+				<th class="ranking-heading ranking-table">Percentage of won Matches</th>
 			</tr>
+			
 		</table>
 		<%@include file="../../resources/html/footer.html" %>
 		<script>
-			var i=0;
+			var i = 0;
+			function createColumn(htmlToIns, row) {
+				colToAppend = document.createElement("td");
+				colToAppend.className="ranking-column ranking-table";
+				colToAppend.innerHTML =htmlToIns;
+				row.appendChild(colToAppend);
+			}
 			<c:forEach items = "${usersRanking}"  var = "userRanking" >
+				console.log(${userRanking});
 			rowToAppend = document.createElement("tr");
-			colToAppend = document.createElement("td");
-			td.html((i+1)+".");
-			rowToAppend.appendChild(colToAppend);
-			colToAppend = document.createElement("td");
-			td.html("coming soon");
-			rowToAppend.appendChild(colToAppend);
-			colToAppend = document.createElement("td");
-			td.html(${userRanking.get(i).getKey()});
-			rowToAppend.appendChild(colToAppend);
-			colToAppend = document.createElement("td");
-			td.html(${userRanking.get(i).getValue()});
-			rowToAppend.appendChild(colToAppend);
-			colToAppend = document.createElement("td");
-			td.html("coming soon");
-			rowToAppend.appendChild(colToAppend);
-			colToAppend = document.createElement("td");
-			td.html("coming soon");
-			rowToAppend.appendChild(colToAppend);
-			colToAppend = document.createElement("td");
-			td.html("coming soon");
-			rowToAppend.appendChild(colToAppend);
+			createColumn((i + 1) + ".",rowToAppend);
+			createColumn("coming soon",rowToAppend);
+			createColumn("${userRanking.getKey()}",rowToAppend);
+			createColumn("${userRanking.getValue()}",rowToAppend);
+			createColumn("coming soon",rowToAppend);
+			createColumn("coming soon",rowToAppend);
+			createColumn("coming soon",rowToAppend);
+			$('#ranking').append(rowToAppend);
 			i++;
 			</c:forEach>
 		</script>
