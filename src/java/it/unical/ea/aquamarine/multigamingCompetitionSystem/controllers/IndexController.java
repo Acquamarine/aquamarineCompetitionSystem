@@ -31,18 +31,11 @@ public class IndexController implements ApplicationContextAware {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params = "page")
 	public String userLogin(ModelMap model, @ModelAttribute("userForm") RegisteredUser user, @RequestParam("page") String page) {
-		//you have to do something smarter!	
-//		if(user.getUsername().equals("ciccio")
-//		   && user.getPassword().equals("pasticcio")){
-//			request.getSession().setAttribute("userSession", user.getUsername());
-//		}
-		/*String username = user.getUsername();
-		 request.getSession().setAttribute("username", user.getUsername());
-		 request.getSession().setAttribute("loggedIn", true);
-		 //model.addAttribute("username",username);
-		 //model.addAttribute("loggedIn", true);*/
-
 		model.addAttribute("page", page);
+		return "/login";
+	}
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginGet(ModelMap model, @ModelAttribute("userForm") RegisteredUser user) {
 		return "/login";
 	}
 
@@ -58,6 +51,7 @@ public class IndexController implements ApplicationContextAware {
 		if(registeredUser != null && password.equals(registeredUser.getPassword())){
 			request.getSession().setAttribute("username", registeredUser.getUsername());
 			request.getSession().setAttribute("nickname", registeredUser.getNickname());
+			request.getSession().setAttribute("playerId", registeredUser.getId());
 			request.getSession().setAttribute("loggedIn", true);
 			return "redirect:" + subPage;
 		}

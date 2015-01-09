@@ -41,6 +41,13 @@ public class TressetteController {
 		}
 		return "/tressette";
 	}
+	@RequestMapping(value = "/tressette/ranking", method = {RequestMethod.GET, RequestMethod.POST})
+	public String ranking(Model model, HttpServletRequest request) {
+		if(request.getSession().getAttribute("loggedIn") == null){
+			request.getSession().setAttribute("loggedIn", false);
+		}
+		return "/tressette";
+	}
 
 	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST})
 	public String play(Model model, HttpServletRequest request) {
@@ -50,8 +57,11 @@ public class TressetteController {
 		Integer me = (Integer) request.getSession().getAttribute("playerId"); //TODO get from session
 		//TODO input validation
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
-		if(playerGame==null) {
+		if(playerGame == null){
 			playerGame = TressetteGameManager.getInstance().getPlayerCompletedMatch(me);
+		}
+		if(playerGame == null){
+			return "redirect:/tressette";
 		}
 		Integer matchedPlayer = playerGame.getMatchedPlayer(me);
 		if(!playerGame.areThereSummaries()){
@@ -117,8 +127,12 @@ public class TressetteController {
 	}
 
 	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = "addToRankedQueue")
-	public void putCompetitorInQueue(HttpServletRequest request) {
-		MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getCanonicalName(), CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
+	public void putCompetitorInQueue(HttpServletRequest request, @RequestParam("addToRankedQueue") boolean ranked) {
+		if(ranked){
+			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getCanonicalName(), CompetitionManager.getInstance().getCompetitor((String) request.getSession().getAttribute("nickname"))); //new Player(competitor)
+		}else{
+			//TODO: addToUnrankedQueue
+		}
 	}
 
 	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = {"inQueue"})
