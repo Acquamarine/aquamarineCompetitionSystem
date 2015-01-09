@@ -98,6 +98,9 @@ public class UserDAOImpl implements UserDAO {
 		});
 		session.close();
 		return returningList;
+	}
+	
+	@Override
 	public ICompetitor retrieveById(Integer id) {
 		Session session = sessionFactory.openSession();
 		String queryString = "from AbstractCompetitor where id = :id";
