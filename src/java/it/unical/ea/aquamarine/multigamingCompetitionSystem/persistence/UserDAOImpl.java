@@ -1,6 +1,9 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.util.Pair;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -79,6 +82,21 @@ public class UserDAOImpl implements UserDAO {
 		}
 		session.close();
 		return true;
+	}
+
+	@Override
+	public List<Pair<String, Integer>> getUsersRanking(String game) {
+		Session session = sessionFactory.openSession();
+		String queryString = "select c.nickname, VALUE(c.competitionProfile) from AbstractCompetitor as c  where KEY(c.competitionProfile)= :game order by VALUE(c.competitionProfile) desc";
+		Query query = session.createQuery(queryString);
+		query.setParameter("game", game);
+		List<Object[]> usersRanking = (List<Object[]>)query.list();
+		List<Pair<String, Integer>> returningList = new ArrayList<>();
+		usersRanking.stream().forEach((userRanking) -> {
+			returningList.add(new Pair<>((String) userRanking[0], (Integer) userRanking[1] ));
+		});
+		session.close();
+		return returningList;
 	}
 
 
