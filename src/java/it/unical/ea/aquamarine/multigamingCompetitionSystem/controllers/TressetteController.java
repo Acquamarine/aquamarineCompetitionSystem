@@ -41,13 +41,7 @@ public class TressetteController {
 		}
 		return "/tressette";
 	}
-	@RequestMapping(value = "/tressette/ranking", method = {RequestMethod.GET, RequestMethod.POST})
-	public String ranking(Model model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
-		}
-		return "/tressette";
-	}
+	
 
 	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST})
 	public String play(Model model, HttpServletRequest request) {

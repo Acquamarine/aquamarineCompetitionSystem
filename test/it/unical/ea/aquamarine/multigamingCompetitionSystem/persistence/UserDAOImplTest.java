@@ -1,6 +1,8 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import java.util.List;
+import javafx.util.Pair;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -19,7 +21,7 @@ public class UserDAOImplTest {
 	
 	@BeforeClass
 	public static void setUpClass() {
-		Configuration configuration = new Configuration().configure();
+		Configuration configuration = new Configuration().configure("hibernate.cfg.test.xml");
 		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 		instance.setSessionFactory(configuration.buildSessionFactory(builder.build()));
 	}
@@ -109,5 +111,39 @@ public class UserDAOImplTest {
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
+	@Test
+	public void testUserElo() {
+		RegisteredUser user = new RegisteredUser();
+		user.setNickname("ciccioEloTestN");
+		user.setUsername("ciccioEloTestU");
+		user.setPassword("ciccioEloTestP");
+		user.getCompetitionProfile().put("tressette1v1",1500);
+		instance.create(user);
+		// TODO review the generated test code and remove the default call to fail.
+		RegisteredUser retrievedUser = instance.retrieveByNick("ciccioEloTestN");
+		assertTrue(1500==retrievedUser.getElo("tressette1v1"));
+	}
+	
+	@Test
+	public void testUserRanking() {
+		RegisteredUser user = new RegisteredUser();
+		RegisteredUser user1 = new RegisteredUser();
+		user.setNickname("pasticcioRankingTestN");
+		user.setUsername("pasticcioRankingTestU");
+		user.setPassword("pasticcioRankingTestP");
+		user1.setNickname("cioRankingTestN");
+		
+		user.getCompetitionProfile().put("tressette1v1",1500);
+		user1.getCompetitionProfile().put("tressette1v1",1100);
+		instance.create(user);
+		instance.create(user1);
+		// TODO review the generated test code and remove the default call to fail.
+		List<Pair<String, Integer>> userRanking = instance.getUsersRanking("tressette1v1");
+		assertTrue(1500==userRanking.get(0).getValue());
+		assertTrue(1100==userRanking.get(1).getValue());
+		System.out.println("");
+	}
+	
+	
 	
 }
