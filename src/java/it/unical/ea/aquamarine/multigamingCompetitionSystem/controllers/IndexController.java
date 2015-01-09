@@ -1,7 +1,8 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DaoProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.UserDAO;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.BeansException;
@@ -26,6 +27,23 @@ public class IndexController implements ApplicationContextAware {
 		if(request.getSession().getAttribute("loggedIn") == null){
 			request.getSession().setAttribute("loggedIn", false);
 		}
+		UserDAO userDAO = DaoProvider.getUserDAO();
+		RegisteredUser user1 = new RegisteredUser();
+		user1.setNickname("ciccio");
+		user1.updateElo("Tressette1v1", 1200);
+		RegisteredUser user4 = new RegisteredUser();
+		user4.setNickname("ciccio4");
+		user4.updateElo("Tressette1v1", 1100);
+		RegisteredUser user2 = new RegisteredUser();
+		user2.setNickname("ciccio2");
+		user2.updateElo("Tressette1v1", 1800);
+		RegisteredUser user3 = new RegisteredUser();
+		user3.setNickname("ciccio3");
+		user3.updateElo("Tressette1v1", 2000);
+		userDAO.create(user3);
+		userDAO.create(user1);
+		userDAO.create(user2);
+		userDAO.create(user4);
 		return "index";
 	}
 
