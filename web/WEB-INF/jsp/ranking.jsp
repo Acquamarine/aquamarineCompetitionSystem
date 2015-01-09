@@ -11,7 +11,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css">
 		<link href="/MultigamingCompetitionSystem/css/ranking.css" rel="stylesheet" type="text/css">
-		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
     </head>
     <body>

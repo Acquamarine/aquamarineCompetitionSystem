@@ -13,6 +13,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tres
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteRoundSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -129,7 +130,7 @@ public class TressetteController {
 	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = "addToRankedQueue")
 	public void putCompetitorInQueue(HttpServletRequest request, @RequestParam("addToRankedQueue") boolean ranked) {
 		if(ranked){
-			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getCanonicalName(), CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
+			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getSimpleName(), CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
 		}else{
 			//TODO: addToUnrankedQueue
 		}
@@ -146,9 +147,13 @@ public class TressetteController {
 		Integer me = (Integer) request.getSession().getAttribute("playerId");
 		Tressette1v1 playerGame = TressetteGameManager.getInstance().getPlayerCompletedMatch(me);
 		Map<Integer, Integer> finalScores = playerGame.getFinalScores();
+		Map<String, Integer> finalScoreWithNicks = new HashMap<>();
+		finalScores.keySet().stream().forEach((id) -> {			
+			finalScoreWithNicks.put((String)request.getSession().getAttribute(id+""), finalScores.get(id));
+		});
 		JSONObject json = new JSONObject();
 		try{
-			json.put("results", finalScores);
+			json.put("results", finalScoreWithNicks);
 		}catch(JSONException ex){
 			Logger.getLogger(TressetteController.class.getName()).log(Level.SEVERE, null, ex);
 		}

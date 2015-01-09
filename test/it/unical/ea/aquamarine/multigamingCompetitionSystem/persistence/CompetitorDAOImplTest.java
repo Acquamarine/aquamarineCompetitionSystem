@@ -13,11 +13,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class UserDAOImplTest {
+public class CompetitorDAOImplTest {
 	
 	private static CompetitorsDAOImpl instance;
 	
-	public UserDAOImplTest() {
+	public CompetitorDAOImplTest() {
 	}
 	
 	@BeforeClass
@@ -44,7 +44,7 @@ public class UserDAOImplTest {
 
 
 	/**
-	 * Test of create method, of class UserDAOImpl.
+	 * Test of create method, of class CompetitorDAOImpl.
 	 */
 	@Test
 	public void testCreate() {
@@ -61,7 +61,7 @@ public class UserDAOImplTest {
 	}
 
 	/**
-	 * Test of retrieveByNick method, of class UserDAOImpl.
+	 * Test of retrieveByNick method, of class CompetitorDAOImpl.
 	 */
 	@Test
 	public void testRetrieveByNick() {
@@ -75,7 +75,7 @@ public class UserDAOImplTest {
 	}
 
 	/**
-	 * Test of retrieveByUsername method, of class UserDAOImpl.
+	 * Test of retrieveByUsername method, of class CompetitorDAOImpl.
 	 */
 	@Test
 	public void testRetrieveByUsername() {
@@ -89,7 +89,7 @@ public class UserDAOImplTest {
 	}
 
 	/**
-	 * Test of doesUserExistByUsername method, of class UserDAOImpl.
+	 * Test of doesUserExistByUsername method, of class CompetitorDAOImpl.
 	 */
 	@Test
 	public void testDoesUserExistByUsername() {
@@ -104,7 +104,7 @@ public class UserDAOImplTest {
 	}
 
 	/**
-	 * Test of doesUserExistByNick method, of class UserDAOImpl.
+	 * Test of doesUserExistByNick method, of class CompetitorDAOImpl.
 	 */
 	@Test
 	public void testDoesUserExistByNick() {

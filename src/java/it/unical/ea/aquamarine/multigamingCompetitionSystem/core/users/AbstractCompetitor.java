@@ -1,7 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DaoProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.AttributeOverride;
@@ -42,9 +42,9 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 
 	@Override
 	public void updateElo(String game, int elo) {
-		System.out.println(nickname + "'s elo is now "+elo);
+		System.out.println(nickname + "'s elo is now "+elo+" at "+game);
 		competitionProfile.put(game, elo);
-		DaoProvider.getUserDAO().updateCompetitor(this);
+		DAOProvider.getCompetitorDAO().updateCompetitor(this);
 	}
 
 	@Id

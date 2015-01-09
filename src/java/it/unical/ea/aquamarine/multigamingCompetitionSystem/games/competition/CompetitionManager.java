@@ -1,7 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DaoProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,8 +39,8 @@ public class CompetitionManager {
 			return activeCompetitors.get(competitorId);
 		}
 		//TODO check
-		CompetitorDAO userDAO = DaoProvider.getUserDAO();
-		ICompetitor competitor = userDAO.retrieveById(competitorId);
+		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
+		ICompetitor competitor = competitorDAO.retrieveById(competitorId);
 		activeCompetitors.put(competitorId, competitor);
 		return competitor;
 		

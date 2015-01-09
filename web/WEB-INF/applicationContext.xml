@@ -30,11 +30,15 @@
 	    </property>
 	</bean>
 	 
-        <bean id="daoProvider" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DaoProvider" >
+        <bean id="daoProvider" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider" >
 	</bean>
     
   
-	<bean id="userDAO" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorsDAOImpl" >
+	<bean id="competitorDAO" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorsDAOImpl" >
+	    <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+        
+	<bean id="matchResultsDAO" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.MatchResultsDAOImpl" >
 	    <property name="sessionFactory" ref="sessionFactory" />
 	</bean>
     

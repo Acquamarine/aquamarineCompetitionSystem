@@ -1,10 +1,11 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsScore;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.SharedFunctions;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -64,6 +65,7 @@ public class Tressette1v1 implements ITressette {
 						//remove from active matches, elo updates
 						TressetteGameManager.getInstance().gameCompletion(this);
 						computeFinalScores();
+						generateMatchResultsForHistory();
 						Integer winner = players.get(0);
 						Integer loser = players.get(1);
 						int player1Score = finalScores.get(players.get(0));
@@ -74,7 +76,7 @@ public class Tressette1v1 implements ITressette {
 							loser = temp;
 						}
 						if(rankedMatch){
-							CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getCanonicalName(), winner, loser);
+							CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getSimpleName(), winner, loser);
 						}
 					}
 					summary.setCardsInDeck(deck.size());
@@ -247,13 +249,14 @@ public class Tressette1v1 implements ITressette {
 		return summaryManager.areThereSummaries();
 	}
 
-	@Override
-	public TwoCompetitorsScore getTwoValuesFinalScore(String competitor) {
-		TwoCompetitorsScore score = new TwoCompetitorsScore();
-		score.setPlayer1(players.get(0));
-		score.setPlayer2(players.get(1));
-		score.setPlayer1Score(finalScores.get(score.getPlayer1()));
-		score.setPlayer2Score(finalScores.get(score.getPlayer2()));
-		return score;
+	private void generateMatchResultsForHistory() {
+		TwoCompetitorsMatchResult score = new TwoCompetitorsMatchResult();
+		score.setPlayer1(CompetitionManager.getInstance().getCompetitor(players.get(0)));
+		score.setPlayer2(CompetitionManager.getInstance().getCompetitor(players.get(1)));
+		score.setPlayer1Score(finalScores.get(players.get(0)));
+		score.setPlayer2Score(finalScores.get(players.get(1)));
+		score.setRankedMatch(rankedMatch);
+		DAOProvider.getMatchResultsDAO().create(score);
+		
 	}
 }

@@ -50,22 +50,22 @@ public class RegisterController implements ApplicationContextAware{
 		}else{
 			model.addAttribute("passwordWrong", false);
 		}
-		CompetitorDAO userDao = (CompetitorDAO) context.getBean("userDAO");
-		if(userDao.doesUserExistByUsername(user.getUsername())){
+		CompetitorDAO competitorDAO = (CompetitorDAO) context.getBean("competitorDAO");
+		if(competitorDAO.doesUserExistByUsername(user.getUsername())){
 			model.addAttribute("userUnavailable", true);
 			validForm = false;
 		}else{
 			model.addAttribute("userUnavailable", false);
 			
 		}
-		if(userDao.doesCompetitorExistByNick(user.getNickname())){
+		if(competitorDAO.doesCompetitorExistByNick(user.getNickname())){
 			model.addAttribute("nickUnavailable", true);
 			validForm = false;
 		}else{
 			model.addAttribute("nickUnavailable", false);
 		}
 		if(validForm){
-			userDao.create(user);
+			competitorDAO.create(user);
 			model.addAttribute("registrationCompleted", true);
 			return "/login";
 		}
