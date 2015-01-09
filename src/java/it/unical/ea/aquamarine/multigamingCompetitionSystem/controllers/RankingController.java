@@ -1,7 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DaoProvider;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.UserDAO;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import java.util.List;
 import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +18,8 @@ public class RankingController {
 		if(request.getSession().getAttribute("loggedIn") == null){
 			request.getSession().setAttribute("loggedIn", false);
 		}
-		UserDAO userDAO = DaoProvider.getUserDAO();
-		List<Pair<String, Integer>> usersRanking = userDAO.getUsersRanking(game);
+		CompetitorDAO userDAO = DaoProvider.getUserDAO();
+		List<Pair<String, Integer>> usersRanking = userDAO.getCompetitorRanking(game);
 		model.addAttribute("usersRanking",usersRanking);
 		return "/ranking";
 	}

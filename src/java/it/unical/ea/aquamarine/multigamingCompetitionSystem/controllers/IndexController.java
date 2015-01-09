@@ -1,7 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.UserDAO;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.BeansException;
@@ -41,11 +41,12 @@ public class IndexController implements ApplicationContextAware {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params = {"loggigIn", "page"})
 	public String login(Model model, HttpServletRequest request, @ModelAttribute("userForm") RegisteredUser user, @RequestParam("page") String page) {
-		UserDAO userDao = (UserDAO) context.getBean("userDAO");
+		CompetitorDAO userDao = (CompetitorDAO) context.getBean("userDAO");
 
 		String username = user.getUsername();
 		String password = user.getPassword();
-		RegisteredUser registeredUser = userDao.retrieveByUsername(username);
+		//TODO type check -> class cast exception may occour
+		RegisteredUser registeredUser = (RegisteredUser) userDao.retrieveByUsername(username);
 		String subPage= page.substring(29);
 			
 		if(registeredUser != null && password.equals(registeredUser.getPassword())){

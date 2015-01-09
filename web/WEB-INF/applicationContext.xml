@@ -34,7 +34,7 @@
 	</bean>
     
   
-	<bean id="userDAO" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.UserDAOImpl" >
+	<bean id="userDAO" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorsDAOImpl" >
 	    <property name="sessionFactory" ref="sessionFactory" />
 	</bean>
     

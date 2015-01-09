@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class UserDAOImpl implements UserDAO {
+public class CompetitorsDAOImpl implements CompetitorDAO {
 	
 	private SessionFactory sessionFactory;
 
@@ -19,12 +19,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void create(RegisteredUser user) {
+	public void create(ICompetitor competitor) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
 		try{
 			tx = session.beginTransaction();
-			session.save(user);
+			session.save(competitor);
 			tx.commit();
 		}catch(Exception e){
 			if(tx != null){
@@ -36,7 +36,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public RegisteredUser retrieveByNick(String nick) {
+	public ICompetitor retrieveByNick(String nick) {
 		Session session = sessionFactory.openSession();
 		String queryString = "from AbstractCompetitor where nickname = :user";
 		Query query = session.createQuery(queryString);
@@ -47,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public RegisteredUser retrieveByUsername(String username) {
+	public ICompetitor retrieveByUsername(String username) {
 		Session session = sessionFactory.openSession();
 		String queryString = "from AbstractCompetitor where username = :user";
 		Query query = session.createQuery(queryString);
@@ -72,7 +72,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean doesUserExistByNick(String nick) {
+	public boolean doesCompetitorExistByNick(String nick) {
 		Session session = sessionFactory.openSession();
 		String queryString = "from AbstractCompetitor where nickname = :nickname";
 		Query query = session.createQuery(queryString);
@@ -86,7 +86,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<Pair<String, Integer>> getUsersRanking(String game) {
+	public List<Pair<String, Integer>> getCompetitorRanking(String game) {
 		Session session = sessionFactory.openSession();
 		String queryString = "select c.nickname, VALUE(c.competitionProfile) from AbstractCompetitor as c  where KEY(c.competitionProfile)= :game order by VALUE(c.competitionProfile) desc";
 		Query query = session.createQuery(queryString);
@@ -109,6 +109,23 @@ public class UserDAOImpl implements UserDAO {
 		RegisteredUser u = (RegisteredUser) query.uniqueResult();
 		session.close();
 		return u;
+	}
+
+	@Override
+	public void updateCompetitor(ICompetitor competitor) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			session.update(competitor);
+			tx.commit();
+		}catch(Exception e){
+			if(tx != null){
+				tx.rollback();
+			}
+		}finally{
+			session.close();
+		}
 	}
 
 

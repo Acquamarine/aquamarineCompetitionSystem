@@ -6,8 +6,8 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.UserDAO;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.UserDAOImpl;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorsDAOImpl;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -50,7 +50,7 @@ public class RegisterController implements ApplicationContextAware{
 		}else{
 			model.addAttribute("passwordWrong", false);
 		}
-		UserDAO userDao = (UserDAO) context.getBean("userDAO");
+		CompetitorDAO userDao = (CompetitorDAO) context.getBean("userDAO");
 		if(userDao.doesUserExistByUsername(user.getUsername())){
 			model.addAttribute("userUnavailable", true);
 			validForm = false;
@@ -58,7 +58,7 @@ public class RegisterController implements ApplicationContextAware{
 			model.addAttribute("userUnavailable", false);
 			
 		}
-		if(userDao.doesUserExistByNick(user.getNickname())){
+		if(userDao.doesCompetitorExistByNick(user.getNickname())){
 			model.addAttribute("nickUnavailable", true);
 			validForm = false;
 		}else{

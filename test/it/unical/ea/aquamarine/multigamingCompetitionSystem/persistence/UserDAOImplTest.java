@@ -1,9 +1,9 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
 import java.util.List;
 import javafx.util.Pair;
-import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.junit.After;
@@ -15,15 +15,14 @@ import static org.junit.Assert.*;
 
 public class UserDAOImplTest {
 	
-	private static UserDAOImpl instance = new UserDAOImpl();
+	private static CompetitorsDAOImpl instance;
+	
 	public UserDAOImplTest() {
 	}
 	
 	@BeforeClass
 	public static void setUpClass() {
-		Configuration configuration = new Configuration().configure("hibernate.cfg.test.xml");
-		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-		instance.setSessionFactory(configuration.buildSessionFactory(builder.build()));
+		
 	}
 	
 	@AfterClass
@@ -32,10 +31,15 @@ public class UserDAOImplTest {
 	
 	@Before
 	public void setUp() {
+		instance = new CompetitorsDAOImpl();
+		Configuration configuration = new Configuration().configure("hibernate.cfg.test.xml");
+		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+		instance.setSessionFactory(configuration.buildSessionFactory(builder.build()));
 	}
 	
 	@After
 	public void tearDown() {
+		
 	}
 
 
@@ -51,7 +55,7 @@ public class UserDAOImplTest {
 		user.setPassword("ciccioP");
 		instance.create(user);
 		// TODO review the generated test code and remove the default call to fail.
-		RegisteredUser retrievedUser = instance.retrieveByNick("ciccioN");
+		RegisteredUser retrievedUser = (RegisteredUser) instance.retrieveByNick("ciccioN");
 		assertEquals("ciccioU", retrievedUser.getUsername());
 		assertEquals("ciccioN", retrievedUser.getNickname());
 	}
@@ -62,12 +66,12 @@ public class UserDAOImplTest {
 	@Test
 	public void testRetrieveByNick() {
 		System.out.println("retrieveByNick");
-		String nick = "";
-		RegisteredUser expResult = null;
-		RegisteredUser result = instance.retrieveByNick(nick);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		RegisteredUser user = new RegisteredUser();
+		user.setUsername("ciccio");
+		user.setNickname("pasticcio");
+		instance.create(user);
+		ICompetitor competitor = instance.retrieveByNick("pasticcio");
+		assertTrue(competitor.getNickname().equals(user.getNickname()));
 	}
 
 	/**
@@ -75,13 +79,13 @@ public class UserDAOImplTest {
 	 */
 	@Test
 	public void testRetrieveByUsername() {
-		System.out.println("retrieveByUsername");
-		String username = "";
-		RegisteredUser expResult = null;
-		RegisteredUser result = instance.retrieveByUsername(username);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		System.out.println("doesUserExistByUsername");
+		RegisteredUser user = new RegisteredUser();
+		user.setUsername("ciccio");
+		user.setNickname("pasticcio");
+		instance.create(user);
+		ICompetitor competitor = instance.retrieveByUsername("ciccio");
+		assertTrue(competitor.getNickname().equals(user.getNickname()));
 	}
 
 	/**
@@ -90,12 +94,13 @@ public class UserDAOImplTest {
 	@Test
 	public void testDoesUserExistByUsername() {
 		System.out.println("doesUserExistByUsername");
-		String username = "";
-		boolean expResult = false;
-		boolean result = instance.doesUserExistByUsername(username);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		RegisteredUser user = new RegisteredUser();
+		user.setUsername("ciccio");
+		user.setNickname("pasticcio");
+		instance.create(user);
+		boolean result = instance.doesUserExistByUsername("ciccio");
+		assertTrue(result);
+		
 	}
 
 	/**
@@ -104,12 +109,12 @@ public class UserDAOImplTest {
 	@Test
 	public void testDoesUserExistByNick() {
 		System.out.println("doesUserExistByNick");
-		String nick = "";
-		boolean expResult = false;
-		boolean result = instance.doesUserExistByNick(nick);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
+		RegisteredUser user = new RegisteredUser();
+		user.setUsername("ciccio");
+		user.setNickname("pasticcio");
+		instance.create(user);
+		boolean result = instance.doesCompetitorExistByNick("pasticcio");
+		assertTrue(result);
 	}
 	@Test
 	public void testUserElo() {
@@ -120,7 +125,7 @@ public class UserDAOImplTest {
 		user.getCompetitionProfile().put("tressette1v1",1500);
 		instance.create(user);
 		// TODO review the generated test code and remove the default call to fail.
-		RegisteredUser retrievedUser = instance.retrieveByNick("ciccioEloTestN");
+		RegisteredUser retrievedUser = (RegisteredUser) instance.retrieveByNick("ciccioEloTestN");
 		assertTrue(1500==retrievedUser.getElo("tressette1v1"));
 	}
 	
@@ -138,12 +143,25 @@ public class UserDAOImplTest {
 		instance.create(user);
 		instance.create(user1);
 		// TODO review the generated test code and remove the default call to fail.
-		List<Pair<String, Integer>> userRanking = instance.getUsersRanking("tressette1v1");
+		List<Pair<String, Integer>> userRanking = instance.getCompetitorRanking("tressette1v1");
 		assertTrue(1500==userRanking.get(0).getValue());
 		assertTrue(1100==userRanking.get(1).getValue());
 		System.out.println("");
 	}
 	
-	
+	@Test
+	public void testUpdateCompetitor() {
+		RegisteredUser userToUpdate = new RegisteredUser();
+		userToUpdate.setNickname("ciccio");
+		instance.create(userToUpdate);
+		userToUpdate.updateElo("tressette1v1", 1500);
+		instance.updateCompetitor(userToUpdate);
+		assertTrue(1500 == instance.retrieveByNick("ciccio").getElo("tressette1v1"));
+		userToUpdate.updateElo("tressette1v1", 2000);
+		instance.updateCompetitor(userToUpdate);
+		assertTrue(2000 == instance.retrieveByNick("ciccio").getElo("tressette1v1"));
+		
+		
+	}
 	
 }
