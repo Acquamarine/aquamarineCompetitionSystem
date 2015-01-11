@@ -80,8 +80,28 @@
 							</div>
 						</div>
 						<div class="MatchStats">
-							
-						</div>
+                                                    <div class="MatchScores">
+                                                        <div class="PlayerMatchDetails">
+                                                            <div class="CompetitorName">
+                                                                    ${matchResult.getPlayer1().getNickname()}
+                                                            </div>
+                                                            <div class="Score">
+                                                                    ${matchResult.getPlayer1Score()}
+                                                            </div>
+                                                        </div>
+                                                        <div class="MatchPlayersSeparator">
+                                                            vs
+                                                        </div>
+                                                        <div class="PlayerMatchDetails">
+                                                            <div class="CompetitorName">
+                                                                    ${matchResult.getPlayer2().getNickname()}
+                                                            </div>
+                                                            <div class="Score">
+                                                                    ${matchResult.getPlayer2Score()}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 					</div>
 				</c:forEach>
 			</div>

@@ -48,3 +48,14 @@
 }
 
 
+.CompetitorHeader{display:inline-block; display:inline \9; width: 100%; position: relative;}
+.ProfileIcon{display:inline-block;vertical-align:bottom; margin-left: 4em;}
+.CompetitorInformation{display:inline-block;display:inline \9; margin-left: 2em;}
+.GameSelectorDiv{vertical-align:bottom; display:inline-block;display:inline \9; position: absolute; right:0em; margin-right: 4em; bottom: 0em;}
+.SearchBoxBlock{display:inline-block;display:inline \9;}
+.SearchBoxInput{display:inline-block;display:inline \9;}
+.SearchButton{display:inline-block;display:inline \9;}
+.PlayerMatchDetails{display:inline-block;display:inline \9; vertical-align:bottom;}
+.MatchPlayersSeparator{display:inline-block;display:inline \9; vertical-align: central; position: relative; margin-left: 5em; margin-right: 5em;}
+.MatchScores{display:inline-block;display:inline \9; vertical-align:bottom; position: relative; margin-left: 20em}
+.Score{margin-left: auto; margin-right: auto ; position: relative; text-align: center}
