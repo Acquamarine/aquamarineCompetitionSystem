@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.Team;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
 import java.util.List;
 import javafx.util.Pair;
@@ -53,11 +54,17 @@ public class CompetitorDAOImplTest {
 		user.setNickname("ciccioN");
 		user.setUsername("ciccioU");
 		user.setPassword("ciccioP");
+		Team ciccioTeam = new Team();
+		ciccioTeam.setNickname("CiccioTeam");				
+		ciccioTeam.addMember(user);
+		user.addTeam(ciccioTeam);
+		instance.create(ciccioTeam);
 		instance.create(user);
 		// TODO review the generated test code and remove the default call to fail.
 		RegisteredUser retrievedUser = (RegisteredUser) instance.retrieveByNick("ciccioN");
 		assertEquals("ciccioU", retrievedUser.getUsername());
 		assertEquals("ciccioN", retrievedUser.getNickname());
+		Team retrievedTeam = (Team) instance.retrieveByNick("CiccioTeam");
 	}
 
 	/**
@@ -157,7 +164,9 @@ public class CompetitorDAOImplTest {
 		userToUpdate.getCompetitionProfile().put("tressette1v1", 1500);
 		instance.updateCompetitor(userToUpdate);
 		assertTrue(1500 == instance.retrieveByNick("ciccio").getElo("tressette1v1"));
-		
+		userToUpdate.getCompetitionProfile().put("tressette1v1", 2000);
+		instance.updateCompetitor(userToUpdate);
+		assertTrue(2000 == instance.retrieveByNick("ciccio").getElo("tressette1v1"));
 		
 		
 	}
