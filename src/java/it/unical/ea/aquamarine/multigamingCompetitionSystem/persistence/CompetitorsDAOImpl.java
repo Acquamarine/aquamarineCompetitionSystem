@@ -127,5 +127,16 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 		}
 	}
 
+	@Override
+	public Pair<Integer,Integer> getCompetitorRankAndEloByNick(String nickname, String game) {
+		List<Pair<String, Integer>> competitorRanking = getCompetitorRanking(game);
+		for(int i=0; i<competitorRanking.size(); i++){
+			if(competitorRanking.get(i).getKey().equals(nickname)){
+				return new Pair<>(i,competitorRanking.get(i).getValue());
+			}
+		}
+		return null;
+	}
+
 
 }

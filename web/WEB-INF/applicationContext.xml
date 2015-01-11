@@ -38,7 +38,7 @@
 	    <property name="sessionFactory" ref="sessionFactory" />
 	</bean>
         
-	<bean id="matchResultsDAO" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.MatchResultsDAOImpl" >
+	<bean id="matchResultsDAO" class="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.MatchResultDAOImpl" >
 	    <property name="sessionFactory" ref="sessionFactory" />
 	</bean>
     
