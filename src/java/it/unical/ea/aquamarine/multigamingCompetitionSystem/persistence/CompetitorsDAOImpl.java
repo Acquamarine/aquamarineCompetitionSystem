@@ -1,6 +1,5 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 		String queryString = "from AbstractCompetitor where nickname = :user";
 		Query query = session.createQuery(queryString);
 		query.setParameter("user", nick);
-		RegisteredUser u = (RegisteredUser) query.uniqueResult();
+		ICompetitor u = (ICompetitor) query.uniqueResult();
 		session.close();
 		return u;
 	}
@@ -52,7 +51,7 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 		String queryString = "from AbstractCompetitor where username = :user";
 		Query query = session.createQuery(queryString);
 		query.setParameter("user", username);
-		RegisteredUser u = (RegisteredUser) query.uniqueResult();
+		ICompetitor u = (ICompetitor) query.uniqueResult();
 		session.close();
 		return u;
 	}
@@ -106,7 +105,7 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 		String queryString = "from AbstractCompetitor where id = :id";
 		Query query = session.createQuery(queryString);
 		query.setParameter("id", id);
-		RegisteredUser u = (RegisteredUser) query.uniqueResult();
+		ICompetitor u = (ICompetitor) query.uniqueResult();
 		session.close();
 		return u;
 	}
