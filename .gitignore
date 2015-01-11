@@ -1,3 +1,7 @@
 nbproject/
 build.xml
+MyDB.lck
+MyDB.log
+MyDB.properties
+MyDB.script
 /dist/
