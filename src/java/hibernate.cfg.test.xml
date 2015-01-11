@@ -13,5 +13,6 @@
         <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.AbstractCompetitor"/>  	
         <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser"/>  	
         <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.Team"/>  	
+        <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult"/>  	
     </session-factory>
 </hibernate-configuration>

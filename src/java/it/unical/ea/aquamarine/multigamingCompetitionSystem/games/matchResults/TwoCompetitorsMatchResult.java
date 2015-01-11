@@ -1,8 +1,10 @@
 
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.AbstractCompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="TwoCompetitorsMatchResult")
@@ -20,10 +24,10 @@ public class TwoCompetitorsMatchResult implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity = AbstractCompetitor.class)
 	@JoinColumn(name="player1")
 	private ICompetitor player1;
-	@ManyToOne
+	@ManyToOne(targetEntity = AbstractCompetitor.class)
 	@JoinColumn(name="player2")
 	private ICompetitor player2;
 	@Column
@@ -32,7 +36,11 @@ public class TwoCompetitorsMatchResult implements Serializable {
 	private int player2Score;
 	@Column
 	private boolean rankedMatch;
+	@Column
+	private Timestamp matchEndTime;
 
+	
+	
 	public ICompetitor getPlayer1() {
 		return player1;
 	}
@@ -71,6 +79,25 @@ public class TwoCompetitorsMatchResult implements Serializable {
 
 	public void setRankedMatch(boolean rankedMatch) {
 		this.rankedMatch = rankedMatch;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Timestamp getMatchEndTime() {
+		return matchEndTime;
+	}
+
+	public void setMatchEndTime(Timestamp matchEndTime) {
+		this.matchEndTime = matchEndTime;
+	}
+	public void setMatchEndTimeByMillis(long matchEndTime) {
+		this.matchEndTime = new Timestamp(matchEndTime);
 	}
 	
 	

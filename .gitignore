@@ -1,3 +1,8 @@
+.gitignore
 nbproject/
 build.xml
 /dist/
+MyDB.lck
+MyDB.log
+MyDB.properties
+MyDB.script

@@ -256,6 +256,7 @@ public class Tressette1v1 implements ITressette {
 		score.setPlayer1Score(finalScores.get(players.get(0)));
 		score.setPlayer2Score(finalScores.get(players.get(1)));
 		score.setRankedMatch(rankedMatch);
+		score.setMatchEndTimeByMillis(System.currentTimeMillis());
 		DAOProvider.getMatchResultsDAO().create(score);
 		
 	}

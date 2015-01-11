@@ -154,12 +154,10 @@ public class CompetitorDAOImplTest {
 		RegisteredUser userToUpdate = new RegisteredUser();
 		userToUpdate.setNickname("ciccio");
 		instance.create(userToUpdate);
-		userToUpdate.updateElo("tressette1v1", 1500);
+		userToUpdate.getCompetitionProfile().put("tressette1v1", 1500);
 		instance.updateCompetitor(userToUpdate);
 		assertTrue(1500 == instance.retrieveByNick("ciccio").getElo("tressette1v1"));
-		userToUpdate.updateElo("tressette1v1", 2000);
-		instance.updateCompetitor(userToUpdate);
-		assertTrue(2000 == instance.retrieveByNick("ciccio").getElo("tressette1v1"));
+		
 		
 		
 	}
