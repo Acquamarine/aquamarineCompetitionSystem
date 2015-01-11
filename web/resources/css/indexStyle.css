@@ -22,6 +22,7 @@ body {
 }
 #content {
     margin: 0 auto;
+	margin-top: 5em;
     width: 75em;
 	border-style: ridge;
 	border-radius: 5%;

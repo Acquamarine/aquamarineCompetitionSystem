@@ -30,25 +30,30 @@
 		<%@include file="../../resources/html/footer.html" %>
 		<script>
 			var i = 0;
-			function createColumn(htmlToIns, row) {
+			function createColumn(htmlToIns, row, id) {
 				colToAppend = document.createElement("td");
-				colToAppend.className="ranking-column ranking-table";
+				if(id!==""){
+					colToAppend.id=id;
+					colToAppend.className="Clickable";
+				}
+				colToAppend.className+=" ranking-column ranking-table";
 				colToAppend.innerHTML =htmlToIns;
 				row.appendChild(colToAppend);
 			}
 			<c:forEach items = "${usersRanking}"  var = "userRanking" >
 				console.log(${userRanking});
 			rowToAppend = document.createElement("tr");
-			createColumn((i + 1) + ".",rowToAppend);
-			createColumn("coming soon",rowToAppend);
-			createColumn("${userRanking.getKey()}",rowToAppend);
-			createColumn("${userRanking.getValue()}",rowToAppend);
-			createColumn("coming soon",rowToAppend);
-			createColumn("coming soon",rowToAppend);
-			createColumn("coming soon",rowToAppend);
-			$('#ranking').append(rowToAppend);
+			createColumn((i + 1) + ".",rowToAppend,"");
+			createColumn("coming soon",rowToAppend,"");
+			createColumn("${userRanking.getKey()}",rowToAppend,"${userRanking.getKey()}");
+			createColumn("${userRanking.getValue()}",rowToAppend,"");
+			createColumn("coming soon",rowToAppend,"");
+			createColumn("coming soon",rowToAppend,"");
+			createColumn("coming soon",rowToAppend,"");
+			$('#ranking').append(rowToAppend,"");
 			i++;
 			</c:forEach>
+				$('.Clickable').click(function(){window.location.href = "/MultigamingCompetitionSystem/userProfile?user=" +this.id;});
 		</script>
     </body>
 </html>

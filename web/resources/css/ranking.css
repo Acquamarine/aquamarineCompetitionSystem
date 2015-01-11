@@ -17,3 +17,7 @@
 	text-transform: uppercase;
 	width:1%;
 }
+
+.Clickable{
+	cursor: pointer;
+}
