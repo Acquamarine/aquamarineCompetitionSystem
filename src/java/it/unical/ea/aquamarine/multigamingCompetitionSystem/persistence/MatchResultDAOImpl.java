@@ -38,11 +38,13 @@ public class MatchResultDAOImpl implements MatchResultDAO {
 	}
 
 	@Override
-	public List<TwoCompetitorsMatchResult> retrieveCompetitorMatches(ICompetitor competitor) {
+	public List<TwoCompetitorsMatchResult> retrieveCompetitorMatches(ICompetitor competitor, String game) {
 		Session session = sessionFactory.openSession();
-		String queryString = "from TwoCompetitorsMatchResult as res  where res.player1= :player or res.player2= :player order by res.matchEndTime desc";
+		
+		String queryString = "from TwoCompetitorsMatchResult as res  where (res.player1= :player or res.player2= :player) and game= :game order by res.matchEndTime desc";
 		Query query = session.createQuery(queryString);
 		query.setParameter("player", competitor);
+		query.setParameter("game", game);
 		List<Object> competitorMatches = (List<Object>)query.list();
 		List<TwoCompetitorsMatchResult> returningList = new ArrayList<>();
 		competitorMatches.stream().forEach((competitorMatch) -> {
@@ -51,5 +53,7 @@ public class MatchResultDAOImpl implements MatchResultDAO {
 		session.close();
 		return returningList;
 	}
+
+	
 
 }

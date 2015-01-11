@@ -8,6 +8,6 @@ import java.util.List;
 public interface MatchResultDAO {
 
 	public void create(TwoCompetitorsMatchResult score);
-	public List<TwoCompetitorsMatchResult> retrieveCompetitorMatches(ICompetitor competitor);
+	public List<TwoCompetitorsMatchResult> retrieveCompetitorMatches(ICompetitor competitor, String game);
 
 }

@@ -1,8 +1,15 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.MatchResultDAO;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.List;
+import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +25,30 @@ public class UserProfileController {
 	public String userProfile(Model model, HttpServletRequest request) {
 		String nick = (String) request.getSession().getAttribute("nickname");
 		model.addAttribute("user", nick);
-		DAOProvider.getCompetitorDAO().retrieveByNick(nick).updateElo(Tressette1v1.class.getSimpleName(), 1500);
+		ICompetitor comp=DAOProvider.getCompetitorDAO().retrieveByNick(nick);
+		comp.updateElo(Tressette1v1.class.getSimpleName(), 1500);
+		TwoCompetitorsMatchResult match1 = new TwoCompetitorsMatchResult();
+		match1.setGame("Tressette1v1");
+		match1.setPlayer1(comp);
+		match1.setPlayer2(comp);
+		match1.setPlayer1Score(6);
+		match1.setPlayer2Score(5);
+		match1.setRankedMatch(false);
+		match1.setMatchEndTimeByMillis(System.currentTimeMillis());
+		DAOProvider.getMatchResultsDAO().create(match1);
+		TwoCompetitorsMatchResult match2 = new TwoCompetitorsMatchResult();
+		match2.setGame("Tressette1v1");
+		match2.setPlayer1(comp);
+		match2.setPlayer2(comp);
+		match2.setPlayer1Score(6);
+		match2.setPlayer2Score(5);
+		match2.setRankedMatch(true);
+		match2.setMatchEndTimeByMillis(System.currentTimeMillis());
+		DAOProvider.getMatchResultsDAO().create(match2);
 		String bestGame = getBestGame(nick);
 		model.addAttribute("game", bestGame);
-		computeRank(model,nick,bestGame);
+		model.addAttribute("matchHistory", getMatchHistory(nick,bestGame));
+		model.addAttribute("rankAndElo",computeRank(nick,bestGame));
 		return "/userProfile";
 	}
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "user")
@@ -29,14 +56,16 @@ public class UserProfileController {
 		model.addAttribute("user", user);
 		String bestGame = getBestGame(user);
 		model.addAttribute("game", bestGame);
-		computeRank(model,user,bestGame);
+		model.addAttribute("matchHistory", getMatchHistory(user,bestGame));
+		model.addAttribute("rankAndElo",computeRank(user,bestGame));
 		return "/userProfile";
 	}
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"user","game"})
 	public String userProfile(@RequestParam("user") String user,@RequestParam("game") String game,Model model, HttpServletRequest request) {
 		model.addAttribute("user", user);
 		model.addAttribute("game", game);
-		computeRank(model,user,game);
+		model.addAttribute("rankAndElo",computeRank(user,game));
+		model.addAttribute("matchHistory", getMatchHistory(user,game));
 		return "/userProfile";
 	}
 	
@@ -46,9 +75,17 @@ public class UserProfileController {
 		return Tressette1v1.class.getSimpleName();
 	}
 
-	private void computeRank(Model model, String nick, String game) {
+	private Pair<Integer,Integer> computeRank(String nick, String game) {
 		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
-		model.addAttribute("rankAndElo",competitorDAO.getCompetitorRankAndEloByNick(nick, game));
+		return competitorDAO.getCompetitorRankAndEloByNick(nick, game);
+	}
+
+	private List<TwoCompetitorsMatchResult> getMatchHistory(String user, String game) {
+		
+		MatchResultDAO matchResultsDAO = DAOProvider.getMatchResultsDAO();
+		ICompetitor competitor = DAOProvider.getCompetitorDAO().retrieveByNick(user);
+		return matchResultsDAO.retrieveCompetitorMatches(competitor,game);
+		
 	}
 
 	

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -43,11 +44,11 @@
 			</div>
 			<div class="CompetitorInformation">
 				<div class="CompetitorName">
-					${user}
+					${user} 
 				</div>
 				<div class="CompetitorLadderRank">
 					<a href="/MultigamingCompetitionSystem/ranking?game=Tressette1v1" class="LadderRankLink">
-						${rankAndElo.getKey()+1}
+						Rank in ${game}: <span id="rank">${rankAndElo.getKey()+1}</span>
 					</a>
 				</div>
 			</div>
@@ -56,6 +57,32 @@
 				<select id="GameSelector" onchange="changeSelectedGame()" >
 					<option value="Tressette1v1">Tressette1v1</option>
 				</select>
+			</div>
+		</div>
+		<div id="userMatchHistoryContainer">
+			<div id="matchHistory">
+				<c:forEach items="${matchHistory}" var="matchResult">
+					<div class="SingleMatchContainer">
+						<div class="MatchType">
+							<div class="SubType">
+								<c:choose>
+									<c:when test="${matchResult.isRankedMatch()}">
+										Ranked Match
+									</c:when>
+									<c:otherwise>
+										Normal Match
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div class="MatchDate">
+								${matchResult.getMatchEndTime()}
+							</div>
+						</div>
+						<div class="MatchStats">
+							
+						</div>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
 		<%@include file="../../resources/html/footer.html" %>

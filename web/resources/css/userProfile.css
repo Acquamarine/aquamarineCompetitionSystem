@@ -1,19 +1,28 @@
 .GlobalHeaderContainer{
 	position: relative;
-	width: 30em;
+	width: 100%;
 	height: 5em;
-	margin-left: 55em;
 	margin-top: 3em;
 }
+.SearchBox{
+	position:absolute;
+	right:0em;
+	margin-right: 4em;
+}
 
-.CompetitorName{display:inline-block; tedisplay:inline \9; font-size: 2em; vertical-align:bottom;}
+#rank{
+	color: #5fdbe2;
+	font-size: 1.5em;
+	margin-left: 0.5em;
+}
+.CompetitorName{display:inline-block; display:inline \9; font-size: 2em; vertical-align:bottom;}
 .CompetitorImage{display:inline-block;width:5em;height:5em;vertical-align:middle; background-image: url("/MultigamingCompetitionSystem/assets/male.png"); background-size: contain;}
 .CompetitorLadderRank{vertical-align:bottom;font-size:0.9em;}
 .CompetitorLadderRank a{text-decoration:none; font-size: 1.2em; color: #ff5400;}
-.CompetitorHeader{display:inline-block; display:inline \9; width: 100%;}
-.ProfileIcon{display:inline-block;vertical-align:bottom;}
+.CompetitorHeader{display:inline-block; display:inline \9; width: 100%; position: relative;}
+.ProfileIcon{display:inline-block;vertical-align:bottom; margin-left: 4em;}
 .CompetitorInformation{display:inline-block;display:inline \9; margin-left: 2em;}
-.GameSelectorDiv{vertical-align:bottom; display:inline-block;display:inline \9; position: absolute; right:0em; }
+.GameSelectorDiv{vertical-align:bottom; display:inline-block;display:inline \9; position: absolute; right:0em; margin-right: 4em; bottom: 0em;}
 .SearchBoxBlock{display:inline-block;display:inline \9;}
 .SearchBoxInput{display:inline-block;display:inline \9;}
 .SearchButton{display:inline-block;display:inline \9;}

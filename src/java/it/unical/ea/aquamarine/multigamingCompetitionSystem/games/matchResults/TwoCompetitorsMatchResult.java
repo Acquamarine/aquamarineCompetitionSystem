@@ -31,6 +31,8 @@ public class TwoCompetitorsMatchResult implements Serializable {
 	@JoinColumn(name="player2")
 	private ICompetitor player2;
 	@Column
+	private String game;
+	@Column
 	private int player1Score;
 	@Column
 	private int player2Score;
@@ -73,7 +75,7 @@ public class TwoCompetitorsMatchResult implements Serializable {
 		this.player2Score = player2Score;
 	}
 
-	public boolean isRankedGame() {
+	public boolean isRankedMatch() {
 		return rankedMatch;
 	}
 
@@ -98,6 +100,14 @@ public class TwoCompetitorsMatchResult implements Serializable {
 	}
 	public void setMatchEndTimeByMillis(long matchEndTime) {
 		this.matchEndTime = new Timestamp(matchEndTime);
+	}
+
+	public String getGame() {
+		return game;
+	}
+
+	public void setGame(String game) {
+		this.game = game;
 	}
 	
 	
