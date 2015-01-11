@@ -80,8 +80,8 @@
 							</div>
 						</div>
 						<div class="MatchStats">
-                                                    <div class="MatchScores">
-                                                        <div class="PlayerMatchDetails">
+                                                    <div class="MatchScores Inline">
+                                                        <div class="PlayerMatchDetails Inline">
                                                             <div class="CompetitorName">
                                                                     ${matchResult.getPlayer1().getNickname()}
                                                             </div>
@@ -89,10 +89,10 @@
                                                                     ${matchResult.getPlayer1Score()}
                                                             </div>
                                                         </div>
-                                                        <div class="MatchPlayersSeparator">
+                                                        <div class="MatchPlayersSeparator Inline">
                                                             vs
                                                         </div>
-                                                        <div class="PlayerMatchDetails">
+                                                        <div class="PlayerMatchDetails Inline">
                                                             <div class="CompetitorName">
                                                                     ${matchResult.getPlayer2().getNickname()}
                                                             </div>

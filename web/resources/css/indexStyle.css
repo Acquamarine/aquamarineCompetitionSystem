@@ -25,7 +25,7 @@ body {
 	margin-top: 5em;
     width: 75em;
 	border-style: ridge;
-	border-radius: 5%;
+	border-radius: 2em;
 	border-color: #5fdbe2;
     background-color: rgba(32, 47, 62, 0.9);
     min-height: 75em;

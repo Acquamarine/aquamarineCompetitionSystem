@@ -54,6 +54,7 @@
 			i++;
 			</c:forEach>
 				$('.Clickable').click(function(){window.location.href = "/MultigamingCompetitionSystem/userProfile?user=" +this.id;});
+				$('.Clickable').css("cursor","pointer");
 		</script>
     </body>
 </html>
