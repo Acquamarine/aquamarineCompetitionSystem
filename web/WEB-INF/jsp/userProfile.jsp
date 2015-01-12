@@ -17,20 +17,6 @@
     <body>
         <%@include file="../../resources/html/header.html" %>
         <div class="GlobalHeaderContainer">
-            <div class="GlobalHeaderSearchForm">
-                <form action="/MultigamingCompetitionSystem/userProfile" method="get">
-                    <div class="SearchBox">
-                        <div class="SearchBoxBlock Inline">
-                            <div class="SearchBoxInput Inline">
-                                <input type="text" name="user" class="Search"  placeholder="User Nickname">
-                            </div>
-                            <div class="SearchButton Inline">
-                                <input class="Submit" type="submit"  value="Search user">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
         <div class="CompetitorHeader Inline">
             <div class="ProfileIcon Inline">
@@ -49,8 +35,9 @@
                     ${user} 
                 </div>
                 <div class="CompetitorLadderRank">
+					<% pageContext.setAttribute("unrankedRank", GameConstants.UNRANKED_RANK);%>
                     <c:choose>
-                        <c:when test="${rankAndElo.getKey()==GameConstants.UNRANKED_RANK}">
+                        <c:when test="${rankAndElo.getKey()==unrankedRank}">
                             <a href="/MultigamingCompetitionSystem/ranking?game=Tressette1v1" class="LadderRankLink">
                                 Unranked in ${game}
                             </a>
@@ -61,7 +48,7 @@
                             </a>
                         </c:otherwise>
                     </c:choose>
-                    
+
                 </div>
             </div>
 
@@ -120,11 +107,11 @@
         <%@include file="../../resources/html/footer.html" %>
 
         <script>
-            function changeSelectedGame() {
-                var x = document.getElementById("GameSelector").value;
-                window.location.href = "/MultigamingCompetitionSystem/userProfile?game=" + x + "&user=" +${user};
-            }
-			
+			function changeSelectedGame() {
+				var x = document.getElementById("GameSelector").value;
+				window.location.href = "/MultigamingCompetitionSystem/userProfile?game=" + x + "&user=" +${user};
+			}
+
         </script>
     </body>
 </html>

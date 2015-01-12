@@ -38,10 +38,10 @@
 
 					<p class="contact"><label for="password">Create a password</label></p> 
 					<div>
-						<form:input type="password" id="password" name="password" required="" path="password" /> 
+						<form:input type="password" id="password" tabindex="2" name="password" required="" path="password" /> 
 					</div>
 					<p class="contact"><label for="repassword">Confirm your password</label></p> 
-					<input type="password" id="repassword" name="repassword" required=""/> 
+					<input type="password" id="repassword" tabindex="2" name="repassword" required=""/> 
 
 					<fieldset>
 						<label>Birthday</label>
@@ -74,7 +74,7 @@
 					</select><br><br>
 
 			<br>
-					<input class="buttom" name="submit" id="submit" tabindex="5" value="Sign me up!" type="submit"> 	 
+					<input class="buttom" name="submit" id="submit" tabindex="2" value="Sign me up!" type="submit"> 	 
 				</form:form> 
 			</div>      
 		</div>

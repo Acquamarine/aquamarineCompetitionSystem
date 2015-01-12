@@ -17,6 +17,7 @@ body {
     margin: 0 auto;
     background-image: url("../assets/background_main2.png");
     background-repeat: repeat;
+	
 
 
 }
@@ -91,7 +92,7 @@ body {
 	margin-left: 66%;
 	width: 17em;
 	height: 7em;
-	top:-290px;
+	top:-300px;
 	font-style: normal;
 	text-align: center;
 	font-size: 1em;
@@ -117,8 +118,7 @@ body {
 	height: 350px;
 	margin:auto;
 	margin-left: 34%;
-	padding-bottom: -500px;
-	top:-40px;
+	top: -3.9em;
 	position: relative;
 }
 
@@ -161,4 +161,17 @@ input{
 	font-family:Verdana, Geneva, sans-serif;
 }
 .Submit:hover	{ background-color: #2a78f6; }
+
+
+.HeaderSearchBox{
+	position:relative;
+	margin-left: 10%;
+	top: 8em;
+	width: 100em;
+}
+
+.Inline{
+	display:inline-block;display:inline \9;
+}
+
 
