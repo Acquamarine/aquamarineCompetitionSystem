@@ -1,4 +1,4 @@
-package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core;
+package it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users;
 
 public interface ICompetitor {
 	
@@ -9,4 +9,5 @@ public interface ICompetitor {
 	public Integer getElo(String game);
 
 	public void updateElo(String game, int winnerNewElo);
+	
 }

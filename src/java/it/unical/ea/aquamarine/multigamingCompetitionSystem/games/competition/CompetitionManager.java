@@ -1,6 +1,6 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import java.util.HashMap;

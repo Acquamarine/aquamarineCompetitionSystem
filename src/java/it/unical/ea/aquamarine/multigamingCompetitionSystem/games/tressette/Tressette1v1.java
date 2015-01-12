@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
@@ -258,6 +259,12 @@ public class Tressette1v1 implements ITressette {
 		score.setRankedMatch(rankedMatch);
 		score.setGame(Tressette1v1.class.getSimpleName());
 		score.setMatchEndTimeByMillis(System.currentTimeMillis());
+		ICompetitor winner = CompetitionManager.getInstance().getCompetitor(players.get(0));
+		if(finalScores.get(players.get(0)) < finalScores.get(players.get(1))) {
+			winner = CompetitionManager.getInstance().getCompetitor(players.get(1));
+			
+		}
+		score.setWinner(winner);
 		DAOProvider.getMatchResultsDAO().create(score);
 		
 	}

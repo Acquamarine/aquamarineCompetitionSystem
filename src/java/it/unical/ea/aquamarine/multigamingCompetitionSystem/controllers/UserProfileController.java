@@ -1,6 +1,6 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
@@ -24,28 +24,7 @@ public class UserProfileController {
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public String userProfile(Model model, HttpServletRequest request) {
 		String nick = (String) request.getSession().getAttribute("nickname");
-		
-		/*ICompetitor comp=DAOProvider.getCompetitorDAO().retrieveByNick(nick);
-		comp.updateElo(Tressette1v1.class.getSimpleName(), 1500);
-		TwoCompetitorsMatchResult match1 = new TwoCompetitorsMatchResult();
-		match1.setGame("Tressette1v1");
-		match1.setPlayer1(comp);
-		match1.setPlayer2(comp);
-		match1.setPlayer1Score(6);
-		match1.setPlayer2Score(5);
-		match1.setRankedMatch(false);
-		match1.setMatchEndTimeByMillis(System.currentTimeMillis());
-		DAOProvider.getMatchResultsDAO().create(match1);
-		TwoCompetitorsMatchResult match2 = new TwoCompetitorsMatchResult();
-		match2.setGame("Tressette1v1");
-		match2.setPlayer1(comp);
-		match2.setPlayer2(comp);
-		match2.setPlayer1Score(6);
-		match2.setPlayer2Score(5);
-		match2.setRankedMatch(true);
-		match2.setMatchEndTimeByMillis(System.currentTimeMillis());
-		DAOProvider.getMatchResultsDAO().create(match2);
-		*/
+		addTest(nick);	
 		String bestGame = getBestGame(nick);
 		buildModel(model, nick, bestGame);
 		return "/userProfile";
@@ -85,6 +64,31 @@ public class UserProfileController {
 		model.addAttribute("game", bestGame);
 		model.addAttribute("matchHistory", getMatchHistory(nick,bestGame));
 		model.addAttribute("rankAndElo",computeRank(nick,bestGame));
+	}
+
+	private void addTest(String nick) {
+		ICompetitor comp=DAOProvider.getCompetitorDAO().retrieveByNick(nick);
+		comp.updateElo(Tressette1v1.class.getSimpleName(), 1500);
+		TwoCompetitorsMatchResult match1 = new TwoCompetitorsMatchResult();
+		match1.setGame("Tressette1v1");
+		match1.setPlayer1(comp);
+		match1.setPlayer2(comp);
+		match1.setPlayer1Score(6);
+		match1.setPlayer2Score(5);
+		match1.setRankedMatch(false);
+		match1.setWinner(comp);
+		match1.setMatchEndTimeByMillis(System.currentTimeMillis());
+		DAOProvider.getMatchResultsDAO().create(match1);
+		TwoCompetitorsMatchResult match2 = new TwoCompetitorsMatchResult();
+		match2.setGame("Tressette1v1");
+		match2.setPlayer1(comp);
+		match2.setPlayer2(comp);
+		match2.setPlayer1Score(6);
+		match2.setPlayer2Score(5);
+		match2.setRankedMatch(true);
+		match2.setMatchEndTimeByMillis(System.currentTimeMillis());
+		match2.setWinner(comp);
+		DAOProvider.getMatchResultsDAO().create(match2);
 	}
 
 	

@@ -1,6 +1,5 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -30,8 +26,12 @@ import javax.persistence.Table;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
 @DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING) 
 public abstract class AbstractCompetitor extends AbstractUser implements ICompetitor{
+
+	public AbstractCompetitor() {
+		super();
+	}
 	
-	
+	protected int virtualPoints;
 	protected Map<String, Integer> competitionProfile = new HashMap<>();
 	
 	@Override
@@ -70,6 +70,17 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 	public void setCompetitionProfile(Map<String, Integer> competitionProfile) {
 		this.competitionProfile = competitionProfile;
 	}
+
+	public void setVirtualPoints(int virtualPoints) {
+		this.virtualPoints = virtualPoints;
+	}
+
+	@Column(name = "virtualPoints")
+	public int getVirtualPoints() {
+		return virtualPoints;
+	}
+	
+	
 	
 	
 }

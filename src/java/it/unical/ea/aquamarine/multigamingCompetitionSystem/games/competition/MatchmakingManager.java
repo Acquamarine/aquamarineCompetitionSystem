@@ -1,6 +1,6 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager;
 import java.util.HashMap;
 import java.util.Iterator;

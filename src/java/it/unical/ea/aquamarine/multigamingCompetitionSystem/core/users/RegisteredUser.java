@@ -28,6 +28,7 @@ public class RegisteredUser extends AbstractCompetitor implements Serializable {
 	private Set<Team> teams;
 	
 	public RegisteredUser(){
+		super();
 		username = "";
 		password = "";
 		teams = new HashSet<>();

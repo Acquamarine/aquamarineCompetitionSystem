@@ -1,7 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.GameManager;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -1,6 +1,6 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;

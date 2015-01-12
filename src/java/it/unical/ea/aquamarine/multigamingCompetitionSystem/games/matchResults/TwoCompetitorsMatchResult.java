@@ -2,7 +2,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.AbstractCompetitor;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Column;
@@ -40,6 +40,10 @@ public class TwoCompetitorsMatchResult implements Serializable {
 	private boolean rankedMatch;
 	@Column
 	private Timestamp matchEndTime;
+	
+	@ManyToOne(targetEntity = AbstractCompetitor.class)
+	@JoinColumn(name="winner")
+	private ICompetitor winner;
 
 	
 	
@@ -109,6 +113,15 @@ public class TwoCompetitorsMatchResult implements Serializable {
 	public void setGame(String game) {
 		this.game = game;
 	}
+
+	public ICompetitor getWinner() {
+		return winner;
+	}
+
+	public void setWinner(ICompetitor winner) {
+		this.winner = winner;
+	}
+	
 	
 	
 	

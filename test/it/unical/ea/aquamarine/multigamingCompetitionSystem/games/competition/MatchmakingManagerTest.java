@@ -1,8 +1,9 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,21 +85,22 @@ public class MatchmakingManagerTest {
 	@Test
 	public void testStartQueuesThread() {
 		System.out.println("startQueuesThread");
-		MultigamingBlManager.getInstance().addGameManager("Tressette", new TressetteGameManager());
+		String game = Tressette1v1.class.getSimpleName();
+		MultigamingBlManager.getInstance().addGameManager(game, new TressetteGameManager());
 		MatchmakingManager instance = new MatchmakingManager();
 		instance.startQueuesThread();
-		String game = "Tressette";
 		String player1Nick = "ciccio";
 		RegisteredUser player1 = new RegisteredUser();
 		player1.setNickname(player1Nick);
+		player1.setId(0);
 		String player2Nick = "pippo";
 		RegisteredUser player2 = new RegisteredUser();
 		player2.setNickname(player2Nick);
-		
+		player2.setId(1);
 		instance.addToQueue(game, player1);
 		instance.addToQueue(game, player2);
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 		} catch (InterruptedException ex) {
 			Logger.getLogger(MatchmakingManagerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}

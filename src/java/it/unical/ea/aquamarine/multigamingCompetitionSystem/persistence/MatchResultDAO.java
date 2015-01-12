@@ -1,7 +1,7 @@
 
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
 import java.util.List;
 

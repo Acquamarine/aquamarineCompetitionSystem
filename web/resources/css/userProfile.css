@@ -15,6 +15,12 @@
 	font-size: 1.5em;
 	margin-left: 0.5em;
 }
+body {
+    color: black;
+}
+#content{
+    font-size: 1.1em;
+}
 .CompetitorName{ font-size: 2em; vertical-align:bottom;}
 .CompetitorImage{width:6em;height:6em;vertical-align:middle;}
 .CompetitorLadderRank{vertical-align:bottom;font-size:0.9em;}
@@ -29,9 +35,16 @@
 
 .SingleMatchContainer{
 	margin-top: 2em;
+        margin-left: 10em;
+        margin-right: 10em;
+        border-style: ridge;
+        overflow: hidden;
+        border-radius: 1em;
 }
 .MatchType{
-	margin-left: 6em;
+        padding-top: 1em;
+        padding-bottom: 0.5em;
+	padding-left: 2em;
 }
 
 .MatchDate{
@@ -48,7 +61,30 @@
 }
 
 
-.PlayerMatchDetails{ vertical-align:bottom;}
-.MatchPlayersSeparator{ vertical-align: central; position: relative; margin-left: 5em; margin-right: 5em;}
-.MatchScores{ vertical-align:bottom; position: relative; margin-left: 20em}
+.PlayerMatchDetails{ 
+    vertical-align:bottom;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+}
+.MatchPlayersSeparator{ vertical-align: top; position: relative; margin-left: 5em; margin-right: 5em; margin-top: 1em;}
+.MatchScores{ margin: auto; vertical-align:bottom; width: 100%;}
 .Score{margin-left: auto; margin-right: auto ; position: relative; text-align: center}
+
+.MatchStats{
+    padding-left: 10em;
+    padding-right: 10em;
+}
+
+.Victory.MatchStats{
+    background-color: rgba(153,255,153,1);
+}
+.Victory.MatchType{
+    background-color: rgba(120,255,120,1);
+}
+
+.Defeat.MatchStats{
+    background-color: rgba(255,120,120,1);
+}
+.Defeat.MatchType{
+    background-color: rgba(255,70,70,1);
+}

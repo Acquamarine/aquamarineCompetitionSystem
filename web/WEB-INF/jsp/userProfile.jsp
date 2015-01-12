@@ -61,8 +61,13 @@
         <div id="userMatchHistoryContainer">
             <div id="matchHistory Inline">
                 <c:forEach items="${matchHistory}" var="matchResult">
+                    <% String victoryOrDefeat = "Defeat"; %>
+                    <c:if test="${matchResult.getWinner().getNickname()==user}">
+                        <%victoryOrDefeat = "Victory"; %>
+                    </c:if>
                     <div class="SingleMatchContainer">
-                        <div class="MatchType">
+                        
+                        <div class="MatchType <%=victoryOrDefeat%>">
                             <div class="SubType Inline">
                                 <c:choose>
                                     <c:when test="${matchResult.isRankedMatch()}">
@@ -77,7 +82,7 @@
                                 ${matchResult.getMatchEndTime()}
                             </div>
                         </div>
-                        <div class="MatchStats">
+                        <div class="MatchStats <%=victoryOrDefeat%>">
                             <div class="MatchScores Inline">
                                 <div class="PlayerMatchDetails Inline">
                                     <div class="CompetitorName">
