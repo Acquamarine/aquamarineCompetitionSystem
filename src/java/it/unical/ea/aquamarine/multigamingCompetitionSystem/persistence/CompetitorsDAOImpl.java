@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
@@ -135,7 +136,7 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 				return new Pair<>(i,competitorRanking.get(i).getValue());
 			}
 		}
-		return null;
+		return new Pair<>(GameConstants.UNRANKED_RANK, GameConstants.UNRANKED_ELO);
 	}
 
 
