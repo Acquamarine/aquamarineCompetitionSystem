@@ -19,11 +19,11 @@
 			<div class="GlobalHeaderSearchForm">
 				<form action="/MultigamingCompetitionSystem/userProfile" method="get">
 					<div class="SearchBox">
-						<div class="SearchBoxBlock">
-							<div class="SearchBoxInput">
+						<div class="SearchBoxBlock Inline">
+							<div class="SearchBoxInput Inline">
 								<input type="text" name="user" class="Search"  placeholder="User Nickname">
 							</div>
-							<div class="SearchButton">
+							<div class="SearchButton Inline">
 								<input type="submit"  value="Search user">
 							</div>
 						</div>
@@ -31,19 +31,20 @@
 				</form>
 			</div>
 		</div>
-		<div class="CompetitorHeader">
-			<div class="ProfileIcon">
-				<div class="CompetitorImage">
+		<div class="CompetitorHeader Inline">
+			<div class="ProfileIcon Inline">
+				<div class="CompetitorImage Inline">
 					<div class="borderImage">
 						<img src="">
 					</div>
 					<div class="CompetitorAvatar">
+						<img class="CompetitorAvatarImage" src="/MultigamingCompetitionSystem/assets/male.png"/>
 					</div>
 				</div>
 
 			</div>
-			<div class="CompetitorInformation">
-				<div class="CompetitorName">
+			<div class="CompetitorInformation Inline">
+				<div class="CompetitorName Inline">
 					${user} 
 				</div>
 				<div class="CompetitorLadderRank">
@@ -53,18 +54,18 @@
 				</div>
 			</div>
 
-			<div class="GameSelectorDiv">
+			<div class="GameSelectorDiv Inline">
 				<select id="GameSelector" onchange="changeSelectedGame()" >
 					<option value="Tressette1v1">Tressette1v1</option>
 				</select>
 			</div>
 		</div>
 		<div id="userMatchHistoryContainer">
-			<div id="matchHistory">
+			<div id="matchHistory Inline">
 				<c:forEach items="${matchHistory}" var="matchResult">
 					<div class="SingleMatchContainer">
 						<div class="MatchType">
-							<div class="SubType">
+							<div class="SubType Inline">
 								<c:choose>
 									<c:when test="${matchResult.isRankedMatch()}">
 										Ranked Match
@@ -74,13 +75,13 @@
 									</c:otherwise>
 								</c:choose>
 							</div>
-							<div class="MatchDate">
+							<div class="MatchDate Inline">
 								${matchResult.getMatchEndTime()}
 							</div>
 						</div>
 						<div class="MatchStats">
-                                                    <div class="MatchScores">
-                                                        <div class="PlayerMatchDetails">
+                                                    <div class="MatchScores Inline">
+                                                        <div class="PlayerMatchDetails Inline">
                                                             <div class="CompetitorName">
                                                                     ${matchResult.getPlayer1().getNickname()}
                                                             </div>
@@ -88,10 +89,10 @@
                                                                     ${matchResult.getPlayer1Score()}
                                                             </div>
                                                         </div>
-                                                        <div class="MatchPlayersSeparator">
+                                                        <div class="MatchPlayersSeparator Inline">
                                                             vs
                                                         </div>
-                                                        <div class="PlayerMatchDetails">
+                                                        <div class="PlayerMatchDetails Inline">
                                                             <div class="CompetitorName">
                                                                     ${matchResult.getPlayer2().getNickname()}
                                                             </div>
