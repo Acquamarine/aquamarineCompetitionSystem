@@ -79,7 +79,7 @@
 				}, 2000);
 
 				setTimeout(function () {
-					$('#deck').html("<img  id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png'/>" + deck + "</img>");
+					$('#deck').html("<img  id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/covers/basic.png'/>" + deck + "</img>");
 					if (player === "${nickname}" && $('#' + card).length === 0) {
 						externalDivToAppend = document.createElement("div");
 						externalDivToAppend.className = "player2-cards-container";
@@ -193,7 +193,7 @@
                 <ul id="cards-on-table-list">
                     <li class="table-card">
                         <div id="deck">
-							<img id="deck-image" class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/Dorso.png"></img>${deck}
+							<img id="deck-image" class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/covers/basic.png"></img>${deck}
                         </div>
                     </li>
                     <li class="table-card">

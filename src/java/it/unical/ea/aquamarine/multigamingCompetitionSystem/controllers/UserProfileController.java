@@ -24,8 +24,8 @@ public class UserProfileController {
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public String userProfile(Model model, HttpServletRequest request) {
 		String nick = (String) request.getSession().getAttribute("nickname");
-		model.addAttribute("user", nick);
-		ICompetitor comp=DAOProvider.getCompetitorDAO().retrieveByNick(nick);
+		
+		/*ICompetitor comp=DAOProvider.getCompetitorDAO().retrieveByNick(nick);
 		comp.updateElo(Tressette1v1.class.getSimpleName(), 1500);
 		TwoCompetitorsMatchResult match1 = new TwoCompetitorsMatchResult();
 		match1.setGame("Tressette1v1");
@@ -45,33 +45,25 @@ public class UserProfileController {
 		match2.setRankedMatch(true);
 		match2.setMatchEndTimeByMillis(System.currentTimeMillis());
 		DAOProvider.getMatchResultsDAO().create(match2);
+		*/
 		String bestGame = getBestGame(nick);
-		model.addAttribute("game", bestGame);
-		model.addAttribute("matchHistory", getMatchHistory(nick,bestGame));
-		model.addAttribute("rankAndElo",computeRank(nick,bestGame));
+		buildModel(model, nick, bestGame);
 		return "/userProfile";
 	}
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "user")
 	public String userProfile(@RequestParam("user") String user,Model model, HttpServletRequest request) {
-		model.addAttribute("user", user);
 		String bestGame = getBestGame(user);
-		model.addAttribute("game", bestGame);
-		model.addAttribute("matchHistory", getMatchHistory(user,bestGame));
-		model.addAttribute("rankAndElo",computeRank(user,bestGame));
+		buildModel(model, user, bestGame);
 		return "/userProfile";
 	}
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"user","game"})
 	public String userProfile(@RequestParam("user") String user,@RequestParam("game") String game,Model model, HttpServletRequest request) {
-		model.addAttribute("user", user);
-		model.addAttribute("game", game);
-		model.addAttribute("rankAndElo",computeRank(user,game));
-		model.addAttribute("matchHistory", getMatchHistory(user,game));
+		buildModel(model, user, game);
 		return "/userProfile";
 	}
 	
-	
-
 	private String getBestGame(String nick) {
+		//TODO get best
 		return Tressette1v1.class.getSimpleName();
 	}
 
@@ -86,6 +78,13 @@ public class UserProfileController {
 		ICompetitor competitor = DAOProvider.getCompetitorDAO().retrieveByNick(user);
 		return matchResultsDAO.retrieveCompetitorMatches(competitor,game);
 		
+	}
+
+	private void buildModel(Model model, String nick, String bestGame) {
+		model.addAttribute("user", nick);
+		model.addAttribute("game", bestGame);
+		model.addAttribute("matchHistory", getMatchHistory(nick,bestGame));
+		model.addAttribute("rankAndElo",computeRank(nick,bestGame));
 	}
 
 	
