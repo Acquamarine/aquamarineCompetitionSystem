@@ -20,7 +20,7 @@
 			<form:form id="login-form" action="" method="post" commandName="userForm">
 				<p> Username :<form:input class="loginTextField" path="username" /></p>
 				<p> Password :<form:password class="loginTextField" path="password" /></p>
-				<p> <input type="submit" value="Login" />  </p>
+				<p> <input class="Submit" type="submit" value="Login" />  </p>
 				</form:form>
 		</div>
 		<%@include file="../../resources/html/footer.html" %>

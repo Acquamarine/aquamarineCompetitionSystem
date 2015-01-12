@@ -2,11 +2,11 @@
 </div>
 <script>
 	if (${loggedIn} === true) {
-	document.getElementById("login").innerHTML = "<h1>Welcome ${username}</h1> <form id='logout-button' method='post'> <input type=submit value='Logout'/></form>" ;
+	document.getElementById("login").innerHTML = "<h1>Welcome ${username}</h1> <form id='logout-button' method='post'> <input class='Submit' type=submit value='Logout'/></form>" ;
 		$("#logout-button").attr("action", "/MultigamingCompetitionSystem/login?logout=true&page=" + window.location.pathname);
 	}
 	else {
-		document.getElementById("login").innerHTML ='<form id="login-button" action="" method="post"><input type="submit" value="Login" /></form> <br/> <form id="signup-button" action="" method="get"><input type="submit" value="SignUp" /></form>';
+		document.getElementById("login").innerHTML ='<form id="login-button" action="" method="post"><input class="Submit" type="submit" value="Login" /></form> <br/> <form id="signup-button" action="" method="get"><input class="Submit" type="submit" value="SignUp" /></form>';
 		$("#login-button").attr("action", "/MultigamingCompetitionSystem/login?page=" + window.location.pathname);
 		$("#signup-button").attr("action", "/MultigamingCompetitionSystem/register");
 		

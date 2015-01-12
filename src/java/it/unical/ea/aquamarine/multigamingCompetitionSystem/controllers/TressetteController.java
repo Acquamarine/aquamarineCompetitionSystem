@@ -159,4 +159,14 @@ public class TressetteController {
 		}
 		return json.toString();
 	}
+	
+	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = "undoQueue")
+	public String removeCompetitorFromQueue(HttpServletRequest request, @RequestParam("undoQueue") boolean ranked) {
+		if(ranked){
+			MatchmakingManager.getInstance().removeFromQueue(Tressette1v1.class.getSimpleName(), CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
+		}else{
+			//TODO: addToUnrankedQueue
+		}
+		return "/tressette";
+	}
 }

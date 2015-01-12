@@ -38,49 +38,53 @@
 
         <script>
 			<c:if test="${empty nickname}">
-				$('#put-in-ranked-queue').remove();
+			$('#put-in-ranked-queue').remove();
 			</c:if>
-            function initMatch() {
-                $.ajax({
-                    url: "tressette/gioca",
-                    success: function (data) {
-                        console.log("play call");
-                    }
-                });
-            }
-            function insertInQueue(rankedQueue) {
-                console.log(rankedQueue);
-                console.log("inserting in queue");
-                $("#choose-match").html("<img id='loading' src='/MultigamingCompetitionSystem/assets/loading.gif'>Loading</img> <form id='undo-queue'> <input type='submit' value='Annulla' enabled='false'/> </form>");
+			function initMatch() {
 				$.ajax({
-                    url: "tressette",
-                    data: {
-                        addToRankedQueue: rankedQueue
-                    },
-                    success: function (data) {
-                        console.log("add in queue success");
-                    }
-                });
-                $.ajax({
-                    url: "tressette",
-                    data: {
-                        inQueue: true
-                    },
-                    success: function (data) {
-                        console.log("match is ready");
-                        initMatch();
-                        window.location.href = "/MultigamingCompetitionSystem/tressette/gioca";
-                    }
-                });
+					url: "tressette/gioca",
+					success: function (data) {
+						console.log("play call");
+					}
+				});
+			}
+			function insertInQueue(rankedQueue) {
+				console.log(rankedQueue);
+				console.log("inserting in queue");
+				$("#choose-match").html("<img id='loading' src='/MultigamingCompetitionSystem/assets/loading.gif'>Loading</img> <form  id='undo-queue' method='post'> <input class='Submit' type='submit' value='Undo'/> </form>");
+				$('#undo-queue').attr("action","/MultigamingCompetitionSystem/tressette?undoQueue=" + rankedQueue);
+				$.ajax({
+					url: "tressette",
+					data: {
+						addToRankedQueue: rankedQueue
+					},
+					success: function (data) {
+						console.log("add in queue success");
+					}
+				});
+				$.ajax({
+					url: "tressette",
+					data: {
+						inQueue: true
+					},
+					success: function (data) {
+						console.log("match is ready");
+						initMatch();
+						window.location.href = "/MultigamingCompetitionSystem/tressette/gioca";
+					}
+				});
 
 
-            }
-            $('#put-in-ranked-queue').click(function() {
-               insertInQueue(true);
-            });
-            $('#put-in-queue').click(function() {
-               insertInQueue(false);
-            });
+			}
+			$('#put-in-ranked-queue').click(function () {
+				insertInQueue(true);
+			});
+			$('#put-in-queue').click(function () {
+				insertInQueue(false);
+			});
+
+
+
         </script>
     </body>
 </html>

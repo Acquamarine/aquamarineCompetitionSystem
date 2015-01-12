@@ -14,7 +14,7 @@
     <body>
         <%@include file="../../resources/html/header.html" %>
 		<form id="tressette_button" action="/MultigamingCompetitionSystem/tressette" method="get">
-			<input type="submit" value="Tressette" />
+			<input class="Submit" type="submit" value="Tressette" />
 		</form>
 		<%@include file="../../resources/html/footer.html" %>
     </body>

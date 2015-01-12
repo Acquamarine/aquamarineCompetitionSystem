@@ -25,7 +25,7 @@
                                 <input type="text" name="user" class="Search"  placeholder="User Nickname">
                             </div>
                             <div class="SearchButton Inline">
-                                <input type="submit"  value="Search user">
+                                <input class="Submit" type="submit"  value="Search user">
                             </div>
                         </div>
                     </div>
@@ -124,6 +124,7 @@
                 var x = document.getElementById("GameSelector").value;
                 window.location.href = "/MultigamingCompetitionSystem/userProfile?game=" + x + "&user=" +${user};
             }
+			
         </script>
     </body>
 </html>
