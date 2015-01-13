@@ -1,11 +1,6 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 

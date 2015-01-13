@@ -76,8 +76,12 @@ public class Tressette1v1 implements ITressette {
 							winner = loser;
 							loser = temp;
 						}
+						CompetitionManager.getInstance().giveVirtualPoints(winner, loser, Tressette1v1.class.getSimpleName());
 						if(rankedMatch){
 							CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getSimpleName(), winner, loser);
+						}
+						else {
+							CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getSimpleName()+"normal", winner, loser);
 						}
 					}
 					summary.setCardsInDeck(deck.size());

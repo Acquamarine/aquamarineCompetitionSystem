@@ -9,6 +9,7 @@ import javafx.util.Pair;
 
 public class GameConstants {
 
+	public static String ITEMS_CONFIG_PATH = "config/items.xml";
 	public static int UNRANKED_ELO = -1;
 	public static int UNRANKED_RANK = -1;
 	public static Map<String, Pair<Integer, Integer>> virtualPointsRewards = initVirtualPointRewards();

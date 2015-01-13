@@ -1,5 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.CompetitorEquip;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.CompetitorInventory;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -31,8 +34,11 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 		super();
 	}
 	
-	protected int virtualPoints;
+	protected int virtualPoints = 0;
 	protected Map<String, Integer> competitionProfile = new HashMap<>();
+	protected Map<String, CompetitorEquip> equip = new HashMap<>();
+	protected CompetitorInventory inventory = new CompetitorInventory();
+	
 	
 	@Override
 	public Integer getElo(String game) {
@@ -76,10 +82,36 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 	}
 
 	@Column(name = "virtualPoints")
+	@Override
 	public int getVirtualPoints() {
 		return virtualPoints;
 	}
+
+	@Override
+	public void gainVirtualPoints(Integer earnedPoints) {
+		this.virtualPoints+=earnedPoints;
+		DAOProvider.getCompetitorDAO().updateCompetitor(this);
+	}
+
+	@Override
+	@Transient
+	public Map<String, CompetitorEquip> getEquip() {
+		return equip;
+	}
+
+	public void setEquip(Map<String, CompetitorEquip> equip) {
+		this.equip = equip;
+	}
 	
+	@Override
+	@Transient
+	public CompetitorInventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(CompetitorInventory inventory) {
+		this.inventory = inventory;
+	}
 	
 	
 	

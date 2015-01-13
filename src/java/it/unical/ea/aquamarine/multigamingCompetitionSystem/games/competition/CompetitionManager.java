@@ -3,6 +3,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +60,13 @@ public class CompetitionManager {
 		return LOWER_ELO_CONSTANT - t;
 		
 		
+	}
+
+	public void giveVirtualPoints(Integer winnerId, Integer loserId, String simpleName) {
+		ICompetitor winner = activeCompetitors.get(winnerId);
+		ICompetitor loser = activeCompetitors.get(loserId);
+		winner.gainVirtualPoints(GameConstants.virtualPointsRewards.get(simpleName).getValue());
+		loser.gainVirtualPoints(GameConstants.virtualPointsRewards.get(simpleName).getKey());
 	}
 	
 }

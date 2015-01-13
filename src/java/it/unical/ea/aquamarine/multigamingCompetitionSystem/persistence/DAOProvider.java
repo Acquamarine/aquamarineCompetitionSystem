@@ -19,6 +19,10 @@ public class DAOProvider implements ApplicationContextAware {
 	public void setApplicationContext(ApplicationContext context) {
 		DAOProvider.context = context;
 	}
+	
+	public static void setContext(ApplicationContext context) {
+		DAOProvider.context = context;
+	}
 
 	
 	

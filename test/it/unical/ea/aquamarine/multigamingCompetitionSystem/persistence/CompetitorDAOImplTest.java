@@ -171,4 +171,21 @@ public class CompetitorDAOImplTest {
 		
 	}
 	
+	@Test
+	public void testVirtualPoints() {
+		RegisteredUser userToUpdate = new RegisteredUser();
+		userToUpdate.setNickname("ciccio");
+		instance.create(userToUpdate);
+		userToUpdate.getCompetitionProfile().put("tressette1v1", 1500);
+		userToUpdate.setVirtualPoints(200);
+		instance.updateCompetitor(userToUpdate);
+		assertTrue(1500 == instance.retrieveByNick("ciccio").getElo("tressette1v1"));
+		assertTrue(200 == instance.retrieveByNick("ciccio").getVirtualPoints());
+		userToUpdate.getCompetitionProfile().put("tressette1v1", 2000);
+		instance.updateCompetitor(userToUpdate);
+		assertTrue(2000 == instance.retrieveByNick("ciccio").getElo("tressette1v1"));
+		
+		
+	}
+	
 }

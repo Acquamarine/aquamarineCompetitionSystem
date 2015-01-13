@@ -132,7 +132,7 @@ public class TressetteController {
 		if(ranked){
 			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getSimpleName(), CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
 		}else{
-			//TODO: addToUnrankedQueue
+			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getSimpleName()+"normal", CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
 		}
 	}
 
@@ -165,7 +165,7 @@ public class TressetteController {
 		if(ranked){
 			MatchmakingManager.getInstance().removeFromQueue(Tressette1v1.class.getSimpleName(), CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
 		}else{
-			//TODO: addToUnrankedQueue
+			MatchmakingManager.getInstance().removeFromQueue(Tressette1v1.class.getSimpleName()+"normal", CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
 		}
 		return "/tressette";
 	}

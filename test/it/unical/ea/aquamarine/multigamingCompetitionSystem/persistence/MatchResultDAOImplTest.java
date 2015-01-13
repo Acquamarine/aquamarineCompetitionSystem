@@ -79,5 +79,6 @@ public class MatchResultDAOImplTest {
 		List<TwoCompetitorsMatchResult> retrieveCompetitorMatches = matchInstance.retrieveCompetitorMatches(user,Tressette1v1.class.getSimpleName());
 		assertTrue(4==retrieveCompetitorMatches.get(0).getPlayer1Score());
 		assertTrue(5==retrieveCompetitorMatches.get(1).getPlayer1Score());
+		
 	}
 }
