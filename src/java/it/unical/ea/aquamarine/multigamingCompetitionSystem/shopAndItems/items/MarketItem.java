@@ -1,5 +1,5 @@
 
-package it.unical.ea.aquamarine.multigamingCompetitionSystem.items;
+package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items;
 
 
 public class MarketItem extends AbstractItem {

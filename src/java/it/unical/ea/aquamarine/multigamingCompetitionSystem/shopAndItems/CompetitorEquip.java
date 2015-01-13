@@ -1,5 +1,6 @@
-package it.unical.ea.aquamarine.multigamingCompetitionSystem.items;
+package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.io.Serializable;
 import java.util.Map;
 

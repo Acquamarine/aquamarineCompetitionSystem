@@ -68,18 +68,6 @@ public class MatchmakingManagerTest {
 	}
 
 	/**
-	 * Test of possiblyCreateMatches method, of class MatchmakingManager.
-	 */
-	@Test
-	public void testPossiblyCreateMatches() {
-		System.out.println("possiblyCreateMatches");
-		MatchmakingManager instance = new MatchmakingManager();
-		instance.possiblyCreateMatches();
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-
-	/**
 	 * Test of startQueuesThread method, of class MatchmakingManager.
 	 */
 	@Test
@@ -100,7 +88,7 @@ public class MatchmakingManagerTest {
 		instance.addToQueue(game, player1);
 		instance.addToQueue(game, player2);
 		try {
-			Thread.sleep(4000);
+			Thread.sleep(2000);
 		} catch (InterruptedException ex) {
 			Logger.getLogger(MatchmakingManagerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}

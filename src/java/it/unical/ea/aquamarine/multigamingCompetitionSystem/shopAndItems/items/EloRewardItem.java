@@ -1,5 +1,5 @@
 
-package it.unical.ea.aquamarine.multigamingCompetitionSystem.items;
+package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items;
 
 
 

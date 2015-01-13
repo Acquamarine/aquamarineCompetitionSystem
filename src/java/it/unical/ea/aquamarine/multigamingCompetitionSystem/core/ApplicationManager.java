@@ -3,7 +3,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.core;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.ItemsProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 

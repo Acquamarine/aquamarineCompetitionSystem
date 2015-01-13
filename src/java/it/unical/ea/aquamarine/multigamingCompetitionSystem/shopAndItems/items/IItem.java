@@ -1,7 +1,8 @@
 
-package it.unical.ea.aquamarine.multigamingCompetitionSystem.items;
+package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemCategory;
 
 
 public interface IItem {

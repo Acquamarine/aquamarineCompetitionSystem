@@ -1,7 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.CompetitorEquip;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.CompetitorInventory;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.CompetitorEquip;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.CompetitorInventory;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import java.util.HashMap;
 import java.util.Map;

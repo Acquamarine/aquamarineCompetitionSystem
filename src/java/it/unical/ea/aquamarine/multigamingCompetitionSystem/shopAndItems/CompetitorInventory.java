@@ -1,6 +1,7 @@
 
-package it.unical.ea.aquamarine.multigamingCompetitionSystem.items;
+package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

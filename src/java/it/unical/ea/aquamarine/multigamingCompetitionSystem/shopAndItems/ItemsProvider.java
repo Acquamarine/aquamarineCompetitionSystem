@@ -1,6 +1,9 @@
 
-package it.unical.ea.aquamarine.multigamingCompetitionSystem.items;
+package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.EloRewardItem;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.MarketItem;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.ConfigReader;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
 import java.util.Collection;
