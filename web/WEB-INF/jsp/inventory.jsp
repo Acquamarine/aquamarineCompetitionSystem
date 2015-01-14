@@ -1,4 +1,4 @@
-<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.items.ItemCategory"%>
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemCategory"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

@@ -98,6 +98,7 @@ public class IndexController implements ApplicationContextAware {
 			String attribute = attributeNames.nextElement();
 			request.getSession().removeAttribute(attribute);
 		}
+		request.getSession().setAttribute("loggedIn", false);
 		
 		return "/index";
 	}

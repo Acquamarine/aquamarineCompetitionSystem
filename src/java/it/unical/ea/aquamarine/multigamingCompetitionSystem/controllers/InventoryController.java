@@ -1,8 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.IItem;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.ItemCategory;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.ItemsProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

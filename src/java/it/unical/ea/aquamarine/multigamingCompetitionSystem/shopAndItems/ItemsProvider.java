@@ -22,9 +22,7 @@ public class ItemsProvider {
 	}
 	
 	public void init() {
-		File catalinaBase = new File( System.getProperty( "catalina.base" ) ).getAbsoluteFile();
-		File xmlFile = new File( catalinaBase, GameConstants.ITEMS_CONFIG_PATH );
-		ConfigReader xmlReader = new ConfigReader(xmlFile.getAbsolutePath());
+		ConfigReader xmlReader = new ConfigReader(GameConstants.ITEMS_CONFIG_PATH);
 		Collection<ConfigReader> itemsReaders = xmlReader.getConfigReaderList("item");
 		for(ConfigReader itemReader:itemsReaders) {
 			IItem readingItem;
