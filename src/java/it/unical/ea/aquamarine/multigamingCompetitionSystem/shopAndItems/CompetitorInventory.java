@@ -1,31 +1,20 @@
 
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.AbstractItem;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="CompetitorInventory")
@@ -35,7 +24,7 @@ public class CompetitorInventory implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="inventoryId")
 	@MapKeyEnumerated(EnumType.STRING)
 	private Map<ItemCategory, ItemSet> inventoryMap = new HashMap<>();

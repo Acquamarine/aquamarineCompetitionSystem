@@ -13,9 +13,19 @@
     </head>
     <body>
         <%@include file="../../resources/html/header.html" %>
-		<form id="tressette_button" action="/MultigamingCompetitionSystem/tressette" method="get">
-			<input class="Submit" type="submit" value="Tressette" />
-		</form>
-		<%@include file="../../resources/html/footer.html" %>
+        <div class="PlatformGames">
+            <div class="PlatformGamesTitle">Competitive Games</div>
+            <div class="TressetteBanner">
+                <div class="TressetteBannerImage"></div>
+                <div class="TressetteDescription"></div>
+                <div class="TressettePlayButton">
+                    <form id="tressette_button" action="/MultigamingCompetitionSystem/tressette" method="get">
+                            <input class="Submit" type="submit" value="Play Tressette" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <%@include file="../../resources/html/footer.html" %>
     </body>
 </html>

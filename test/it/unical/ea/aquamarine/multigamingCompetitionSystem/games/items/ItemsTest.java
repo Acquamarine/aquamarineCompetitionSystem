@@ -27,7 +27,7 @@ public class ItemsTest {
 	
 	@BeforeClass
 	public static void setUpClass() {
-		GameConstants.ITEMS_CONFIG_PATH = new File("config/itemsTesting.xml").toURI();
+		GameConstants.ITEMS_CONFIG_PATH = new File("itemsTesting.xml").toURI();
 		ItemsProvider.getInstance().init();
 		ApplicationContext context = new ClassPathXmlApplicationContext("/applicationContext.xml");
 		DAOProvider.setContext(context);

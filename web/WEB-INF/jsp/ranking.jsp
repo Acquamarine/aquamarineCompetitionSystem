@@ -17,13 +17,13 @@
         <%@include file="../../resources/html/header.html" %>
 		<table class="ranking-table" id="ranking">
 			<tr>
-				<th class="ranking-heading ranking-table">Rank</th>
-				<th class="ranking-heading ranking-table">Tier</th> 
-				<th class="ranking-heading ranking-table">Player</th>
-				<th class="ranking-heading ranking-table">Elo</th>
-				<th class="ranking-heading ranking-table">Won Matches</th>
-				<th class="ranking-heading ranking-table">Lose Matches</th>
-				<th class="ranking-heading ranking-table">Percentage of won Matches</th>
+				<td class="ranking-heading ranking-table">Rank</td>
+				<td class="ranking-heading ranking-table">Tier</td> 
+				<td class="ranking-heading ranking-table">Player</td>
+				<td class="ranking-heading ranking-table">Elo</td>
+				<td class="ranking-heading ranking-table">Won Matches</td>
+				<td class="ranking-heading ranking-table">Lost Matches</td>
+				<td class="ranking-heading ranking-table">Percentage of won Matches</td>
 			</tr>
 			
 		</table>

@@ -15,7 +15,7 @@
     <body>
         <%@include file="../../resources/html/header.html" %>
         <div>
-            <img id="tressette-img" src="/MultigamingCompetitionSystem/assets/Tressette.png"/>;
+            <img id="tressette-img" src="/MultigamingCompetitionSystem/assets/Tressette.png"/>
         </div>
         <div id="tressette-descr">
             <h1> Per una descrizione dettagliata del gioco vai su 

@@ -3,7 +3,10 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.Team;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.CompetitorInventory;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;
+import java.io.File;
 import java.util.List;
 import javafx.util.Pair;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -24,7 +27,8 @@ public class CompetitorDAOImplTest {
 	
 	@BeforeClass
 	public static void setUpClass() {
-		
+		GameConstants.ITEMS_CONFIG_PATH = new File("itemsTesting.xml").toURI();
+		ItemsProvider.getInstance().init();
 	}
 	
 	@AfterClass
@@ -61,11 +65,14 @@ public class CompetitorDAOImplTest {
 		user.addTeam(ciccioTeam);
 		instance.create(ciccioTeam);
 		instance.create(user);
-		// TODO review the generated test code and remove the default call to fail.
 		RegisteredUser retrievedUser = (RegisteredUser) instance.retrieveByNick("ciccioN");
 		assertEquals("ciccioU", retrievedUser.getUsername());
 		assertEquals("ciccioN", retrievedUser.getNickname());
+		assertTrue(retrievedUser.getInventory().getInventoryMap().isEmpty());
+		retrievedUser.getInventory().addItem(ItemsProvider.getInstance().getMarketItem(1));
+		instance.updateCompetitor(retrievedUser);
 		Team retrievedTeam = (Team) instance.retrieveByNick("CiccioTeam");
+		assertEquals("CiccioTeam", retrievedTeam.getNickname());
 	}
 
 	/**

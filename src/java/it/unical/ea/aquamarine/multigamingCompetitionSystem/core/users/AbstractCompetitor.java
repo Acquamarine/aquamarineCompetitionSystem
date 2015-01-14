@@ -106,7 +106,7 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 	}
 	
 	@Override
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="inventory")
 	public CompetitorInventory getInventory() {
 		return inventory;

@@ -4,18 +4,20 @@ html {
 
 
 body {
-	color: #5fdbe2;
-	font-family: "Adobe Garamond Pro",Garamond,Baskerville,"Baskerville Old Face","Hoefler Text","Times New Roman",serif;
+    color: #5fdbe2;
+    //font-family: "Adobe Garamond Pro",Garamond,Baskerville,"Baskerville Old Face","Hoefler Text","Times New Roman",serif;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
     margin: 0% 0% 0% 0%;
 }
 
 #main {
     //padding:2% 10% 5% 10%; 
 	//width: 1350px;
+    color: #000000;
     min-width: 85em;
     min-height: 150em;
     margin: 0 auto;
-    background: linear-gradient(to bottom, rgba(120,120,255,1), white 30em);
+    background: linear-gradient(to bottom, rgba(120,150,255,1), white 30em);
     background-repeat: repeat;
 	
 
@@ -29,7 +31,8 @@ body {
 	border-style: ridge;
 	border-radius: 2em;
 	border-color: #5fdbe2;
-    background-color: rgba(32, 47, 62, 0.9);
+    //background-color: rgba(32, 47, 62, 0.9);
+    background-color: #8babb9;
     min-height: 75em;
 }
 
@@ -90,17 +93,17 @@ body {
 
 #login{
 	position:relative;
-	margin-left: 66%;
+	margin-left: 70%;
 	width: 17em;
 	height: 7em;
-	top:-300px;
+	top:-330px;
 	font-style: normal;
 	text-align: center;
 	font-size: 1em;
 	color: #5fdbe2;
 	background-color: #202f3e;
 	border-style: ridge;
-	border-radius: 15%;
+	border-radius: 1em;
 	border-color: #5fdbe2;
 	opacity: 0.9;
 }
@@ -128,8 +131,8 @@ body {
 }
 
 #tressette_button{
-	margin-left: 14em;
-	margin-top: 7em;
+	margin-left: 4em;
+	margin-top: 4em;
 }
 
 input{
@@ -180,3 +183,28 @@ input{
 }
 
 
+.TressetteBannerImage {
+	background-image: url("../assets/tressetteBanner.png");
+        background-repeat: no-repeat;
+	background-size: contain;
+        min-height: 270px;
+        min-width: 630px;
+	margin:0 auto;
+}
+
+.TressetteBanner {
+	width: 80%;
+        height: auto;
+	margin: auto;
+        margin-top: 2em;
+	padding:2em;
+        background-color: #202f3e
+}
+
+.PlatformGamesTitle {
+    color: #101010;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    text-align: center;
+    font-size: 2em;
+    margin-top: 2em;
+}
