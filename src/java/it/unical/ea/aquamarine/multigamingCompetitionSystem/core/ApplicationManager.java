@@ -4,6 +4,12 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.Multigami
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.ItemsProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -20,7 +26,14 @@ public class ApplicationManager implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		//ItemsProvider.getInstance().init();
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		URL resource = loader.getResource("/../config/items.xml");
+		try{
+			GameConstants.ITEMS_CONFIG_PATH=resource.toURI();
+		}catch(URISyntaxException ex){
+			Logger.getLogger(ApplicationManager.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		ItemsProvider.getInstance().init();
 		MultigamingBlManager.getInstance().startQueues();
 		MultigamingBlManager.getInstance().addGameManager(Tressette1v1.class.getSimpleName(), TressetteGameManager.getInstance());
 		MultigamingBlManager.getInstance().addGameManager(Tressette1v1.class.getSimpleName()+"normal", TressetteGameManager.getInstance());

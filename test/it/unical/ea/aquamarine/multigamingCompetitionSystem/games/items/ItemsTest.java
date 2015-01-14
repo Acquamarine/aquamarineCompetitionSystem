@@ -10,6 +10,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.MarketItem;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.items.VirtualShop;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
+import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -26,8 +27,8 @@ public class ItemsTest {
 	
 	@BeforeClass
 	public static void setUpClass() {
+		GameConstants.ITEMS_CONFIG_PATH = new File("config/itemsTesting.xml").toURI();
 		ItemsProvider.getInstance().init();
-		GameConstants.ITEMS_CONFIG_PATH = "config/itemsTesting.xml";
 		ApplicationContext context = new ClassPathXmlApplicationContext("/applicationContext.xml");
 		DAOProvider.setContext(context);
 	}

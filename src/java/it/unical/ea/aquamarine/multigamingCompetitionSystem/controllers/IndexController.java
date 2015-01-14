@@ -91,18 +91,15 @@ public class IndexController implements ApplicationContextAware {
 		 return "redirect:" + page;*/
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST, params = {"logout", "page"})
-	public String logout(HttpServletRequest request, @RequestParam("page") String page) {
+	@RequestMapping(value = "/login", method = RequestMethod.POST, params = {"logout"})
+	public String logout(HttpServletRequest request) {
 		Enumeration<String> attributeNames = request.getSession().getAttributeNames();
 		while(attributeNames.hasMoreElements()){
 			String attribute = attributeNames.nextElement();
 			request.getSession().removeAttribute(attribute);
 		}
-		String subPage = page.substring(29);
-		if(subPage == null){
-			subPage = "index";
-		}
-		return "redirect:" + subPage;
+		
+		return "/index";
 	}
 
 	@Override

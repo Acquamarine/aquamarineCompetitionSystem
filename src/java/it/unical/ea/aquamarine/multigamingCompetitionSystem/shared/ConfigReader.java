@@ -3,6 +3,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.shared;
 
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.w3c.dom.NodeList;
 public class ConfigReader {
 	private Element xmlNode;
 
-	public ConfigReader(String filename){
+	public ConfigReader(URI filename){
 		File xmlFile = new File(filename);
 		Document xmlDocument;
 		try{
