@@ -1,0 +1,28 @@
+#inventoryContainer{
+	font-size: 1.5em;
+	margin-left: 2em;
+	margin-top: 5em;
+}
+
+.ItemContainer{
+	font-size: 0.5em;
+	width:8em;
+	height: 10em;
+}
+
+
+
+.Image{
+	width: 5em;
+	height:9em;
+}
+
+.Submit{
+	font-size: 0.7em;
+	margin-left: 1.5em;
+}
+
+.ItemCategory{
+	margin-top: 0.5em;
+	position: relative;
+}

@@ -32,7 +32,16 @@
             </div>
             <div class="CompetitorInformation Inline">
                 <div class="CompetitorName Inline">
-                    ${user} 
+					<div class="Inline">
+						${user} 
+					</div>
+					<div class="Inline">
+						<c:if test="${not empty nickname}">
+							<c:if test="${user.equals(nickname)}">
+								<span class="Clickable" id="goToInventory">Inventory</span>
+							</c:if>
+						</c:if>
+					</div>
                 </div>
                 <div class="CompetitorLadderRank">
 					<% pageContext.setAttribute("unrankedRank", GameConstants.UNRANKED_RANK);%>
@@ -63,10 +72,10 @@
                 <c:forEach items="${matchHistory}" var="matchResult">
                     <% String victoryOrDefeat = "Defeat"; %>
                     <c:if test="${matchResult.getWinner().getNickname()==user}">
-                        <%victoryOrDefeat = "Victory"; %>
+                        <%victoryOrDefeat = "Victory";%>
                     </c:if>
                     <div class="SingleMatchContainer">
-                        
+
                         <div class="MatchType <%=victoryOrDefeat%>">
                             <div class="SubType Inline">
                                 <c:choose>
@@ -114,9 +123,13 @@
         <script>
 			function changeSelectedGame() {
 				var x = document.getElementById("GameSelector").value;
-				window.location.href = "/MultigamingCompetitionSystem/userProfile?game=" + x + "&user=" +${user};
+				window.location.href = "/MultigamingCompetitionSystem/userProfile?game=" + x + "&user=${user}";
 			}
-
+			if ($('#goToInventory').length) {
+				$('#goToInventory').click(function () {
+					window.location.href = "/MultigamingCompetitionSystem/inventory";
+				});
+			}
         </script>
     </body>
 </html>

@@ -3,7 +3,7 @@
 <script>
 	if (${loggedIn} === true) {
 	document.getElementById("login").innerHTML = "<h1>Welcome <span id='usernameToClick'>${nickname}</span></h1> <form id='logout-button' method='post'> <input class='Submit' type=submit value='Logout'/></form>" ;
-		$("#logout-button").attr("action", "/MultigamingCompetitionSystem/login?logout=true&page=" + window.location.pathname);
+		$("#logout-button").attr("action", "/MultigamingCompetitionSystem/login?logout=true");
 		$('#usernameToClick').click(function(){window.location.href = "/MultigamingCompetitionSystem/userProfile?user=" +this.innerHTML;});
 		$('#usernameToClick').css("cursor","pointer");
 	}

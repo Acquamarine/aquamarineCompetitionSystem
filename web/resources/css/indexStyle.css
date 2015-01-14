@@ -175,4 +175,8 @@ input{
 	display:inline-block;display:inline \9;
 }
 
+.Clickable{
+	cursor: pointer;
+}
+
 
