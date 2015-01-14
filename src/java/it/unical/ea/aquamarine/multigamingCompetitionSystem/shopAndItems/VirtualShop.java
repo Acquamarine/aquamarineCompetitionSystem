@@ -37,11 +37,11 @@ public class VirtualShop {
 	}
 	
 	public Map<ItemCategory, Set<MarketItem>> getAvailableItems(ICompetitor competitor) {
-		Map<ItemCategory, Set<IItem>> inventoryMap = competitor.getInventory().getInventoryMap();
+		Map<ItemCategory, ItemSet> inventoryMap = competitor.getInventory().getInventoryMap();
 		Map<ItemCategory, Set<MarketItem>> sellingItemsCopy = new HashMap<>();
 		sellingItemsCopy.putAll(sellingItems);
 		inventoryMap.keySet().stream().forEach((category) -> {
-			sellingItemsCopy.get(category).removeAll(inventoryMap.get(category));
+			sellingItemsCopy.get(category).removeAll(inventoryMap.get(category).getItems());
 		});
 		return sellingItemsCopy;
 		

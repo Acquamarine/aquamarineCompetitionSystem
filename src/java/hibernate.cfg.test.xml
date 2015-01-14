@@ -14,5 +14,8 @@
         <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser"/>  	
         <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.Team"/>  	
         <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult"/>  	
+        <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.CompetitorInventory"/>  	
+        <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemSet"/>  	
+        <mapping class="it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.AbstractItem"/>  	
     </session-factory>
 </hibernate-configuration>

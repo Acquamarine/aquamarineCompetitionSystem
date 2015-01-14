@@ -1,7 +1,6 @@
 
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems;
 
-
 public enum ItemCategory {
 	CARD_COVER("CARD_COVER"), AVATAR("AVATAR");
 	

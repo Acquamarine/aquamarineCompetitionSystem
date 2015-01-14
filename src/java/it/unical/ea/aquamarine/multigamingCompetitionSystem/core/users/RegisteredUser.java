@@ -17,10 +17,6 @@ import javax.persistence.ManyToMany;
 @DiscriminatorValue("registeredUser")
 public class RegisteredUser extends AbstractCompetitor implements Serializable {
 
-	
-	
-	
-	
 	protected String username;
 	
 	protected String password;

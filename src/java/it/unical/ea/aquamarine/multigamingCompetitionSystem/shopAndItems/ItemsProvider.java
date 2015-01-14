@@ -6,6 +6,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.E
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.MarketItem;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.ConfigReader;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
+import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,9 @@ public class ItemsProvider {
 	}
 	
 	public void init() {
-		ConfigReader xmlReader = new ConfigReader(GameConstants.ITEMS_CONFIG_PATH);
+		File catalinaBase = new File( System.getProperty( "catalina.base" ) ).getAbsoluteFile();
+		File xmlFile = new File( catalinaBase, GameConstants.ITEMS_CONFIG_PATH );
+		ConfigReader xmlReader = new ConfigReader(xmlFile.getAbsolutePath());
 		Collection<ConfigReader> itemsReaders = xmlReader.getConfigReaderList("item");
 		for(ConfigReader itemReader:itemsReaders) {
 			IItem readingItem;

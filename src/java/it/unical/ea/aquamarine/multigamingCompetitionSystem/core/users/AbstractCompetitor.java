@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -20,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -104,7 +106,8 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 	}
 	
 	@Override
-	@Transient
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="inventory")
 	public CompetitorInventory getInventory() {
 		return inventory;
 	}

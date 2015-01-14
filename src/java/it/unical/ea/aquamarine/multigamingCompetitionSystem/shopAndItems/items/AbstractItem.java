@@ -3,9 +3,13 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemCategory;
+import java.io.Serializable;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
-
-public abstract class AbstractItem implements IItem{
+@Embeddable
+public abstract class AbstractItem implements IItem, Serializable{
 
 	protected int id;
 	protected String game;
@@ -74,5 +78,6 @@ public abstract class AbstractItem implements IItem{
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	
 	
 }
