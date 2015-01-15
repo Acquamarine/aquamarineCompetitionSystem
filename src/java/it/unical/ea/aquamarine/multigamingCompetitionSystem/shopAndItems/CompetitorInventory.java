@@ -5,6 +5,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.I
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.FetchType;
@@ -24,7 +25,7 @@ public class CompetitorInventory implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinColumn(name="inventoryId")
 	@MapKeyEnumerated(EnumType.STRING)
 	private Map<ItemCategory, ItemSet> inventoryMap = new HashMap<>();

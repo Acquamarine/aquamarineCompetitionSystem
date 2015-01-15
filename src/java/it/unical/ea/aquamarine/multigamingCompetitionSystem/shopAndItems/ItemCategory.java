@@ -4,19 +4,19 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems;
 public enum ItemCategory {
 	CARD_COVER("CARD_COVER"), AVATAR("AVATAR");
 	
-	private final String name;       
+	private final String categoryName;       
 
     private ItemCategory(String name) {
-        this.name = name;
+        this.categoryName = name;
     }
 
     public boolean equalsName(String otherName){
-        return (otherName == null)? false:name.equals(otherName);
+        return (otherName == null)? false:categoryName.equals(otherName);
     }
 
 	@Override
     public String toString(){
-       return name;
+       return categoryName;
     }
 	
 	public static ItemCategory getItemCategory(String category) {

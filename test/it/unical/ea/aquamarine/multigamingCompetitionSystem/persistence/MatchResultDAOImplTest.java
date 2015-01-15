@@ -4,6 +4,8 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.Registere
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -67,6 +69,11 @@ public class MatchResultDAOImplTest {
 		res.setRankedMatch(true);
 		res.setMatchEndTimeByMillis(System.currentTimeMillis());
 		matchInstance.create(res);
+		try{
+			Thread.sleep(1000);
+		}catch(InterruptedException ex){
+			Logger.getLogger(MatchResultDAOImplTest.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		TwoCompetitorsMatchResult res2 = new TwoCompetitorsMatchResult();
 		res2.setPlayer1(user);
 		res2.setPlayer2(user);

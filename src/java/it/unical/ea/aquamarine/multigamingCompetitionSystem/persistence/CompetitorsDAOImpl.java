@@ -2,6 +2,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
@@ -27,6 +28,7 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 			session.save(competitor);
 			tx.commit();
 		}catch(Exception e){
+			e.printStackTrace();
 			if(tx != null){
 				tx.rollback();
 			}
@@ -35,6 +37,8 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 		}
 	}
 
+	
+	
 	@Override
 	public ICompetitor retrieveByNick(String nick) {
 		Session session = sessionFactory.openSession();

@@ -14,6 +14,10 @@ public class DAOProvider implements ApplicationContextAware {
 	public static MatchResultDAO getMatchResultsDAO() {
 		return (MatchResultDAO) context.getBean("matchResultsDAO");
 	}
+	
+	public static ItemDAO getItemDAO() {
+		return (ItemDAO) context.getBean("itemDAO");
+	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext context) {

@@ -14,6 +14,7 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyEnumerated;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -96,7 +99,8 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 	}
 
 	@Override
-	@Transient
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name="competitorId")
 	public Map<String, CompetitorEquip> getEquip() {
 		return equip;
 	}
@@ -114,6 +118,14 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 
 	public void setInventory(CompetitorInventory inventory) {
 		this.inventory = inventory;
+	}
+
+	@Override
+	public CompetitorEquip getEquip(String game) {
+		if(!equip.containsKey(game)){
+			equip.put(game, new CompetitorEquip());
+		}
+		return equip.get(game);
 	}
 	
 	

@@ -1,3 +1,9 @@
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor"%>
+<%@page import="java.util.Map"%>
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem"%>
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemCategory"%>
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1"%>
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser"%>
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard"%>
 <%@page import="java.util.List"%>
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand"%>
@@ -14,6 +20,7 @@
         <title>Gioca a Tressette!</title>
         <script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
         <script>
+			<%String deckCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";%>
 			var graphicComplete = true;
 			function gameComplete() {
 				$.ajax({
@@ -79,7 +86,7 @@
 				}, 2000);
 
 				setTimeout(function () {
-					$('#deck').html("<img  id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png'/>" + deck + "</img>");
+					$('#deck').html("<img  id='deck-image' class='cards_img' src=<%=deckCoverPath%>/>" + deck + "</img>");
 					if (player === "${nickname}" && $('#' + card).length === 0) {
 						externalDivToAppend = document.createElement("div");
 						externalDivToAppend.className = "player2-cards-container";
@@ -96,7 +103,7 @@
 						$('#' + card).click(cardsClick);
 					} else if (player !== "${nickname}") {
 						divToAppend = document.createElement("div");
-						divToAppend.innerHTML = "<img class='cards_img' src='/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png'/>";
+						divToAppend.innerHTML = "<img class='cards_img' src=<%=deckCoverPath%>/>";
 						divToAppend.className = "player1-cards";
 						toAppend = document.createElement("li");
 						toAppend.appendChild(divToAppend);
@@ -172,7 +179,15 @@
 			$(document).ready(function () {
 				console.log(<%=request.getSession().getAttribute("reloaded")%>);
 				eventHandler(<%=request.getSession().getAttribute("reloaded")%>);
-				<%request.getSession().setAttribute("reloaded",false);%>
+			<%request.getSession().setAttribute("reloaded", false);%>
+			<%
+				ICompetitor user = (ICompetitor) request.getSession().getAttribute("matchedCompetitor");
+				System.out.println(user.getNickname());
+				System.out.println(user.getEquip("Tressette1v1").getEquipMap());
+				if(user.getEquip("Tressette1v1").getEquipMap().containsKey(ItemCategory.CARD_COVER)){
+					String cover = user.getEquip("Tressette1v1").getEquipMap().get(ItemCategory.CARD_COVER).getName();
+					deckCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/" + cover + ".png";
+				}%>
 			});
 		</script>
     </head>
@@ -191,7 +206,7 @@
 							<c:if test='${!card.equals("")}'>
 								<li class="li-cards">
 									<div class="player1-cards">
-										<img class='cards_img' src="/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png"/>
+										<img class='cards_img' src=<%=deckCoverPath%>/>
 									</div>
 								</li>
 							</c:if>
@@ -205,7 +220,7 @@
                     <li class="table-card">
 						<c:if test="${deck!=0}">
 							<div id="deck">
-								<img id="deck-image" class='cards_img' src="/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png"></img>${deck}
+								<img id="deck-image" class='cards_img' src=<%=deckCoverPath%>></img>${deck}
 							</div>
 						</c:if>
                     </li>
@@ -252,6 +267,6 @@
         <%@include file="../../../resources/html/footer.html" %>
 
 
-       
+
     </body>
 </html>

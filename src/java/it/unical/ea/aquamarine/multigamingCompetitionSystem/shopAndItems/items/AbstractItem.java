@@ -2,15 +2,29 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemCategory;
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
-@Embeddable
+@Entity
+@Table(name="Item")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
+@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING) 
 public abstract class AbstractItem implements IItem, Serializable{
-
+	
 	protected int id;
 	protected String game;
 	protected ItemCategory category;
@@ -20,7 +34,8 @@ public abstract class AbstractItem implements IItem, Serializable{
 
 	@Override
 	public void equip(ICompetitor competitor) {
-		competitor.getEquip().get(game).equipItem(this);
+		DAOProvider.getCompetitorDAO().updateCompetitor(competitor);
+		competitor.getEquip(game).equipItem(this);
 	}
 	
 	@Override
@@ -28,6 +43,7 @@ public abstract class AbstractItem implements IItem, Serializable{
 		competitor.getEquip().get(game).unequipItem(this);
 	}
 
+	@Enumerated(EnumType.STRING)
 	@Override
 	public ItemCategory getCategory() {
 		return category;
@@ -38,6 +54,8 @@ public abstract class AbstractItem implements IItem, Serializable{
 		this.category = category;
 	}
 
+	@Id
+	@Column(name = "id")
 	@Override
 	public int getId() {
 		return id;
@@ -49,6 +67,7 @@ public abstract class AbstractItem implements IItem, Serializable{
 	}
 	
 
+	@Column(name = "game", nullable = false)
 	@Override
 	public String getGame() {
 		return game;
@@ -59,6 +78,7 @@ public abstract class AbstractItem implements IItem, Serializable{
 		this.game = game;
 	}
 
+	@Column(name = "name", nullable = false, unique = true)
 	@Override
 	public String getName() {
 		return name;
@@ -69,6 +89,7 @@ public abstract class AbstractItem implements IItem, Serializable{
 		this.name = name;
 	}
 
+	@Column(name = "displayName", nullable = false, unique = true)
 	@Override
 	public String getDisplayName() {
 		return displayName;

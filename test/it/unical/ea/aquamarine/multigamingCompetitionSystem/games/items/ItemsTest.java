@@ -66,7 +66,8 @@ public class ItemsTest {
 		assertTrue(competitor.getVirtualPoints() == 150);
 		assertTrue(competitor.getInventory().getInventoryMap().get(ItemCategory.CARD_COVER).size()==1);
 		assertTrue(competitor.getInventory().containsItem(ItemsProvider.getInstance().getMarketItem(1)));
-		
-		
 	}
+
+	
+	
 }
