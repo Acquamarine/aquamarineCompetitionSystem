@@ -79,7 +79,7 @@
 				}, 2000);
 
 				setTimeout(function () {
-					$('#deck').html("<img  id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/covers/basic.png'/>" + deck + "</img>");
+					$('#deck').html("<img  id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png'/>" + deck + "</img>");
 					if (player === "${nickname}" && $('#' + card).length === 0) {
 						externalDivToAppend = document.createElement("div");
 						externalDivToAppend.className = "player2-cards-container";
@@ -96,6 +96,7 @@
 						$('#' + card).click(cardsClick);
 					} else if (player !== "${nickname}") {
 						divToAppend = document.createElement("div");
+						divToAppend.innerHTML = "<img class='cards_img' src='/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png'/>";
 						divToAppend.className = "player1-cards";
 						toAppend = document.createElement("li");
 						toAppend.appendChild(divToAppend);
@@ -127,7 +128,7 @@
 							}
 							else {
 								console.log(reloaded);
-								if (reloaded === null || reloaded === false) {
+								if (reloaded === false) {
 									$('.li-cards').first().remove();
 								}
 							}
@@ -137,9 +138,9 @@
 								setTimeout(function () {
 									$('#card-played-0').children("img").remove();
 									$('#card-played-1').children("img").remove();
-                                                                        if (! $('#deck').length) {
-                                                                            graphicComplete=true;
-                                                                        }
+									if (!$('#deck').length) {
+										graphicComplete = true;
+									}
 								}, 1000);
 								if ($('#deck').length) {
 									distributeCard(obj.picked0, obj.winner, obj.deck + 1, false);
@@ -148,9 +149,9 @@
 
 								}
 							}
-                                                        else {
-                                                            graphicComplete = true;
-                                                        }
+							else {
+								graphicComplete = true;
+							}
 							if (obj.gameover) {
 								gameComplete();
 							} else {
@@ -169,7 +170,9 @@
 				});
 			}
 			$(document).ready(function () {
+				console.log(<%=request.getSession().getAttribute("reloaded")%>);
 				eventHandler(<%=request.getSession().getAttribute("reloaded")%>);
+				<%request.getSession().setAttribute("reloaded",false);%>
 			});
 		</script>
     </head>
@@ -184,7 +187,15 @@
                 </ul>
                 <div id="player1-cards">
                     <ul id="player1-cards-list">
-
+						<c:forEach items = "${matchedPlayerCards}"  var = "card" >
+							<c:if test='${!card.equals("")}'>
+								<li class="li-cards">
+									<div class="player1-cards">
+										<img class='cards_img' src="/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png"/>
+									</div>
+								</li>
+							</c:if>
+						</c:forEach>
                     </ul>
 
                 </div>
@@ -192,9 +203,11 @@
             <div id="cards-on-table">
                 <ul id="cards-on-table-list">
                     <li class="table-card">
-                        <div id="deck">
-							<img id="deck-image" class='cards_img' src="/MultigamingCompetitionSystem/assets/carte_napoletane/covers/basic.png"></img>${deck}
-                        </div>
+						<c:if test="${deck!=0}">
+							<div id="deck">
+								<img id="deck-image" class='cards_img' src="/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png"></img>${deck}
+							</div>
+						</c:if>
                     </li>
                     <li class="table-card">
                         <div class= "played-cards" id="card-played-0">
@@ -216,7 +229,17 @@
             <div id="player2">
                 <div id="player2-cards">
                     <ul id="player2-cards-list">
-
+						<c:forEach items = "${cards}"  var = "card" >
+							<c:if test='${!card.equals("")}'>
+								<li class="li-cards">
+									<div class="player2-cards-container">
+										<div class="player2-cards" id='${card.toString()}'>
+											<img  class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/${card.toString()}.png' />
+										</div>
+									</div>
+								</li>
+							</c:if>
+						</c:forEach>
                     </ul>
                 </div>
 				<ul id="player2_info">
@@ -228,40 +251,7 @@
         </div>
         <%@include file="../../../resources/html/footer.html" %>
 
-        <script>
-			if (${deck} === 0 && $('#deck').length) {
-				$('#deck').remove();
-			}
-			<c:forEach items = "${matchedPlayerCards}"  var = "card" >
-			if ("${card}" !== "") {
-				divToAppend = document.createElement("div");
-				divToAppend.className = "player1-cards";
-				toAppend = document.createElement("li");
-				toAppend.appendChild(divToAppend);
-				toAppend.className = "li-cards";
-				document.getElementById("player1-cards-list").appendChild(toAppend);
-			}
-			</c:forEach>
 
-		</script>
-        <script>
-            <c:forEach items = "${cards}"  var = "card" >
-			if ("${card}" !== "") {
-				externalDivToAppend = document.createElement("div");
-				externalDivToAppend.className = "player2-cards-container";
-				divToAppend = document.createElement("div");
-				divToAppend.setAttribute("href", "./");
-				var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/${card.toString()}.png";
-				divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
-				divToAppend.className = "player2-cards";
-				toAppend = document.createElement("li");
-				divToAppend.id = "${card.toString()}";
-				externalDivToAppend.appendChild(divToAppend);
-				toAppend.appendChild(externalDivToAppend);
-				toAppend.className = "li-cards";
-				document.getElementById("player2-cards-list").appendChild(toAppend);
-			}
-            </c:forEach>
-		</script>
+       
     </body>
 </html>
