@@ -5,6 +5,7 @@
  */
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.MatchmakingManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
@@ -13,6 +14,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tres
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteGameManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteRoundSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +63,7 @@ public class TressetteController {
 		}
 		Integer matchedPlayerId = playerGame.getMatchedPlayer(me);
 		String matchedPlayer = CompetitionManager.getInstance().getCompetitor(matchedPlayerId).getNickname();
+		ICompetitor matchedCompetitor = CompetitionManager.getInstance().getCompetitor(matchedPlayerId);
 		request.getSession().setAttribute(me+"", myNickname);
 		request.getSession().setAttribute(matchedPlayerId+"", matchedPlayer);
 		
@@ -71,6 +74,7 @@ public class TressetteController {
 		}
 		//TODO move to login
 		request.getSession().setAttribute("matched", matchedPlayer);
+		request.getSession().setAttribute("matchedCompetitor", matchedCompetitor);
 		NeapolitanHand myHand = playerGame.getHands().get(me);
 		NeapolitanHand matchedPlayerHand = playerGame.getHands().get(matchedPlayerId);
 		List<NeapolitanCard> cards = myHand.getHandCards();

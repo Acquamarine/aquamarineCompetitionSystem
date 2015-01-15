@@ -8,14 +8,19 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyEnumerated;
 import javax.persistence.Table;
 
 @Entity
@@ -26,11 +31,7 @@ public class ItemSet implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int id;
 	
-	@ElementCollection(targetClass = AbstractItem.class)
-	@CollectionTable(name="Items", joinColumns=@JoinColumn(name="itemset_id"))
-	@AttributeOverrides({
-	   @AttributeOverride(name="id", column=@Column(name="item_id"))
-	})
+	@ManyToMany(targetEntity = AbstractItem.class, fetch = FetchType.EAGER)
 	private Set<IItem> items = new HashSet<>();
 
 	public Set<IItem> getItems() {

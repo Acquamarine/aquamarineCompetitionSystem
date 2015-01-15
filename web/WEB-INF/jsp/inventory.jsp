@@ -31,10 +31,8 @@
 								<div class="ItemImage ">
 									<img class="Image" src="/MultigamingCompetitionSystem/assets/items/${itemsInCategory.getCategory().toString()}/${itemsInCategory.getName()}.png"/>
 								</div>
-								<div class="EquipeItem ">
-									<form  action="/MultigamingCompetitionSystem/inventory?equipeItem=${itemsInCategory.getName()}" method="post">
-										<input class="Submit EquipItem" type="submit" value="Equip" />
-									</form>
+								<div class="EquipItem ">
+									<input class="Submit EquipItem EquipItemButton" id='${itemsInCategory.getId()}' type="submit" value="Equip" />
 								</div>
 							</div>
 						</c:forEach>
@@ -43,5 +41,23 @@
 			</div>
 		</div>
 		<%@include file="../../resources/html/footer.html" %>
+		<script>
+			$(document).ready(function () {
+				$('.EquipItemButton').click(function (e) {
+					console.log(this);
+					e.preventDefault(); // <------------------ stop default behaviour of button
+					$.ajax({
+						url: "/MultigamingCompetitionSystem/inventory",
+						data: {
+							equipItem: this.id
+						},
+						success: function (data) {
+							console.log("asdfg2");
+
+						}
+					});
+				});
+			});
+		</script>
 	</body>
 </html>

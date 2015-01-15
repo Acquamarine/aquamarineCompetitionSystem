@@ -74,6 +74,7 @@ public class IndexController implements ApplicationContextAware {
 			request.getSession().setAttribute("username", registeredUser.getUsername());
 			request.getSession().setAttribute("nickname", registeredUser.getNickname());
 			request.getSession().setAttribute("playerId", registeredUser.getId());
+			request.getSession().setAttribute("registeredUser", registeredUser);
 			request.getSession().setAttribute("loggedIn", true);
 			return "redirect:" + subPage;
 		}

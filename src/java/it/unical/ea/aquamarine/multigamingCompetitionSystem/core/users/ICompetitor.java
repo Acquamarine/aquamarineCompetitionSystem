@@ -21,5 +21,7 @@ public interface ICompetitor {
 	public Map<String, CompetitorEquip> getEquip();
 	
 	public CompetitorInventory getInventory();
+
+	public CompetitorEquip getEquip(String game);
 	
 }
