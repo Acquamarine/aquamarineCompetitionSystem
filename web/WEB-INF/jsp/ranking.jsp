@@ -21,9 +21,9 @@
 				<td class="ranking-heading ranking-table">Tier</td> 
 				<td class="ranking-heading ranking-table">Player</td>
 				<td class="ranking-heading ranking-table">Elo</td>
-				<td class="ranking-heading ranking-table">Won Matches</td>
-				<td class="ranking-heading ranking-table">Lost Matches</td>
-				<td class="ranking-heading ranking-table">Percentage of won Matches</td>
+				<td class="ranking-heading ranking-table">Victories</td>
+				<td class="ranking-heading ranking-table">Defeats</td>
+				<td class="ranking-heading ranking-table">Victory rate</td>
 			</tr>
 			
 		</table>

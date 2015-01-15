@@ -14,22 +14,21 @@
     </head>
     <body>
         <%@include file="../../resources/html/header.html" %>
-        <div>
-            <img id="tressette-img" src="/MultigamingCompetitionSystem/assets/Tressette.png"/>
-        </div>
-        <div id="tressette-descr">
-            <h1> Per una descrizione dettagliata del gioco vai su 
-                <a href="http://www.tressette.info/tressette/regolamento-del-tressette.html">www.tressette.info/tressette/regolamento-del-tressette.html</a>
-        </div>
-        <div id="choose-match">
-            <ul id="tressette-ul">
-                <li class="tressette-li">
-                    <a id="put-in-ranked-queue">Mettiti in coda per una partita classificata!</a>
-                </li>
-                <li class="tressette-li">
-                    <a id="put-in-queue">Mettiti in coda per una partita di allenamento!</a>
-                </li>
-            </ul>
+        <div class="PlatformGamesTitle">Tressette 1vs1</div>
+        <div class="TressetteBanner">
+            <div class="TressetteBannerImage2"></div>
+            <div id="tressette-descr">
+            </div>
+            <div class="MatchChooserContainer">
+                <ul class="MatchChooser">
+                    <li id="rankedQueueButton" class="TressettePlayButton Inline">
+                        <input id="rankedGameInput" class="Submit" type="submit" value="Queue up for a ranked match!" />
+                    </li>
+                    <li id="normalQueueButton" class="TressettePlayButton Inline">
+                        <input id="normalGameInput" class="Submit" type="submit" value="Queue up for a normal match!" />
+                    </li>
+                </ul>
+            </div>
         </div>
         <!--<form id="gioca_button" action="/MultigamingCompetitionSystem/tressette/gioca" method="get">
                 <input type="submit" value="Gioca Ora!" />
@@ -38,7 +37,10 @@
 
         <script>
 			<c:if test="${empty nickname}">
-			$('#put-in-ranked-queue').remove();
+			$('#rankedQueueButton').children().first().attr("value", "Login to play ranked matches");
+			$('#rankedQueueButton').children().first().css("background-color", "#ff4040");
+			$('#rankedQueueButton').children().first().prop("disabled",true);
+                        
 			</c:if>
 			function initMatch() {
 				$.ajax({
@@ -51,7 +53,7 @@
 			function insertInQueue(rankedQueue) {
 				console.log(rankedQueue);
 				console.log("inserting in queue");
-				$("#choose-match").html("<img id='loading' src='/MultigamingCompetitionSystem/assets/loading.gif'>Loading</img> <form  id='undo-queue' method='post'> <input class='Submit' type='submit' value='Undo'/> </form>");
+				$(".MatchChooserContainer").html("<img id='loading' src='/MultigamingCompetitionSystem/assets/loading.gif'>Loading</img> <form  id='undo-queue' method='post'> <input class='Submit' type='submit' value='Undo'/> </form>");
 				$('#undo-queue').attr("action","/MultigamingCompetitionSystem/tressette?undoQueue=" + rankedQueue);
 				$.ajax({
 					url: "tressette",
@@ -76,10 +78,10 @@
 
 
 			}
-			$('#put-in-ranked-queue').click(function () {
+			$('#rankedGameInput').click(function () {
 				insertInQueue(true);
 			});
-			$('#put-in-queue').click(function () {
+			$('#normalGameInput').click(function () {
 				insertInQueue(false);
 			});
 
