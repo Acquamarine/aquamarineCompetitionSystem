@@ -16,13 +16,17 @@
         <div class="PlatformGames">
             <div class="PlatformGamesTitle">Competitive Games</div>
             <div class="TressetteBanner">
-                <div class="TressetteBannerImage"></div>
-                <div class="TressetteDescription"></div>
-                <div class="TressettePlayButton">
+                <div class="TressetteBannerImage Inline"></div>
+                <div class="TressetteDescription Inline">
+                    <div class="TressetteDescriptionTitle">Defeat your opponents on the table with Tressette 1vs1</div>
+                    <div class="TressetteDetails">Tressette is an italian card game. The proposed variant is designed for 2 players. Even being a card game, the outcomes of tressette heavily relies on players' game skills. Join the challenge and climb the ladder!</div>
+                    <div class="TressettePlayButton">
                     <form id="tressette_button" action="/MultigamingCompetitionSystem/tressette" method="get">
-                            <input class="Submit" type="submit" value="Play Tressette" />
+                        <input class="Submit" type="submit" value="Play Tressette" />
                     </form>
                 </div>
+                </div>
+                
             </div>
         </div>
         

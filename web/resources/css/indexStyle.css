@@ -208,3 +208,22 @@ input{
     font-size: 2em;
     margin-top: 2em;
 }
+
+.TressetteDescription {
+    width: 35%;
+    vertical-align: top;
+}
+
+.TressetteDescriptionTitle {
+    vertical-align: top;
+    font-size: 1.2em;
+    color: #ffcc00;
+}
+
+.TressetteDetails {
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 1em;
+    margin-top: 1em;
+    color: #ffffff;
+}
