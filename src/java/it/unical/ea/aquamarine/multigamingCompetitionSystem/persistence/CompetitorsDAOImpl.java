@@ -92,7 +92,8 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 	@Override
 	public List<Pair<ICompetitor, Integer>> getCompetitorRanking(String game) {
 		Session session = sessionFactory.openSession();
-		String queryString = "from AbstractCompetitor as c  where KEY(c.competitionProfile)= :game order by VALUE(c.competitionProfile) desc";
+                //TODO finish order by
+		String queryString = "from AbstractCompetitor as c  where KEY(c.competitionProfile)= :game order by (select VALUE(c2.competitionProfile) from AbstractCompetitor as c2 where KEY(c2.competitionProfile)= :game) desc";
 		Query query = session.createQuery(queryString);
 		query.setParameter("game", game);
 		List<Object> usersRanking = (List<Object>)query.list();

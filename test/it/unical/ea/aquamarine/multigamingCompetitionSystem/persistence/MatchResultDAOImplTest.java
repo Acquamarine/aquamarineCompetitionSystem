@@ -3,6 +3,9 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;
+import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +18,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -22,8 +27,8 @@ import static org.junit.Assert.*;
  */
 public class MatchResultDAOImplTest {
 	
-	private static MatchResultDAOImpl matchInstance;
-	private static CompetitorsDAOImpl userInstance;
+	private static MatchResultDAO matchInstance;
+	private static CompetitorDAO userInstance;
 	
 	public MatchResultDAOImplTest() {
 	}
@@ -38,13 +43,12 @@ public class MatchResultDAOImplTest {
 	
 	@Before
 	public void setUp() {
-		matchInstance = new MatchResultDAOImpl();
-		userInstance = new CompetitorsDAOImpl();
-		Configuration configuration = new Configuration().configure("hibernate.cfg.test.xml");
-		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-		SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
-		matchInstance.setSessionFactory(sessionFactory);
-		userInstance.setSessionFactory(sessionFactory);
+		GameConstants.ITEMS_CONFIG_PATH = new File("itemsTesting.xml").toURI();
+		ApplicationContext context = new ClassPathXmlApplicationContext("/applicationContext.xml");
+		DAOProvider.setContext(context);
+                ItemsProvider.getInstance().init();
+		userInstance = DAOProvider.getCompetitorDAO();
+		matchInstance = DAOProvider.getMatchResultsDAO();
 	
 	}
 	

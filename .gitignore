@@ -6,3 +6,4 @@ MyDB.log
 MyDB.properties
 MyDB.script
 /dist/
+/build/

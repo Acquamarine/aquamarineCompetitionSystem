@@ -19,19 +19,20 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CompetitorDAOImplTest {
 	
-	private static CompetitorsDAOImpl instance;
-	private static ItemDAOImpl itemInstance;
+	private static CompetitorDAO instance;
+	private static ItemDAO itemInstance;
 	
 	public CompetitorDAOImplTest() {
 	}
 	
 	@BeforeClass
 	public static void setUpClass() {
-		GameConstants.ITEMS_CONFIG_PATH = new File("itemsTesting.xml").toURI();
-		//ItemsProvider.getInstance().init();
+		
 	}
 	
 	@AfterClass
@@ -40,13 +41,18 @@ public class CompetitorDAOImplTest {
 	
 	@Before
 	public void setUp() {
-		instance = new CompetitorsDAOImpl();
-		itemInstance = new ItemDAOImpl();
-		Configuration configuration = new Configuration().configure("hibernate.cfg.test.xml");
+                GameConstants.ITEMS_CONFIG_PATH = new File("itemsTesting.xml").toURI();
+		ApplicationContext context = new ClassPathXmlApplicationContext("/applicationContext.xml");
+		DAOProvider.setContext(context);
+                ItemsProvider.getInstance().init();
+		instance = DAOProvider.getCompetitorDAO();
+		itemInstance = DAOProvider.getItemDAO();
+		/*Configuration configuration = new Configuration().configure("hibernate.cfg.test.xml");
 		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 		SessionFactory buildSessionFactory = configuration.buildSessionFactory(builder.build());
 		instance.setSessionFactory(buildSessionFactory);
 		itemInstance.setSessionFactory(buildSessionFactory);
+                */
 	}
 	
 	@After
@@ -162,15 +168,20 @@ public class CompetitorDAOImplTest {
 		user.setUsername("pasticcioRankingTestU");
 		user.setPassword("pasticcioRankingTestP");
 		user1.setNickname("cioRankingTestN");
-		
-		user.getCompetitionProfile().put("tressette1v1",1500);
-		user1.getCompetitionProfile().put("tressette1v1",1100);
 		instance.create(user);
 		instance.create(user1);
+		
+		user.updateElo("Tressette1v1",1500);
+		user1.updateElo("Tressette1v1",1100);
 		// TODO review the generated test code and remove the default call to fail.
-		List<Pair<ICompetitor, Integer>> userRanking = instance.getCompetitorRanking("tressette1v1");
+		List<Pair<ICompetitor, Integer>> userRanking = instance.getCompetitorRanking("Tressette1v1");
 		assertTrue(1500==userRanking.get(0).getValue());
 		assertTrue(1100==userRanking.get(1).getValue());
+                user.updateElo("A",1600);
+		user1.updateElo("A",1700);
+                List<Pair<ICompetitor, Integer>> userRanking2 = instance.getCompetitorRanking("Tressette1v1");
+		assertTrue(1700==userRanking2.get(0).getValue());
+		assertTrue(1600==userRanking2.get(1).getValue());
 		System.out.println("");
 	}
 	

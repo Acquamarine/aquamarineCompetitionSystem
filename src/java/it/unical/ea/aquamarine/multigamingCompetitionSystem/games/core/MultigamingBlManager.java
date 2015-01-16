@@ -38,7 +38,7 @@ public class MultigamingBlManager {
 	}
 	
 	public GameManager getGameManager(String id) {
-		return gameManagers.get("id");
+		return gameManagers.get(id);
 	}
 	
 	
