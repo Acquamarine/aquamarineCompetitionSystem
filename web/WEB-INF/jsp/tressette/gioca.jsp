@@ -1,3 +1,4 @@
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager"%>
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor"%>
 <%@page import="java.util.Map"%>
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem"%>

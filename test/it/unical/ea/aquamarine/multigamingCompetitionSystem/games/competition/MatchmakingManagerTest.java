@@ -38,25 +38,14 @@ public class MatchmakingManagerTest {
 	/**
 	 * Test of addToQueue method, of class MatchmakingManager.
 	 */
-	@Test
-	public void testAddToQueue() {
-		System.out.println("addToQueue");
-		String game = "Tressette";
-		String playerNick = "Ciccio";
-		RegisteredUser player = new RegisteredUser();
-		player.setNickname(playerNick);
-		MatchmakingManager instance = new MatchmakingManager();
-		instance.addToQueue(game, player);
-		assertEquals(instance.getQueuedCompetitorsMap().get(player).getCompetitor().getNickname(),playerNick);
-	}
-
+	
 	/**
 	 * Test of removeFromQueue method, of class MatchmakingManager.
 	 */
 	@Test
-	public void testRemoveFromQueue() {
+	public void testAddAndRemoveFromQueue() {
 		System.out.println("addToQueue");
-		String game = "Tressette";
+		String game = "Tressette1v1";
 		String playerNick = "ciccio";
 		RegisteredUser player = new RegisteredUser();
 		player.setNickname(playerNick);

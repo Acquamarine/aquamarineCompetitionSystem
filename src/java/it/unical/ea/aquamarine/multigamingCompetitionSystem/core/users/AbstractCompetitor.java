@@ -27,24 +27,23 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
+import org.hibernate.Hibernate;
 
 @Entity
-@Table(name="Competitor")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
-@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING) 
-public abstract class AbstractCompetitor extends AbstractUser implements ICompetitor{
+@Table(name = "Competitor")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+public abstract class AbstractCompetitor extends AbstractUser implements ICompetitor {
 
 	public AbstractCompetitor() {
 		super();
 	}
-	
+
 	protected int virtualPoints = 0;
 	protected Map<String, Integer> competitionProfile = new HashMap<>();
 	protected Map<String, CompetitorEquip> equip = new HashMap<>();
 	protected CompetitorInventory inventory = new CompetitorInventory();
-	
-	
+
 	@Override
 	public Integer getElo(String game) {
 		competitionProfile.putIfAbsent(game, 1200);
@@ -53,9 +52,8 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 
 	@Override
 	public void updateElo(String game, int elo) {
-		System.out.println(nickname + "'s elo is now "+elo+" at "+game);
+		System.out.println(nickname + "'s elo is now " + elo + " at " + game);
 		competitionProfile.put(game, elo);
-		DAOProvider.getCompetitorDAO().updateCompetitor(this);
 	}
 
 	@Id
@@ -65,7 +63,7 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 	public int getId() {
 		return super.getId(); //To change body of generated methods, choose Tools | Templates.
 	}
-	
+
 	@Column(name = "nickname", nullable = false, unique = true)
 	@Override
 	public String getNickname() {
@@ -94,13 +92,13 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 
 	@Override
 	public void gainVirtualPoints(Integer earnedPoints) {
-		this.virtualPoints+=earnedPoints;
+		this.virtualPoints += earnedPoints;
 		DAOProvider.getCompetitorDAO().updateCompetitor(this);
 	}
 
 	@Override
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="competitorId")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "competitorId")
 	public Map<String, CompetitorEquip> getEquip() {
 		return equip;
 	}
@@ -108,10 +106,10 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 	public void setEquip(Map<String, CompetitorEquip> equip) {
 		this.equip = equip;
 	}
-	
+
 	@Override
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="inventory")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "inventory")
 	public CompetitorInventory getInventory() {
 		return inventory;
 	}
@@ -127,7 +125,5 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 		}
 		return equip.get(game);
 	}
-	
-	
-	
+
 }

@@ -3,6 +3,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,8 @@ public class CompetitionManager {
 		int loserNewElo = (int) Math.round(loserPreviousElo + getEloDynamicConstant(loserPreviousElo) * (-loserExpectedWinningProbability));
 		winner.updateElo(game, winnerNewElo);
 		loser.updateElo(game, loserNewElo);
+		OnDemandPersistenceManager.getInstance().updateCompetitor(loser);
+		OnDemandPersistenceManager.getInstance().updateCompetitor(winner);
 	}
 
 	public ICompetitor getCompetitor(Integer competitorId) {

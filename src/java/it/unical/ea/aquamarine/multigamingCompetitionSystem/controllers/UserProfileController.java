@@ -6,6 +6,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tres
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.MatchResultDAO;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -69,6 +70,7 @@ public class UserProfileController {
 	private void addTest(String nick) {
 		ICompetitor comp=DAOProvider.getCompetitorDAO().retrieveByNick(nick);
 		comp.updateElo(Tressette1v1.class.getSimpleName(), 1500);
+		OnDemandPersistenceManager.getInstance().updateCompetitor(comp);
 		TwoCompetitorsMatchResult match1 = new TwoCompetitorsMatchResult();
 		match1.setGame("Tressette1v1");
 		match1.setPlayer1(comp);

@@ -34,13 +34,14 @@ public abstract class AbstractItem implements IItem, Serializable{
 
 	@Override
 	public void equip(ICompetitor competitor) {
-		DAOProvider.getCompetitorDAO().updateCompetitor(competitor);
 		competitor.getEquip(game).equipItem(this);
+		DAOProvider.getCompetitorDAO().updateCompetitor(competitor);
 	}
 	
 	@Override
 	public void unequip(ICompetitor competitor) {
 		competitor.getEquip().get(game).unequipItem(this);
+		DAOProvider.getCompetitorDAO().updateCompetitor(competitor);
 	}
 
 	@Enumerated(EnumType.STRING)

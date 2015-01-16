@@ -2,10 +2,13 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.CompetitorEquip;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javafx.util.Pair;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -93,7 +96,7 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 	public List<Pair<ICompetitor, Integer>> getCompetitorRanking(String game) {
 		Session session = sessionFactory.openSession();
                 //TODO finish order by
-		String queryString = "from AbstractCompetitor as c  where KEY(c.competitionProfile)= :game order by (select VALUE(c2.competitionProfile) from AbstractCompetitor as c2 where KEY(c2.competitionProfile)= :game) desc";
+		String queryString = "from AbstractCompetitor as c  where KEY(c.competitionProfile)= :game order by  c.competitionProfile[:game] desc";
 		Query query = session.createQuery(queryString);
 		query.setParameter("game", game);
 		List<Object> usersRanking = (List<Object>)query.list();
@@ -143,6 +146,42 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 			}
 		}
 		return new Pair<>(GameConstants.UNRANKED_RANK, GameConstants.UNRANKED_ELO);
+	}
+
+	@Override
+	public void initializeEquip(ICompetitor competitor) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			session.update(competitor);
+			competitor.getEquip().size();
+			tx.commit();
+		}catch(Exception e){
+			if(tx != null){
+				tx.rollback();
+			}
+		}finally{
+			session.close();
+		}
+	}
+
+	@Override
+	public void initializeInventory(ICompetitor competitor) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			session.update(competitor);
+			competitor.getInventory().getInventoryMap().size();
+			tx.commit();
+		}catch(Exception e){
+			if(tx != null){
+				tx.rollback();
+			}
+		}finally{
+			session.close();
+		}
 	}
 
 

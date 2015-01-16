@@ -9,6 +9,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsPr
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.MarketItem;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.VirtualShop;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
 import java.io.File;
 import org.junit.After;
@@ -62,6 +63,7 @@ public class ItemsTest {
 		competitor.setNickname("ciccio");
 		competitor.setVirtualPoints(200);
 		competitor.setId(1);
+		OnDemandPersistenceManager.getInstance().initializeInventory(competitor);
 		VirtualShop.getInstance().buyItem(competitor, ItemsProvider.getInstance().getMarketItem(1));
 		assertTrue(competitor.getVirtualPoints() == 150);
 		assertTrue(competitor.getInventory().getInventoryMap().get(ItemCategory.CARD_COVER).size()==1);

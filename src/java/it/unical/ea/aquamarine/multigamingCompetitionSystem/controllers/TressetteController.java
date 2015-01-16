@@ -15,6 +15,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tres
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.TressetteRoundSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class TressetteController {
 		Integer matchedPlayerId = playerGame.getMatchedPlayer(me);
 		String matchedPlayer = CompetitionManager.getInstance().getCompetitor(matchedPlayerId).getNickname();
 		ICompetitor matchedCompetitor = CompetitionManager.getInstance().getCompetitor(matchedPlayerId);
+		OnDemandPersistenceManager.getInstance().initializeEquip(matchedCompetitor);
 		request.getSession().setAttribute(me+"", myNickname);
 		request.getSession().setAttribute(matchedPlayerId+"", matchedPlayer);
 		

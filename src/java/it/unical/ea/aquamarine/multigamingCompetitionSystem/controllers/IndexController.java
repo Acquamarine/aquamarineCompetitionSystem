@@ -28,25 +28,7 @@ public class IndexController implements ApplicationContextAware {
 		if(request.getSession().getAttribute("loggedIn") == null){
 			request.getSession().setAttribute("loggedIn", false);
 		}
-		/*
-		CompetitorDAO competitorDao = DAOProvider.getCompetitorDAO();
-		RegisteredUser user1 = new RegisteredUser();
-		user1.setNickname("ciccio");
-		user1.updateElo("Tressette1v1", 1200);
-		RegisteredUser user4 = new RegisteredUser();
-		user4.setNickname("ciccio4");
-		user4.updateElo("Tressette1v1", 1100);
-		RegisteredUser user2 = new RegisteredUser();
-		user2.setNickname("ciccio2");
-		user2.updateElo("Tressette1v1", 1800);
-		RegisteredUser user3 = new RegisteredUser();
-		user3.setNickname("ciccio3");
-		user3.updateElo("Tressette1v1", 2000);
-		competitorDao.create(user3);
-		competitorDao.create(user1);
-		competitorDao.create(user2);
-		competitorDao.create(user4);
-		*/
+		
 		return "index";
 	}
 

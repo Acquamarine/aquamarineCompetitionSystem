@@ -94,6 +94,7 @@ public class TressetteGameManager implements GameManager {
 		activeMatches.remove(tressetteGame.getPlayers().get(1));
 	}
 	
+	@Override
 	public synchronized boolean isCompetitorInGame(ICompetitor competitor) {
 		return activeMatches.get(competitor.getId()) !=null;
 		

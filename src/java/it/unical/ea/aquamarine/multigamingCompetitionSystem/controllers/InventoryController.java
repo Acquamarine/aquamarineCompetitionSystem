@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.util.HashMap;
@@ -18,31 +19,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/inventory")
 public class InventoryController {
-	
-	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST})
-	public String inventory(HttpServletRequest request, Model m){
-		if(request.getSession().getAttribute("nickname")!=null){
-			m.addAttribute("user",request.getSession().getAttribute("nickname"));
+
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+	public String inventory(HttpServletRequest request, Model m) {
+		if(request.getSession().getAttribute("nickname") != null){
+			m.addAttribute("user", request.getSession().getAttribute("nickname"));
 			//TODO get from DAO
-			ItemsProvider.getInstance().init();//TODO delegate to ApplicationManager
-			Map<String, Set<IItem>> inventory = new HashMap<>();
-			Set<IItem> items = new HashSet<>();
-			items.add(ItemsProvider.getInstance().getEloRewardItem(2));
-			items.add(ItemsProvider.getInstance().getMarketItem(1));
-			inventory.put("card", items);
-			inventory.put("avatar", new HashSet<>());
-			m.addAttribute("inventoryMap", inventory);
+			RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
+			OnDemandPersistenceManager.getInstance().initializeInventory(user);
+			m.addAttribute("inventoryMap", user.getInventory().getInventoryMap());
 			return "/inventory";
 		}
 		return "/login";
 	}
-	
-	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST}, params = "equipItem")
-	public void equipItem(HttpServletRequest request, @RequestParam("equipItem") int itemId){
+
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "equipItem")
+	public void equipItem(HttpServletRequest request, @RequestParam("equipItem") int itemId) {
 		IItem item = ItemsProvider.getInstance().getItem(itemId);
 		RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
 		item.equip(user);
-		System.out.println("equipItem "+itemId);
+		System.out.println("equipItem " + itemId);
 	}
-	
+
 }

@@ -3,6 +3,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.MarketItem;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class VirtualShop {
 	}
 	
 	public Map<ItemCategory, Set<MarketItem>> getAvailableItems(ICompetitor competitor) {
+		OnDemandPersistenceManager.getInstance().initializeInventory(competitor);
 		Map<ItemCategory, ItemSet> inventoryMap = competitor.getInventory().getInventoryMap();
 		Map<ItemCategory, Set<MarketItem>> sellingItemsCopy = new HashMap<>();
 		sellingItemsCopy.putAll(sellingItems);
