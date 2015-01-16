@@ -69,26 +69,33 @@ public class TressetteGameManager implements GameManager {
 				lock.unlock();
 			}
 		}
+		else {
+			lock.unlock();
+		}
 		return activeMatches.get(player);
 	}
 	
-	public Tressette1v1 getPlayerCompletedMatch(Integer player) {
+	public synchronized Tressette1v1 getPlayerCompletedMatch(Integer player) {
 		return completedMatches.get(player);
 	}
 	
-	public Tressette1v1 getPlayerActiveMatch(Integer player) {
+	public synchronized Tressette1v1 getPlayerActiveMatch(Integer player) {
 		return activeMatches.get(player);
 	}
 
-	public Integer getMatchedWith(Integer player) {
+	public synchronized Integer getMatchedWith(Integer player) {
 		return matchedPlayers.get(player);
 	}
 
-	public void gameCompletion(Tressette1v1 tressetteGame) {
+	public synchronized void gameCompletion(Tressette1v1 tressetteGame) {
 		completedMatches.put(tressetteGame.getPlayers().get(0), tressetteGame);
 		completedMatches.put(tressetteGame.getPlayers().get(1), tressetteGame);
 		activeMatches.remove(tressetteGame.getPlayers().get(0));
 		activeMatches.remove(tressetteGame.getPlayers().get(1));
+	}
+	
+	public synchronized boolean isCompetitorInGame(ICompetitor competitor) {
+		return activeMatches.get(competitor.getId()) !=null;
 		
 	}
 	

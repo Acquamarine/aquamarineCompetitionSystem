@@ -11,7 +11,7 @@
 }
 
 #rank{
-	color: #5fdbe2;
+	color: darkblue;
 	font-size: 1.5em;
 	margin-left: 0.5em;
 }
@@ -24,7 +24,7 @@ body {
 .CompetitorName{ font-size: 2em; vertical-align:bottom;}
 .CompetitorImage{width:6em;height:6em;vertical-align:middle;}
 .CompetitorLadderRank{vertical-align:bottom;font-size:0.9em;}
-.CompetitorLadderRank a{text-decoration:none; font-size: 1.2em; color: #ff5400;}
+.CompetitorLadderRank a{text-decoration:none; font-size: 1.2em; color: #4b4b4b;}
 .CompetitorHeader{width: 100%; position: relative;}
 .ProfileIcon{vertical-align:bottom; margin-left: 4em;}
 .CompetitorInformation{margin-left: 2em;}

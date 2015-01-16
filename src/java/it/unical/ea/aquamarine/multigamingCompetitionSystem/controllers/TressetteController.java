@@ -82,6 +82,7 @@ public class TressetteController {
 		model.addAttribute("cards", cards);
 		model.addAttribute("matchedPlayerCards", matchedPlayerCards);
 		model.addAttribute("userForm", new RegisteredUser());
+		model.addAttribute("cardOnTable", playerGame.getFirstCardOnTable());
 		Integer turnPlayer = playerGame.getTurnPlayer();
 		model.addAttribute("turn", request.getSession().getAttribute(turnPlayer+""));
 		return "/tressette/gioca";

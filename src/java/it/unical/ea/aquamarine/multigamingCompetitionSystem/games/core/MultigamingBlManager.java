@@ -37,5 +37,9 @@ public class MultigamingBlManager {
 		MatchmakingManager.getInstance().startQueuesThread();
 	}
 	
+	public GameManager getGameManager(String id) {
+		return gameManagers.get("id");
+	}
+	
 	
 }

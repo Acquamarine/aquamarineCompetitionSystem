@@ -22,6 +22,9 @@ public class MatchmakingManager {
 	private Map<String, CompetitorsQueue> queues = new HashMap<>();
 
 	public synchronized void addToQueue(String game, ICompetitor competitor) {
+		if(MultigamingBlManager.getInstance().getGameManager(game).isCompetitorInGame(competitor)) {
+			return;
+		}
 		if (queues.get(game) == null) {
 			queues.put(game, new CompetitorsQueue(game));
 		}

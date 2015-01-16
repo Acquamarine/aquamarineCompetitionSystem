@@ -4,6 +4,8 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetit
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.MatchResultDAO;
+import java.util.LinkedList;
 import java.util.List;
 import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +23,15 @@ public class RankingController {
 			request.getSession().setAttribute("loggedIn", false);
 		}
 		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
-		List<Pair<String, Integer>> usersRanking = competitorDAO.getCompetitorRanking(game);
+		MatchResultDAO matchResultsDAO = DAOProvider.getMatchResultsDAO();
+		List<Pair<ICompetitor, Integer>> usersRankingWithCompetitor = competitorDAO.getCompetitorRanking(game);
+		List<Pair<String, Integer>> usersRanking = new LinkedList<>();
+		List<Pair<Integer, Integer>> usersDefeatsAndVictories = new LinkedList<>();
+		for(Pair<ICompetitor, Integer> userRankingWithCompetitor : usersRankingWithCompetitor) {
+			usersRanking.add(new Pair<>(userRankingWithCompetitor.getKey().getNickname(), userRankingWithCompetitor.getValue()));
+			usersDefeatsAndVictories.add(matchResultsDAO.retrieveDefeatsAndVictories(userRankingWithCompetitor.getKey(), game));
+		}
+		model.addAttribute("usersDefeatsAndVictories", usersDefeatsAndVictories);
 		model.addAttribute("usersRanking",usersRanking);
 		return "/ranking";
 	}

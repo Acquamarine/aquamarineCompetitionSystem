@@ -49,7 +49,7 @@ public class Tressette1v1 implements ITressette {
 	}
 
 	@Override
-	public TressetteRoundSummary playCard(Integer playerId, NeapolitanCard card) {
+	public synchronized TressetteRoundSummary playCard(Integer playerId, NeapolitanCard card) {
 		TressetteRoundSummary summary = new TressetteRoundSummary();
 		if(playerId.equals(turnPlayer) && !gameComplete){
 			summary.setActionPlayer(turnPlayer);
@@ -271,5 +271,12 @@ public class Tressette1v1 implements ITressette {
 		score.setWinner(winner);
 		DAOProvider.getMatchResultsDAO().create(score);
 		
+	}
+
+	public synchronized NeapolitanCard getFirstCardOnTable() {
+		if(table.size() == 1) {
+			return table.get(0);
+		}
+		return null;
 	}
 }

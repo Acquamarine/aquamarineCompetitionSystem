@@ -54,6 +54,24 @@ public class MatchResultDAOImpl implements MatchResultDAO {
 		return returningList;
 	}
 
+	@Override
+	public Pair<Integer, Integer> retrieveDefeatsAndVictories(ICompetitor competitor, String game) {
+		List<TwoCompetitorsMatchResult> matchHistory = retrieveCompetitorMatches(competitor, game);
+		int victory = 0;
+		int defeats = 0;
+		for(TwoCompetitorsMatchResult result:matchHistory) {
+			if(result.getWinner().equals(competitor)) {
+				victory++;
+			}
+			else {
+				defeats++;
+			}
+		}
+		return new Pair<>(defeats, victory);
+	}
+
+	
+	
 	
 
 }

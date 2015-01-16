@@ -12,7 +12,7 @@ public interface CompetitorDAO {
 	public boolean doesCompetitorExistByNick(String nick);
 	public ICompetitor retrieveById(Integer competitor);
 	public void updateCompetitor(ICompetitor competitor);
-	public List<Pair<String,Integer>> getCompetitorRanking(String game);
+	public List<Pair<ICompetitor,Integer>> getCompetitorRanking(String game);
 	public Pair<Integer,Integer> getCompetitorRankAndEloByNick(String nickname,String game);
 
 }

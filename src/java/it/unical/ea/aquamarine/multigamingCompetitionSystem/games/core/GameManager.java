@@ -4,4 +4,5 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetit
 
 public interface GameManager {
 	public void startMatch(ICompetitor competitor1, ICompetitor competitor2, boolean rankedMatch);
+	public boolean isCompetitorInGame(ICompetitor competitor);
 }

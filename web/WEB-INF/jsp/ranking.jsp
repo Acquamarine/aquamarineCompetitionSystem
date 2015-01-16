@@ -40,16 +40,19 @@
 				colToAppend.innerHTML =htmlToIns;
 				row.appendChild(colToAppend);
 			}
-			<c:forEach items = "${usersRanking}"  var = "userRanking" >
+			<c:forEach items = "${usersRanking}"  var = "userRanking" varStatus="loop" >
 				console.log(${userRanking});
 			rowToAppend = document.createElement("tr");
 			createColumn((i + 1) + ".",rowToAppend,"");
 			createColumn("coming soon",rowToAppend,"");
 			createColumn("${userRanking.getKey()}",rowToAppend,"${userRanking.getKey()}");
 			createColumn("${userRanking.getValue()}",rowToAppend,"");
-			createColumn("coming soon",rowToAppend,"");
-			createColumn("coming soon",rowToAppend,"");
-			createColumn("coming soon",rowToAppend,"");
+                        var defeats = ${usersDefeatsAndVictories.get(loop.index).getKey()};
+                        var victories = ${usersDefeatsAndVictories.get(loop.index).getValue()};
+			createColumn(victories,rowToAppend,"");
+			createColumn(defeats,rowToAppend,"");
+                        var winRate = victories/(defeats+victories)*100;
+			createColumn(winRate,rowToAppend,"");
 			$('#ranking').append(rowToAppend,"");
 			i++;
 			</c:forEach>

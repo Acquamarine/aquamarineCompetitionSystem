@@ -90,15 +90,16 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 	}
 
 	@Override
-	public List<Pair<String, Integer>> getCompetitorRanking(String game) {
+	public List<Pair<ICompetitor, Integer>> getCompetitorRanking(String game) {
 		Session session = sessionFactory.openSession();
-		String queryString = "select c.nickname, VALUE(c.competitionProfile) from AbstractCompetitor as c  where KEY(c.competitionProfile)= :game order by VALUE(c.competitionProfile) desc";
+		String queryString = "from AbstractCompetitor as c  where KEY(c.competitionProfile)= :game order by VALUE(c.competitionProfile) desc";
 		Query query = session.createQuery(queryString);
 		query.setParameter("game", game);
-		List<Object[]> usersRanking = (List<Object[]>)query.list();
-		List<Pair<String, Integer>> returningList = new ArrayList<>();
+		List<Object> usersRanking = (List<Object>)query.list();
+		List<Pair<ICompetitor, Integer>> returningList = new ArrayList<>();
 		usersRanking.stream().forEach((userRanking) -> {
-			returningList.add(new Pair<>((String) userRanking[0], (Integer) userRanking[1] ));
+			ICompetitor competitor = ((ICompetitor) userRanking);
+			returningList.add(new Pair<>(competitor, competitor.getElo(game)));
 		});
 		session.close();
 		return returningList;
@@ -134,9 +135,9 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 
 	@Override
 	public Pair<Integer,Integer> getCompetitorRankAndEloByNick(String nickname, String game) {
-		List<Pair<String, Integer>> competitorRanking = getCompetitorRanking(game);
+		List<Pair<ICompetitor, Integer>> competitorRanking = getCompetitorRanking(game);
 		for(int i=0; i<competitorRanking.size(); i++){
-			if(competitorRanking.get(i).getKey().equals(nickname)){
+			if(competitorRanking.get(i).getKey().getNickname().equals(nickname)){
 				return new Pair<>(i,competitorRanking.get(i).getValue());
 			}
 		}
