@@ -164,8 +164,8 @@ input{
 	font-size: 14px; 
 	font-family:Verdana, Geneva, sans-serif;
 }
-.Submit:hover	{ background-color: #2a78f6; }
-
+.Submit:hover:enabled{ background-color: #2a78f6;}
+.Submit:disabled{cursor:auto;}
 
 .HeaderSearchBox{
 	position:relative;
@@ -227,3 +227,5 @@ input{
     margin-top: 1em;
     color: #ffffff;
 }
+
+.GameSelectorDiv{vertical-align:bottom; position: absolute; right:0em; margin-right: 4em; bottom: 0em;}

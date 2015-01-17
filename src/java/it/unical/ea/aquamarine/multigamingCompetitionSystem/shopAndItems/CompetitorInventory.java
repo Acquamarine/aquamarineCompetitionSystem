@@ -39,6 +39,9 @@ public class CompetitorInventory implements Serializable{
 	}
 	
 	public boolean containsItem(IItem item) {
+		if(inventoryMap.get(item.getCategory())==null){
+			return false;
+		}
 		return  inventoryMap.get(item.getCategory()).contains(item);
 	}
 
