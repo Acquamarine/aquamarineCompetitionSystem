@@ -32,9 +32,9 @@ public class VirtualShopController {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "game")
     public String virtualShop(HttpServletRequest request, Model model, @RequestParam("game") String game) {
         ICompetitor buyer = (ICompetitor)request.getSession().getAttribute("registeredUser");
+		OnDemandPersistenceManager.getInstance().initializeInventory(buyer);
 		request.getSession().setAttribute("buyer", buyer);
         buildModel(game, buyer, model);
-		OnDemandPersistenceManager.getInstance().initializeInventory(buyer);
         return "/virtualShop";
     }
 
