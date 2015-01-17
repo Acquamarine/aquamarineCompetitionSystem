@@ -2,7 +2,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems;
 
 public enum ItemCategory {
-	CARD_COVER("CARD_COVER"), AVATAR("AVATAR");
+	CARD_COVER("Card cover"), AVATAR("Avatar");
 	
 	private final String categoryName;       
 
@@ -21,7 +21,7 @@ public enum ItemCategory {
 	
 	public static ItemCategory getItemCategory(String category) {
 		switch(category) {
-			case "CARD_COVER":
+			case "Card cover":
 				return CARD_COVER;
 			default:
 				return AVATAR;

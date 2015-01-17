@@ -4,7 +4,7 @@
 		<name>redCover</name>
 		<displayName>Fury Cover</displayName>
 		<game>Tressette1v1</game>
-		<category>CARD_COVER</category>
+		<category>Card cover</category>
 		<type>market</type>
 		<price>50</price>
 		<id>1</id>
@@ -13,9 +13,18 @@
 		<name>greenCover</name>
 		<displayName>Hope Cover</displayName>
 		<game>Tressette1v1</game>
-		<category>CARD_COVER</category>
+		<category>Card cover</category>
 		<type>eloReward</type>
 		<elo>1200</elo>
 		<id>2</id>
+	</item>
+	<item>
+		<name>lightBlueCover</name>
+		<displayName>Sea Cover</displayName>
+		<game>Tressette1v1</game>
+		<category>Card cover</category>
+		<type>market</type>
+		<price>100</price>
+		<id>3</id>
 	</item>
 </items>

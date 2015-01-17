@@ -6,6 +6,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetit
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,6 +49,22 @@ public class VirtualShop {
 		return sellingItemsCopy;
 		
 	}
+        
+        public Map<ItemCategory, Set<MarketItem>> getAvailableItems(ICompetitor competitor, String game) {
+            Map<ItemCategory, Set<MarketItem>> availableItems = getAvailableItems(competitor);
+            for(Set<MarketItem> items: availableItems.values()) {
+                Iterator<MarketItem> iterator = items.iterator();
+                while(iterator.hasNext()) {
+                    if(!iterator.next().getGame().equals(game)) {
+                        iterator.remove();
+                    }
+                }
+            }
+            return availableItems;
+		
+	}
+        
+        
 	
 	public void buyItem(ICompetitor competitor, MarketItem item) {
 		if(getAvailableItems(competitor).get(item.getCategory()).contains(item)) {

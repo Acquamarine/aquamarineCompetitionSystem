@@ -1,0 +1,73 @@
+.ShopContainer{
+	font-size: 1.5em;
+	margin-top: 2em;
+	margin: auto;
+        width: 90%;
+}
+
+
+.Image{
+	width:7em;
+	height:11em;
+}
+
+.Submit{
+	font-size: 0.7em;
+}
+
+.ShopItemContainer {
+	width: 80%;
+        height: 11em;
+	margin: auto;
+        margin-top: 2em;
+	padding:1.2em;
+        background-color: #202f3e;
+}
+
+.ItemDetails {
+    position: relative;
+    margin-left: 1em;
+    margin-right: 1em;
+    width: 30%;
+    vertical-align: top;
+    height: 100%;
+}
+
+.ItemDescription {
+    margin-left: 1em;
+    margin-right: 2em;
+    width: 25%;
+    vertical-align: top;
+}
+
+.ItemBanner {
+    margin-left: 2em;
+    margin-right: 1em;
+    width: 20%;
+    vertical-align: bottom;
+}
+
+.Detail {
+    margin-bottom: 0.5em;
+}
+
+.BuyOption {
+    position: absolute;
+    bottom: 0em;
+}
+/*
+.TressetteDescriptionTitle {
+    vertical-align: top;
+    font-size: 1.2em;
+    color: #ffcc00;
+}
+
+.TressetteDetails {
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 1em;
+    margin-top: 1em;
+    color: #ffffff;
+}
+
+*/

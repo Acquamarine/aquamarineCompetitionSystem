@@ -21,7 +21,15 @@
         <title>Gioca a Tressette!</title>
         <script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
         <script>
-            <%String deckCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";%>
+            <%String deckCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
+                String opponentCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
+                ICompetitor user = (ICompetitor) request.getSession().getAttribute("matchedCompetitor");
+                System.out.println(user.getNickname());
+                System.out.println(user.getEquip("Tressette1v1").getEquipMap());
+                if (user.getEquip("Tressette1v1").getEquipMap().containsKey(ItemCategory.CARD_COVER)) {
+                    String cover = user.getEquip("Tressette1v1").getEquipMap().get(ItemCategory.CARD_COVER).getName();
+                    opponentCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/" + cover + ".png";
+                }%>
             var graphicComplete = true;
             function gameComplete() {
                 $.ajax({
@@ -97,7 +105,7 @@
                         $('#' + card).click(cardsClick);
                     } else if (player !== "${nickname}") {
                         divToAppend = document.createElement("div");
-                        divToAppend.innerHTML = "<img class='cards_img' src=<%=deckCoverPath%>/>";
+                        divToAppend.innerHTML = "<img class='cards_img' src=<%=opponentCoverPath%>/>";
                         divToAppend.className = "player1-cards";
                         toAppend = document.createElement("li");
                         toAppend.appendChild(divToAppend);
@@ -169,14 +177,7 @@
             }
             $(document).ready(function () {
                 eventHandler();
-            <%
-                                            ICompetitor user = (ICompetitor) request.getSession().getAttribute("matchedCompetitor");
-                                            System.out.println(user.getNickname());
-                                            System.out.println(user.getEquip("Tressette1v1").getEquipMap());
-                                            if (user.getEquip("Tressette1v1").getEquipMap().containsKey(ItemCategory.CARD_COVER)) {
-                                                    String cover = user.getEquip("Tressette1v1").getEquipMap().get(ItemCategory.CARD_COVER).getName();
-                                                    deckCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/" + cover + ".png";
-							}%>
+
             });
         </script>
     </head>
@@ -195,7 +196,7 @@
                             <c:if test='${card!=null}'>
                                 <li class="li-cards">
                                     <div class="player1-cards">
-                                        <img class='cards_img' src=<%=deckCoverPath%>/>
+                                        <img class='cards_img' src=<%=opponentCoverPath%>/>
                                     </div>
                                 </li>
                             </c:if>

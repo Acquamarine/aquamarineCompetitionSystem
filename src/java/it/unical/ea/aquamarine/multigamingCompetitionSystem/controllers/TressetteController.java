@@ -16,6 +16,8 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tres
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +89,9 @@ public class TressetteController {
 		model.addAttribute("cardOnTable", playerGame.getFirstCardOnTable());
 		Integer turnPlayer = playerGame.getTurnPlayer();
 		model.addAttribute("turn", request.getSession().getAttribute(turnPlayer+""));
+                
+                IItem testItem = ItemsProvider.getInstance().getItem(1);
+                testItem.equip(matchedCompetitor);
 		return "/tressette/gioca";
 	}
 
