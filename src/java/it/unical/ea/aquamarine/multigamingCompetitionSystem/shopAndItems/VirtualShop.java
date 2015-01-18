@@ -42,7 +42,10 @@ public class VirtualShop {
 		OnDemandPersistenceManager.getInstance().initializeInventory(competitor);
 		Map<ItemCategory, ItemSet> inventoryMap = competitor.getInventory().getInventoryMap();
 		Map<ItemCategory, Set<MarketItem>> sellingItemsCopy = new HashMap<>();
-		sellingItemsCopy.putAll(sellingItems);
+		for(ItemCategory category : sellingItems.keySet()){
+			sellingItemsCopy.put(category, new HashSet<>());
+			sellingItemsCopy.get(category).addAll(sellingItems.get(category));
+		}
 		inventoryMap.keySet().stream().forEach((category) -> {
 			sellingItemsCopy.get(category).removeAll(inventoryMap.get(category).getItems());
 		});

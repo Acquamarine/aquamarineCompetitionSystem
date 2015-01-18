@@ -27,4 +27,15 @@
 		<price>100</price>
 		<id>3</id>
 	</item>
+
+	<item>
+		<name>greenCover</name>
+		<displayName>Hope Cover</displayName>
+		<game>Tressette1v1</game>
+		<category>Card cover</category>
+		<type>market</type>
+		<price>100</price>
+		<id>4</id>
+	</item>
+	
 </items>

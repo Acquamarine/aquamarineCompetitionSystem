@@ -4,8 +4,12 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.AbstractC
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemCategory;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.VirtualShop;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.MarketItem;
+import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +44,8 @@ public class VirtualShopController {
 
     private void buildModel(String game, ICompetitor buyer, Model model) {
         model.addAttribute("game", game);
-        model.addAttribute("availableItems", VirtualShop.getInstance().getSellingItems());
+		Map<ItemCategory, Set<MarketItem>> sellingItems = VirtualShop.getInstance().getSellingItems();
+        model.addAttribute("availableItems", sellingItems);
         
     }
     

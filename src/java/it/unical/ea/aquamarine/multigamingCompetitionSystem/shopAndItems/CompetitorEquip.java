@@ -60,5 +60,10 @@ public class CompetitorEquip implements Serializable {
 		this.id = id;
 	}
 	
-	
+	public boolean isItemEquipped(IItem item){
+		if(equipMap.get(item.getCategory())==null){
+			return false;
+		}
+		return equipMap.get(item.getCategory()).equals(item);
+	}
 }
