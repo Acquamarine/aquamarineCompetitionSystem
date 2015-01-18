@@ -28,18 +28,26 @@ public class InventoryController {
 			RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
 			OnDemandPersistenceManager.getInstance().initializeInventory(user);
 			OnDemandPersistenceManager.getInstance().initializeEquip(user);
-			m.addAttribute("inventoryMap", user.getInventory().getInventoryMap());
 			return "/inventory";
 		}
 		return "/login";
 	}
 
-	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "equipItem")
-	public void equipItem(HttpServletRequest request, @RequestParam("equipItem") int itemId) {
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "Equip")
+	public void equipItem(HttpServletRequest request, @RequestParam("Equip") int itemId) {
 		IItem item = ItemsProvider.getInstance().getItem(itemId);
 		RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
 		item.equip(user);
+		OnDemandPersistenceManager.getInstance().updateCompetitor(user);
 		System.out.println("equipItem " + itemId);
+	}
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "Unequip")
+	public void unequipItem(HttpServletRequest request, @RequestParam("Unequip") int itemId) {
+		IItem item = ItemsProvider.getInstance().getItem(itemId);
+		RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
+		item.unequip(user);
+		OnDemandPersistenceManager.getInstance().updateCompetitor(user);
+		System.out.println("unequipItem " + itemId);
 	}
 
 }

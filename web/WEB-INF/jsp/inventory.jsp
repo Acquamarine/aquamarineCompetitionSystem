@@ -19,7 +19,7 @@
             <div class="InventoryHeader">
 				<div class="PlatformGamesTitle">Your Inventory</div>
 				<div class="HeaderDetails">
-					<div class="CompetitorVirtualPoints Inline">Credit: ${buyer.getVirtualPoints()} vp</div>
+					<div class="CompetitorVirtualPoints Inline">Credit: ${registeredUser.getVirtualPoints()} vp</div>
 					<div class="GameSelectorDiv Inline">
 						<select id="GameSelector" onchange="changeSelectedGame()" >
 							<option value="Tressette1v1">Tressette1v1</option>
@@ -27,10 +27,10 @@
 					</div>
 				</div>
 			</div>
-            <div class="InventoryContent">
-                <c:forEach items="${inventoryMap.keySet()}" var="category">
-                    <c:forEach items="${inventoryMap.get(category).getItems()}" var="itemInCategory">
-                        <div class="InventoryItemContainer">
+            <ul class="InventoryContent">
+                <c:forEach items="${registeredUser.getInventory().getInventoryMap().keySet()}" var="category">
+                    <c:forEach items="${registeredUser.getInventory().getInventoryMap().get(category).getItems()}" var="itemInCategory">
+                        <li class="InventoryItemContainer Inline">
                             <div class="ItemBanner Inline">
                                 <img class="Image" src="/MultigamingCompetitionSystem/assets/items/${itemInCategory.getCategory()}/${itemInCategory.getName()}.png"/>
                             </div>
@@ -42,7 +42,7 @@
 									<%String buttonValue = "Equip!";
 										String buttonClass = "Equip";
 									%>
-										<c:if  test="${buyer.getInventory().containsItem(itemInCategory)}">
+										<c:if  test="${registeredUser.getEquip(itemInCategory.getGame()).isItemEquipped(itemInCategory)}">
 											<%buttonValue = "Unequip!";
 												buttonClass = "Unequip";
 											%>
@@ -52,12 +52,12 @@
 									</form>
                                 </div>
                             </div>
-                        </div>
+                        </li>
                     </c:forEach>
                 </c:forEach>
 
             </div>
-        </div>
+        </ul>
 
         <%@include file="../../resources/html/footer.html" %>
 

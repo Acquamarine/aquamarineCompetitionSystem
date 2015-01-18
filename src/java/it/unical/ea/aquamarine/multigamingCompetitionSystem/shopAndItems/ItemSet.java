@@ -33,7 +33,6 @@ public class ItemSet implements Serializable{
 	int id;
 	
 	@ManyToMany(targetEntity = AbstractItem.class, fetch = FetchType.EAGER)
-	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Set<IItem> items = new HashSet<>();
 
 	public Set<IItem> getItems() {

@@ -2,7 +2,7 @@
 	font-size: 1.5em;
 	margin-top: 2em;
 	margin: auto;
-        width: 90%;
+        width: 100%;
 }
 
 
@@ -17,34 +17,31 @@
 
 .InventoryItemContainer {
 	color:#ffffff;
-	width: 80%;
+	width: 20em;
         height: 11em;
 	margin: auto;
         margin-top: 2em;
 	padding:1.2em;
         background-color: #202f3e;
+		text-align: left;
+		margin-left: 0.5em;
+		margin-right: 0.5em;
 }
 
 .ItemDetails {
     position: relative;
     margin-left: 1em;
     margin-right: 1em;
-    width: 30%;
     vertical-align: top;
     height: 100%;
 }
 
-.ItemDescription {
-    margin-left: 1em;
-    margin-right: 2em;
-    width: 25%;
-    vertical-align: top;
-}
+
 
 .ItemBanner {
-    margin-left: 2em;
+    margin-left: 0.5em;
     margin-right: 1em;
-    width: 20%;
+    width: 30%;
     vertical-align: bottom;
 }
 
@@ -57,7 +54,7 @@
     bottom: 0em;
 }
 
-.GameSelectorDiv{vertical-align: top;}
+.GameSelectorDiv{vertical-align: top; margin-right: 6em;}
 
 .InventoryHeader{position:relative;}
 
@@ -67,8 +64,15 @@
 }
 
 
-.Unequip .EquipOption{
-	color: #40dd40;
+.Unequip{
+	background-color: #40dd40;
 }
 
+.InventoryContent{
+	width: 90%;
+	margin: auto;
+	 list-style-type: none;
+    text-align: center;
+	padding: 0em;
+}
 
