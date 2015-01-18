@@ -16,6 +16,7 @@
 }
 
 .ShopItemContainer {
+	color:#ffffff;
 	width: 80%;
         height: 11em;
 	margin: auto;
@@ -55,19 +56,23 @@
     position: absolute;
     bottom: 0em;
 }
-/*
-.TressetteDescriptionTitle {
-    vertical-align: top;
-    font-size: 1.2em;
-    color: #ffcc00;
+
+.GameSelectorDiv{vertical-align: top;}
+
+.ShopHeader{position:relative;}
+
+.HeaderDetails{
+	width: 80%;
+	margin: auto;
 }
 
-.TressetteDetails {
-    text-align: justify;
-    text-justify: inter-word;
-    font-size: 1em;
-    margin-top: 1em;
-    color: #ffffff;
+.ButtonDisabled{
+	background-color: #ff4040;
+	cursor: auto;
 }
 
-*/
+.OwnedButton{
+	background-color: #40dd40;
+	cursor: auto;
+}
+

@@ -70,6 +70,8 @@ public class CompetitionManager {
 		ICompetitor loser = activeCompetitors.get(loserId);
 		winner.gainVirtualPoints(GameConstants.virtualPointsRewards.get(simpleName).getValue());
 		loser.gainVirtualPoints(GameConstants.virtualPointsRewards.get(simpleName).getKey());
+		OnDemandPersistenceManager.getInstance().updateCompetitor(loser);
+		OnDemandPersistenceManager.getInstance().updateCompetitor(winner);
 	}
 	
 }

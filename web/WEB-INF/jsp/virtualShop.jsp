@@ -16,7 +16,17 @@
     <body>
         <%@include file="../../resources/html/header.html" %>
         <div class="ShopContainer">
-            <div class="ShopHeader"></div>
+            <div class="ShopHeader">
+				<div class="PlatformGamesTitle">Virtual Shop</div>
+				<div class="HeaderDetails">
+					<div class="CompetitorVirtualPoints Inline">Credit: ${buyer.getVirtualPoints()} vp</div>
+					<div class="GameSelectorDiv Inline">
+						<select id="GameSelector" onchange="changeSelectedGame()" >
+							<option value="Tressette1v1">Tressette1v1</option>
+						</select>
+					</div>
+				</div>
+			</div>
             <div class="ShopContent">
                 <c:forEach items="${availableItems.keySet()}" var="category">
                     <c:forEach items="${availableItems.get(category)}" var="itemInCategory">
@@ -30,7 +40,27 @@
                                 <div class="ItemCategory Detail">Category: ${itemInCategory.getCategory().toString()}</div>
                                 <div class="ItemPrice Detail">Price: ${itemInCategory.getVirtualPointsPrice()} vp</div>
                                 <div class="BuyOption Detail">
-                                    <input class="Submit BuyItemButton" id='${itemsInCategory.getId()}' type="submit" value="Buy now!" />
+									<%String buttonValue = "Buy Now!";
+										String buttonClass = "";
+										String disabled = "";
+									%>
+									<c:choose>
+										<c:when  test="${buyer.getInventory().containsItem(itemInCategory)}">
+											<%buttonValue = "Owned";
+												buttonClass = "OwnedButton";
+												disabled = "disabled";
+											%>
+										</c:when>
+										<c:when  test="${buyer.getVirtualPoints()<itemInCategory.getVirtualPointsPrice()}">
+											<%buttonValue = "Not enough vp";
+												buttonClass = "ButtonDisabled";
+												disabled = "disabled";
+											%>
+										</c:when>
+									</c:choose>
+									<form action="/MultigamingCompetitionSystem/virtualShop?buyItem=${itemInCategory.getId()}" method="post">
+										<input  class="Submit BuyItemButton <%=buttonClass%>"  type="submit" value="<%=buttonValue%>" <%=disabled%>/>
+									</form>
                                 </div>
                             </div>
                             <div class="ItemDescription Inline">
@@ -44,24 +74,7 @@
         </div>
 
         <%@include file="../../resources/html/footer.html" %>
-        
-        <script>
-			$(document).ready(function () {
-				$('.BuyItemButton').click(function (e) {
-					console.log(this);
-					e.preventDefault(); // <------------------ stop default behaviour of button
-					$.ajax({
-						url: "/MultigamingCompetitionSystem/virtualShop",
-						data: {
-							buyItem: this.id
-						},
-						success: function (data) {
-							console.log("transaction succeded");
 
-						}
-					});
-				});
-			});
-		</script>
+
     </body>
 </html>

@@ -28,7 +28,7 @@ body {
 .CompetitorHeader{width: 100%; position: relative;}
 .ProfileIcon{vertical-align:bottom; margin-left: 4em;}
 .CompetitorInformation{margin-left: 2em;}
-.GameSelectorDiv{vertical-align:bottom; position: absolute; right:0em; margin-right: 4em; bottom: 0em;}
+
 #matchHistory{
 	width: 100%; position: relative;
 }

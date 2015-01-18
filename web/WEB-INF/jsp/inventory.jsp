@@ -23,13 +23,13 @@
 			<div class="ItemsContainer">			
 				<c:forEach items="${inventoryMap.keySet()}" var="category">
 					<div class="ItemCategory">
-						<c:forEach items="${inventoryMap.get(category)}" var="itemsInCategory">
+						<c:forEach items="${inventoryMap.get(category).getItems()}" var="itemsInCategory">
 							<div class="ItemContainer Inline">
 								<div class="ItemNameAndGame ">
 									${itemsInCategory.getDisplayName()} / ${itemsInCategory.getGame()}
 								</div>
 								<div class="ItemImage ">
-									<img class="Image" src="/MultigamingCompetitionSystem/assets/items/${itemsInCategory.getCategory().toString()}/${itemsInCategory.getName()}.png"/>
+									<img class="Image" src="/MultigamingCompetitionSystem/assets/items/${itemsInCategory.getCategory()}/${itemsInCategory.getName()}.png"/>
 								</div>
 								<div class="EquipItem ">
 									<input class="Submit EquipItem EquipItemButton" id='${itemsInCategory.getId()}' type="submit" value="Equip" />

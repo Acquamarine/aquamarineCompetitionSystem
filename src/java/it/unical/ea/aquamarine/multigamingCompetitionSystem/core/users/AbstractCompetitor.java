@@ -93,7 +93,6 @@ public abstract class AbstractCompetitor extends AbstractUser implements ICompet
 	@Override
 	public void gainVirtualPoints(Integer earnedPoints) {
 		this.virtualPoints += earnedPoints;
-		DAOProvider.getCompetitorDAO().updateCompetitor(this);
 	}
 
 	@Override
