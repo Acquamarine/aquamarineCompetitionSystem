@@ -100,6 +100,28 @@ public abstract class AbstractItem implements IItem, Serializable{
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 47 * hash + this.id;
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null){
+			return false;
+		}
+		if(getClass() != obj.getClass()){
+			return false;
+		}
+		final AbstractItem other = (AbstractItem) obj;
+		if(this.id != other.id){
+			return false;
+		}
+		return true;
+	}
 	
 	
 }

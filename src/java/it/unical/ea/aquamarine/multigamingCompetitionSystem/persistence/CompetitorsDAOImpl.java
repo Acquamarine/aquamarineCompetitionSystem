@@ -129,6 +129,7 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 			session.update(competitor);
 			tx.commit();
 		}catch(Exception e){
+			e.printStackTrace();
 			if(tx != null){
 				tx.rollback();
 			}

@@ -1,15 +1,9 @@
-#inventoryContainer{
+.InventoryContainer{
 	font-size: 1.5em;
-	margin-left: 2em;
-	margin-top: 5em;
+	margin-top: 2em;
+	margin: auto;
+        width: 90%;
 }
-
-.ItemContainer{
-	font-size: 0.5em;
-	width:10em;
-	height: 12em;
-}
-
 
 
 .Image{
@@ -19,10 +13,62 @@
 
 .Submit{
 	font-size: 0.7em;
-	margin-left: 1.5em;
 }
 
-.ItemCategory{
-	margin-top: 0.5em;
-	position: relative;
+.InventoryItemContainer {
+	color:#ffffff;
+	width: 80%;
+        height: 11em;
+	margin: auto;
+        margin-top: 2em;
+	padding:1.2em;
+        background-color: #202f3e;
 }
+
+.ItemDetails {
+    position: relative;
+    margin-left: 1em;
+    margin-right: 1em;
+    width: 30%;
+    vertical-align: top;
+    height: 100%;
+}
+
+.ItemDescription {
+    margin-left: 1em;
+    margin-right: 2em;
+    width: 25%;
+    vertical-align: top;
+}
+
+.ItemBanner {
+    margin-left: 2em;
+    margin-right: 1em;
+    width: 20%;
+    vertical-align: bottom;
+}
+
+.Detail {
+    margin-bottom: 0.5em;
+}
+
+.EquipOption {
+    position: absolute;
+    bottom: 0em;
+}
+
+.GameSelectorDiv{vertical-align: top;}
+
+.InventoryHeader{position:relative;}
+
+.HeaderDetails{
+	width: 80%;
+	margin: auto;
+}
+
+
+.Unequip .EquipOption{
+	color: #40dd40;
+}
+
+

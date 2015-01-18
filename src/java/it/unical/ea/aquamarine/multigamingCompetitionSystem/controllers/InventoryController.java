@@ -27,6 +27,7 @@ public class InventoryController {
 			//TODO get from DAO
 			RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
 			OnDemandPersistenceManager.getInstance().initializeInventory(user);
+			OnDemandPersistenceManager.getInstance().initializeEquip(user);
 			m.addAttribute("inventoryMap", user.getInventory().getInventoryMap());
 			return "/inventory";
 		}

@@ -22,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name="ItemSet")
@@ -32,6 +33,7 @@ public class ItemSet implements Serializable{
 	int id;
 	
 	@ManyToMany(targetEntity = AbstractItem.class, fetch = FetchType.EAGER)
+	@Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	private Set<IItem> items = new HashSet<>();
 
 	public Set<IItem> getItems() {
