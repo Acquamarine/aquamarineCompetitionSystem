@@ -3,6 +3,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.AbstractNeapolitanCardGame;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.SharedFunctions;
@@ -14,38 +15,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-public class Tressette1v1 implements ITressette {
+public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITressette {
 
-	private List<Integer> players;
-	private Map<Integer, Integer> followingPlayer = new HashMap<>();
-	private Integer turnPlayer;
-	private Map<Integer, NeapolitanHand> hands = new HashMap<>();
-	private Map<Integer, NeapolitanCard> lastPickedCards = new HashMap<>();
-	private Queue<NeapolitanCard> deck;
-	private Map<Integer, List<NeapolitanCard>> takenCards = new HashMap<>();
-	private Map<Integer, Integer> finalScores = new HashMap<>();
-	private List<NeapolitanCard> table = new ArrayList<>();
-	private final SummaryManager summaryManager = new SummaryManager();
-	private boolean gameComplete = false;
-	private boolean rankedMatch;
+	private final Tressette1v1SummaryManager summaryManager = new Tressette1v1SummaryManager();
 
 	public Tressette1v1(List<Integer> players, boolean rankedMatch) {
-		this.players = players;
-		for(Integer player : players){
-			hands.put(player, new NeapolitanHand());
-			lastPickedCards.put(player, null);
-			takenCards.put(player, new LinkedList<>());
-		}
-		followingPlayer.put(players.get(0), players.get(1));
-		followingPlayer.put(players.get(1), players.get(0));
-		deck = SharedFunctions.getShuffledNeapolitanDeck();
+		super(players, rankedMatch);
 		players.stream().forEach((player) -> {
 			for(int i = 0; i < 10; i++){
 				hands.get(player).addCard(deck.poll());
 			}
 		});
-		turnPlayer = players.iterator().next();
-		this.rankedMatch = rankedMatch;
 	}
 
 	@Override
@@ -171,60 +151,6 @@ public class Tressette1v1 implements ITressette {
 	private void pickCards(Integer handWinner) {
 		pickACard(handWinner);
 		pickACard(followingPlayer.get(handWinner));
-	}
-
-	private void pickACard(Integer pickingPlayer) {
-		NeapolitanCard pickedCard = deck.poll();
-		lastPickedCards.put(pickingPlayer, pickedCard);
-		hands.get(pickingPlayer).addCard(pickedCard);
-	}
-
-	public List<Integer> getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(List<Integer> players) {
-		this.players = players;
-	}
-
-	public Map<Integer, Integer> getFollowingPlayer() {
-		return followingPlayer;
-	}
-
-	public void setFollowingPlayer(Map<Integer, Integer> followingPlayer) {
-		this.followingPlayer = followingPlayer;
-	}
-
-	public Integer getTurnPlayer() {
-		return turnPlayer;
-	}
-
-	public void setTurnPlayer(Integer turnPlayer) {
-		this.turnPlayer = turnPlayer;
-	}
-
-	public Map<Integer, NeapolitanHand> getHands() {
-		return hands;
-	}
-
-	public Map<Integer, NeapolitanCard> getLastPickedCards() {
-		return lastPickedCards;
-	}
-
-	public Queue<NeapolitanCard> getDeck() {
-		return deck;
-	}
-
-	public Map<Integer, List<NeapolitanCard>> getTakenCards() {
-		return takenCards;
-	}
-
-	public List<NeapolitanCard> getTable() {
-		return table;
-	}
-
-	public boolean isGameComplete() {
-		return gameComplete;
 	}
 
 	private int getCardValue(NeapolitanCard card) {
