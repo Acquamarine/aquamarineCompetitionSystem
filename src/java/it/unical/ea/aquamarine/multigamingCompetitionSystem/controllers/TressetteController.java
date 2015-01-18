@@ -89,9 +89,6 @@ public class TressetteController {
 		model.addAttribute("cardOnTable", playerGame.getFirstCardOnTable());
 		Integer turnPlayer = playerGame.getTurnPlayer();
 		model.addAttribute("turn", request.getSession().getAttribute(turnPlayer+""));
-                
-                IItem testItem = ItemsProvider.getInstance().getItem(1);
-                testItem.equip(matchedCompetitor);
 		return "/tressette/gioca";
 	}
 

@@ -9,15 +9,7 @@
 		<price>50</price>
 		<id>1</id>
 	</item>
-	<item>
-		<name>greenCover</name>
-		<displayName>Hope Cover</displayName>
-		<game>Tressette1v1</game>
-		<category>Card cover</category>
-		<type>eloReward</type>
-		<elo>1200</elo>
-		<id>2</id>
-	</item>
+
 	<item>
 		<name>lightBlueCover</name>
 		<displayName>Sea Cover</displayName>
