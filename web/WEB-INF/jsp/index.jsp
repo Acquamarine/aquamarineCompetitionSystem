@@ -15,18 +15,29 @@
         <%@include file="../../resources/html/header.html" %>
         <div class="PlatformGames">
             <div class="PlatformGamesTitle">Competitive Games</div>
-            <div class="TressetteBanner">
-                <div class="TressetteBannerImage Inline"></div>
-                <div class="TressetteDescription Inline">
-                    <div class="TressetteDescriptionTitle">Defeat your opponents on the table with Tressette 1vs1</div>
-                    <div class="TressetteDetails">Tressette is an italian card game. The proposed variant is designed for 2 players. Even being a card game, the outcomes of tressette heavily relies on players' game skills. Join the challenge and climb the ladder!</div>
-                    <div class="TressettePlayButton">
-                        <form id="tressette_button" action="/MultigamingCompetitionSystem/tressette" method="get">
+            <div class="FrontBanner">
+                <div class="FrontGameBannerImage TressetteBannerImage Inline"></div>
+                <div class="FrontGameDescription Inline">
+                    <div class="FrontGameDescriptionTitle">Defeat your opponents on the table with Tressette 1vs1</div>
+                    <div class="FrontGameDetails">Tressette is an italian card game. The proposed variant is designed for 2 players. Even being a card game, the outcomes of tressette heavily relies on players' game skills. Join the challenge and climb the ladder!</div>
+                    <div class="FrontGamePlayButton">
+                        <form class="play_game_button" action="/MultigamingCompetitionSystem/tressette" method="get">
                             <input class="Submit" type="submit" value="Play Tressette" />
                         </form>
                     </div>
                 </div>
-                
+            </div>
+            <div class="FrontBanner">
+                <div class="FrontGameBannerImage BriscolaBannerImage Inline"></div>
+                <div class="FrontGameDescription Inline">
+                    <div class="FrontGameDescriptionTitle">Lead your team to the victory in Briscola 2vs2 </div>
+                    <div class="FrontGameDetails">An italian card game, designed to be played with a trusted partner. Build your team and queue up for a Briscola showdown. Claim the ranking first spot! </div>
+                    <div class="FrontGamePlayButton">
+                        <form class="play_game_button" action="/MultigamingCompetitionSystem/briscola" method="get">
+                            <input class="Submit" type="submit" value="Play Briscola" />
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         

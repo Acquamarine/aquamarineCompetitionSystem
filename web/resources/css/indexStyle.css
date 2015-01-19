@@ -130,7 +130,7 @@ body {
 	width: 100px;
 }
 
-#tressette_button{
+.play_game_button{
 	margin-left: 4em;
 	margin-top: 4em;
 }
@@ -183,8 +183,8 @@ input{
 }
 
 
-.TressetteBannerImage {
-	background-image: url("../assets/tressetteBanner.png");
+.FrontGameBannerImage {
+	
         background-repeat: no-repeat;
 	background-size: contain;
         min-height: 270px;
@@ -192,7 +192,15 @@ input{
 	margin:0 auto;
 }
 
-.TressetteBanner {
+.TressetteBannerImage {
+    background-image: url("../assets/tressetteBanner.png");
+}
+
+.BriscolaBannerImage {
+    background-image: url("../assets/briscolaBanner.png");
+}
+
+.FrontBanner {
 	width: 80%;
         height: auto;
 	margin: auto;
@@ -209,18 +217,18 @@ input{
     margin-top: 2em;
 }
 
-.TressetteDescription {
+.FrontGameDescription {
     width: 35%;
     vertical-align: top;
 }
 
-.TressetteDescriptionTitle {
+.FrontGameDescriptionTitle {
     vertical-align: top;
     font-size: 1.2em;
     color: #ffcc00;
 }
 
-.TressetteDetails {
+.FrontGameDetails {
     text-align: justify;
     text-justify: inter-word;
     font-size: 1em;

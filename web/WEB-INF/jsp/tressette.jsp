@@ -15,16 +15,16 @@
     <body>
         <%@include file="../../resources/html/header.html" %>
         <div class="PlatformGamesTitle">Tressette 1vs1</div>
-        <div class="TressetteBanner">
+        <div class="FrontBanner">
             <div class="TressetteBannerImage2"></div>
             <div id="tressette-descr">
             </div>
             <div class="MatchChooserContainer">
                 <ul class="MatchChooser">
-                    <li id="rankedQueueButton" class="TressettePlayButton Inline">
+                    <li id="rankedQueueButton" class="FrontGamePlayButton Inline">
                         <input id="rankedGameInput" class="Submit" type="submit" value="Queue up for a ranked match!" />
                     </li>
-                    <li id="normalQueueButton" class="TressettePlayButton Inline">
+                    <li id="normalQueueButton" class="FrontGamePlayButton Inline">
                         <input id="normalGameInput" class="Submit" type="submit" value="Queue up for a normal match!" />
                     </li>
                 </ul>
