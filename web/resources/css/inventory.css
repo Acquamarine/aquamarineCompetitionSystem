@@ -11,7 +11,7 @@
 	height:11em;
 }
 
-.Submit{
+.EquipItemButton{
 	font-size: 0.7em;
 }
 
@@ -65,7 +65,11 @@
 
 
 .Unequip{
-	background-color: #40dd40;
+    background-color: #40dd40;
+}
+
+.Unequip:hover:enabled {
+    background-color: #30bb30;
 }
 
 .InventoryContent{

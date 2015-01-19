@@ -1,9 +1,16 @@
 .GlobalHeaderContainer{
 	position: relative;
-	width: 100%;
-	height: 5em;
-	margin-top: 3em;
+	height: 2em;
+	margin-top: 1em;
+        background-color: #8babb9;
+       
 }
+.ManageSubmit {
+        font-size: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+}
+
 .SearchBox{
 	position:absolute;
 	right:0em;
@@ -11,7 +18,7 @@
 }
 
 #rank{
-	color: darkblue;
+	color: #ffcc00;
 	font-size: 1.5em;
 	margin-left: 0.5em;
 }
@@ -20,13 +27,14 @@ body {
 }
 #content{
     font-size: 1.1em;
+    color: #ffffff;
 }
 .CompetitorName{ font-size: 2em; vertical-align:bottom;}
-.CompetitorImage{width:6em;height:6em;vertical-align:middle;}
+.CompetitorImage{width:6em;height:6em;vertical-align:central; }
 .CompetitorLadderRank{vertical-align:bottom;font-size:0.9em;}
-.CompetitorLadderRank a{text-decoration:none; font-size: 1.2em; color: #4b4b4b;}
-.CompetitorHeader{width: 100%; position: relative;}
-.ProfileIcon{vertical-align:bottom; margin-left: 4em;}
+.CompetitorLadderRank a{text-decoration:none; font-size: 1.2em; color: #9b9b9b;}
+.CompetitorHeader{position: relative; margin: auto;}
+.ProfileIcon{vertical-align:bottom; margin-left: 4em; position: relative;}
 .CompetitorInformation{margin-left: 2em;}
 
 #matchHistory{
@@ -56,6 +64,13 @@ body {
 }
 
 .CompetitorAvatarImage{
+    position: absolute;
+    vertical-align: bottom;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 	width: 90%;
 	height: 90%;
 }
@@ -92,4 +107,13 @@ body {
 #goToInventory{
 	font-size: 0.5em;
 	margin-left: 2em;
+}
+
+.GameSelectorDiv{vertical-align: top; margin-bottom: 2em;}
+
+.GlobalHeaderMenu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
 }

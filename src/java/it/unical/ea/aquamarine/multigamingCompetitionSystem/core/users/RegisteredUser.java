@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("registeredUser")
@@ -61,6 +62,12 @@ public class RegisteredUser extends AbstractCompetitor implements Serializable {
 
 	public void setTeams(Set<Team> teams) {
 		this.teams = teams;
+	}
+
+	@Override
+	@Transient
+	public boolean isTeam() {
+		return false;
 	}
 
 	

@@ -10,6 +10,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 @DiscriminatorValue("team")
@@ -37,5 +38,10 @@ public class Team extends AbstractCompetitor{
 		this.members = members;
 	}
 	
+	@Override
+	@Transient
+	public boolean isTeam() {
+		return true;
+	}
 	
 }

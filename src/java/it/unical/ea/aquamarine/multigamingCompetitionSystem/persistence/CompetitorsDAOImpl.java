@@ -2,13 +2,9 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.CompetitorEquip;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javafx.util.Pair;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -159,6 +155,7 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 			competitor.getEquip().size();
 			tx.commit();
 		}catch(Exception e){
+			e.printStackTrace();
 			if(tx != null){
 				tx.rollback();
 			}
@@ -177,6 +174,7 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 			competitor.getInventory().getInventoryMap().size();
 			tx.commit();
 		}catch(Exception e){
+			e.printStackTrace();
 			if(tx != null){
 				tx.rollback();
 			}

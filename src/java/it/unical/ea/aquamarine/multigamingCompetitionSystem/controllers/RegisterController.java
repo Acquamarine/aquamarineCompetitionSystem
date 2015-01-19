@@ -6,8 +6,11 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.Team;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorsDAOImpl;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -66,7 +69,12 @@ public class RegisterController implements ApplicationContextAware{
 		}
 		if(validForm){
 			user.gainVirtualPoints(500);
+			Team team = new Team();
+			team.setNickname(user.getNickname()+"Team");
+			team.addMember(user);
+			user.addTeam(team);
 			competitorDAO.create(user);
+			OnDemandPersistenceManager.getInstance().updateCompetitor(team);
 			model.addAttribute("message","Registration has been successful. You can now login!");
 			model.addAttribute("registrationCompleted", true);
 			return "/login";

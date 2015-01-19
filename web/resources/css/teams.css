@@ -1,0 +1,136 @@
+.IconAndName {
+    text-align: center;
+    color: #ffcc00;
+    margin-bottom: 3em;
+}
+.CompetitorName {
+    margin-left: 1em;
+}
+
+.MemberLink {
+    color: inherit;
+    text-decoration: none;
+}
+
+.ProfileIcon {
+    margin-left: 0em;
+}
+
+.MemberName {
+    color: #000000;
+    font-size: 1.7em;
+    margin-left: 0.8em;
+}
+
+.InvitationsTitle {
+    color: #ffffff;
+    font-size: 1.4em;
+    margin-bottom: 0em;
+    text-align: left;
+    margin-left: 2em;
+    margin-top: 0em;
+}
+
+.MembersTitle {
+    color: #ffffff;
+    font-size: 1.4em;
+    margin-bottom: 0em;
+    text-align: left;
+    margin-left: 2em;
+}
+
+.Member {
+    background-color: #9b9b9b;
+    padding: 0.5em;
+    width: 20em;
+    border-radius: 0.5em;
+    // #0c9eb5
+    -webkit-box-shadow: 0 0 40px #3b5df9;
+    -moz-box-shadow: 0 0 40px #3b5df9;
+    box-shadow: 0 0 40px #3b5df9;
+    margin: auto;
+    margin-top: 2em;
+    margin-right: 1em;
+    margin-left: 2em;
+}
+
+.Members  {
+    list-style-type: none;
+}
+
+
+.Invitations {
+    position: relative;
+}
+
+.InvitationsSearchBox{
+	text-align: right;
+	top: 8em;
+        width: 20em;
+}
+
+.InvitationsSearchBoxContainer{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.Invite {
+    background-color: #40dd40;
+}
+
+.Invite:hover:enabled {
+    background-color: #30bb30;
+    
+}
+
+.InvitationsHeader {
+    position: relative;
+}
+
+.PendingMember {
+    -webkit-box-shadow: 0 0 40px #5fdbe2;
+    -moz-box-shadow: 0 0 40px #5fdbe2;
+    box-shadow: 0 0 30px #5fdbe2;
+}
+
+.GreenButton{
+    background-color: #40d040;
+}
+
+.GreenButton:hover:enabled {
+    background-color: #30bb30;
+}
+
+.RedButton{
+    background-color: #ee4040;
+}
+
+.RedButton:hover:enabled {
+    background-color: #bb3030;
+}
+
+.AcceptOrDecline {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+.ADButton {
+    margin: 1em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    -moz-box-shadow: 1px 1px 6px #000000; 
+    -webkit-box-shadow: 1px 1px 6px #000000; 
+    box-shadow: 1px 1px 6px #000000; 
+    text-shadow: 0 -1px 1px #222; 
+}
+
+.FrontBanner {
+    margin-bottom: 3em;
+}
+
+.PlatformGamesTitle {
+    margin-top: 1.2em;
+}

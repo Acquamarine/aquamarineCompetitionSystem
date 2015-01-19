@@ -17,16 +17,16 @@
         <%@include file="../../resources/html/header.html" %>
         <div class="InventoryContainer">
             <div class="InventoryHeader">
-				<div class="PlatformGamesTitle">Your Inventory</div>
-				<div class="HeaderDetails">
-					<div class="CompetitorVirtualPoints Inline">Credit: ${registeredUser.getVirtualPoints()} vp</div>
-					<div class="GameSelectorDiv Inline">
-						<select id="GameSelector" onchange="changeSelectedGame()" >
-							<option value="Tressette1v1">Tressette1v1</option>
-						</select>
-					</div>
-				</div>
-			</div>
+                <div class="PlatformGamesTitle">Your Inventory</div>
+                <div class="HeaderDetails">
+                    <div class="CompetitorVirtualPoints Inline">Credit: ${registeredUser.getVirtualPoints()} vp</div>
+                    <div class="GameSelectorDiv Inline">
+                        <select id="GameSelector" onchange="changeSelectedGame()" >
+                            <option value="Tressette1v1">Tressette1v1</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <ul class="InventoryContent">
                 <c:forEach items="${registeredUser.getInventory().getInventoryMap().keySet()}" var="category">
                     <c:forEach items="${registeredUser.getInventory().getInventoryMap().get(category).getItems()}" var="itemInCategory">
@@ -39,28 +39,28 @@
                                 <div class="ItemGame Detail">Game: ${itemInCategory.getGame()}</div>
                                 <div class="ItemCategory Detail">Category: ${itemInCategory.getCategory().toString()}</div>
                                 <div class="EquipOption Detail">
-									<%String buttonValue = "Equip!";
-										String buttonClass = "Equip";
-									%>
-										<c:if  test="${registeredUser.getEquip(itemInCategory.getGame()).isItemEquipped(itemInCategory)}">
-											<%buttonValue = "Unequip!";
-												buttonClass = "Unequip";
-											%>
-										</c:if>
-									<form action="/MultigamingCompetitionSystem/inventory?<%=buttonClass%>=${itemInCategory.getId()}" method="post">
-										<input  class="Submit EquipItemButton <%=buttonClass%>"  type="submit" value="<%=buttonValue%>"/>
-									</form>
+                                    <%String buttonValue = "Equip!";
+                                                                                                                    String buttonClass = "Equip";
+                                    %>
+                                    <c:if  test="${registeredUser.getEquip(itemInCategory.getGame()).isItemEquipped(itemInCategory)}">
+                                        <%buttonValue = "Unequip!";
+                                                                                                                                        buttonClass = "Unequip";
+                                        %>
+                                    </c:if>
+                                    <form action="/MultigamingCompetitionSystem/inventory?<%=buttonClass%>=${itemInCategory.getId()}" method="post">
+                                        <input  class="Submit EquipItemButton <%=buttonClass%>"  type="submit" value="<%=buttonValue%>"/>
+                                    </form>
                                 </div>
                             </div>
                         </li>
                     </c:forEach>
                 </c:forEach>
 
-            </div>
-        </ul>
+        </div>
+    </ul>
 
-        <%@include file="../../resources/html/footer.html" %>
+    <%@include file="../../resources/html/footer.html" %>
 
 
-    </body>
+</body>
 </html>

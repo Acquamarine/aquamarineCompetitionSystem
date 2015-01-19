@@ -16,9 +16,29 @@
     </head>
     <body>
         <%@include file="../../resources/html/header.html" %>
-        <div class="GlobalHeaderContainer">
+        <div class="GlobalHeaderContainer FrontBanner">
+            <ul class="GlobalHeaderMenu">
+                <li class="InventoryLink Inline">
+                    <c:if test="${not empty nickname}">
+                        <c:if test="${user.equals(nickname)}">
+                            <form action="/MultigamingCompetitionSystem/inventory" method="get">
+                                <input class="Submit ManageSubmit" type="submit" value="Manage Inventory"/>
+                            </form>
+                        </c:if>
+                    </c:if>
+                </li>
+                <li class="TeamsLink Inline">
+                    <c:if test="${not empty nickname}">
+                        <c:if test="${user.equals(nickname)}">
+                            <form action="/MultigamingCompetitionSystem/teams" method="get">
+                                <input class="Submit ManageSubmit" type="submit" value="Manage Teams"/>
+                            </form>
+                        </c:if>
+                    </c:if>
+                </li>   
+            </ul>
         </div>
-        <div class="CompetitorHeader Inline">
+        <div class="CompetitorHeader FrontBanner">
             <div class="ProfileIcon Inline">
                 <div class="CompetitorImage Inline">
                     <div class="borderImage">
@@ -32,19 +52,13 @@
             </div>
             <div class="CompetitorInformation Inline">
                 <div class="CompetitorName Inline">
-					<div class="Inline">
-						${user} 
-					</div>
-					<div class="Inline">
-						<c:if test="${not empty nickname}">
-							<c:if test="${user.equals(nickname)}">
-								<span class="Clickable" id="goToInventory">Inventory</span>
-							</c:if>
-						</c:if>
-					</div>
+                    <div class="Inline">
+                        ${user} 
+                    </div>
+
                 </div>
                 <div class="CompetitorLadderRank">
-					<% pageContext.setAttribute("unrankedRank", GameConstants.UNRANKED_RANK);%>
+                    <% pageContext.setAttribute("unrankedRank", GameConstants.UNRANKED_RANK);%>
                     <c:choose>
                         <c:when test="${rankAndElo.getKey()==unrankedRank}">
                             <a href="/MultigamingCompetitionSystem/ranking?game=Tressette1v1" class="LadderRankLink">
@@ -67,8 +81,8 @@
                 </select>
             </div>
         </div>
-        <div id="userMatchHistoryContainer">
-            <div id="matchHistory Inline">
+        <div id="userMatchHistoryContainer FrontBanner">
+            <div id="matchHistory">
                 <c:forEach items="${matchHistory}" var="matchResult">
                     <% String victoryOrDefeat = "Defeat"; %>
                     <c:if test="${matchResult.getWinner().getNickname()==user}">
@@ -121,15 +135,11 @@
         <%@include file="../../resources/html/footer.html" %>
 
         <script>
-			function changeSelectedGame() {
-				var x = document.getElementById("GameSelector").value;
-				window.location.href = "/MultigamingCompetitionSystem/userProfile?game=" + x + "&user=${user}";
-			}
-			if ($('#goToInventory').length) {
-				$('#goToInventory').click(function () {
-					window.location.href = "/MultigamingCompetitionSystem/inventory";
-				});
-			}
+            function changeSelectedGame() {
+                var x = document.getElementById("GameSelector").value;
+                window.location.href = "/MultigamingCompetitionSystem/userProfile?game=" + x + "&user=${user}";
+            }
+            
         </script>
     </body>
 </html>

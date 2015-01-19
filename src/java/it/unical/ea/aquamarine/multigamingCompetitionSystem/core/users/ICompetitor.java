@@ -24,4 +24,6 @@ public interface ICompetitor {
 
 	public CompetitorEquip getEquip(String game);
 	
+	public boolean isTeam();
+	
 }

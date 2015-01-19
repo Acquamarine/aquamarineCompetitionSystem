@@ -18,6 +18,10 @@ public class DAOProvider implements ApplicationContextAware {
 	public static ItemDAO getItemDAO() {
 		return (ItemDAO) context.getBean("itemDAO");
 	}
+	
+	public static InvitationsDAO getInvitationsDAO() {
+		return (InvitationsDAO) context.getBean("invitationsDAO");
+	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext context) {

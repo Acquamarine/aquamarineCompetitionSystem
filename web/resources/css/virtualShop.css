@@ -11,16 +11,13 @@
 	height:11em;
 }
 
-.Submit{
-	font-size: 0.7em;
-}
-
 .ShopItemContainer {
 	color:#ffffff;
 	width: 80%;
         height: 11em;
 	margin: auto;
-        margin-top: 2em;
+        margin-top: 1em;
+        margin-bottom: 1em;
 	padding:1.2em;
         background-color: #202f3e;
 }
@@ -76,3 +73,14 @@
 	cursor: auto;
 }
 
+.BuyItemButton {
+    font-size: 0.7em;
+}
+
+.PlatformGamesTitle {
+    margin-top: 1.5em;
+}
+
+.ShopHeader {
+    margin-bottom: 2em;
+}

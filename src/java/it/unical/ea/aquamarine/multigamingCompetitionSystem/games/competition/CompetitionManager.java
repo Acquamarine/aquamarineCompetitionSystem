@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
@@ -12,6 +13,7 @@ public class CompetitionManager {
 	private static CompetitionManager instance;
 	private final Map<Integer, ICompetitor> activeCompetitors = new HashMap<>();
 	private final Map<String, ICompetitor> activeCompetitorsByUsername = new HashMap<>();
+	private final Map<String, ICompetitor> activeCompetitorsByNick = new HashMap<>();
 	float HIGHER_BOUND = 2000;
 	float LOWER_BOUND = 600;
 	float HIGHER_ELO_CONSTANT = 10;
@@ -47,10 +49,30 @@ public class CompetitionManager {
 		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
 		ICompetitor competitor = competitorDAO.retrieveById(competitorId);
 		activeCompetitors.put(competitorId, competitor);
-		activeCompetitorsByUsername.put(competitor.getNickname(), competitor);
+		if(!competitor.isTeam()) {
+			activeCompetitorsByUsername.put(((RegisteredUser)competitor).getUsername(), competitor);
+		}
+		activeCompetitorsByNick.put(competitor.getNickname(), competitor);
 		return competitor;
 		
 	}
+	
+	public ICompetitor getCompetitorByNick(String nick) {
+		if(activeCompetitorsByNick.containsKey(nick)) {
+			return activeCompetitorsByNick.get(nick);
+		}
+		//TODO check
+		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
+		ICompetitor competitor = competitorDAO.retrieveByNick(nick);
+		activeCompetitorsByNick.put(nick, competitor);
+		if(!competitor.isTeam()) {
+			activeCompetitorsByUsername.put(((RegisteredUser)competitor).getUsername(), competitor);
+		}
+		activeCompetitors.put(competitor.getId(), competitor);
+		return competitor;
+		
+	}
+	
 	public ICompetitor getCompetitorByUsername(String username) {
 		if(activeCompetitorsByUsername.containsKey(username)) {
 			return activeCompetitorsByUsername.get(username);
