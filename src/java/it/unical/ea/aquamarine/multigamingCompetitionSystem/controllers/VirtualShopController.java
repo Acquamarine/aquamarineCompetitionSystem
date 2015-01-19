@@ -2,6 +2,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.AbstractCompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemCategory;
@@ -25,16 +26,26 @@ public class VirtualShopController {
     
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public String virtualShop(HttpServletRequest request, Model model) {
+		if(request.getSession().getAttribute("registeredUser")==null){
+			model.addAttribute("message", "You have to login to access the virtual shop!");
+			model.addAttribute("userForm", new RegisteredUser());
+			return "/login";
+		}
         String game = Tressette1v1.class.getSimpleName();
         ICompetitor buyer = (ICompetitor)request.getSession().getAttribute("registeredUser");
 		request.getSession().setAttribute("buyer", buyer);
 		OnDemandPersistenceManager.getInstance().initializeInventory(buyer);
         buildModel(game, buyer, model);
-        return "/virtualShop";
+        return "redirect:virtualShop";
     }
     
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "game")
     public String virtualShop(HttpServletRequest request, Model model, @RequestParam("game") String game) {
+		if(request.getSession().getAttribute("registeredUser")==null){
+			model.addAttribute("message", "You have to login to access the virtual shop!");
+			model.addAttribute("userForm", new RegisteredUser());
+			return "/login";
+		}
         ICompetitor buyer = (ICompetitor)request.getSession().getAttribute("registeredUser");
 		OnDemandPersistenceManager.getInstance().initializeInventory(buyer);
 		request.getSession().setAttribute("buyer", buyer);

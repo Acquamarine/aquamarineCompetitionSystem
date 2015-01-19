@@ -1,6 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
@@ -44,12 +45,11 @@ public class IndexController implements ApplicationContextAware {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, params = {"loggigIn", "page"})
 	public String login(Model model, HttpServletRequest request, @ModelAttribute("userForm") RegisteredUser user, @RequestParam("page") String page) {
-		CompetitorDAO competitorDAO = (CompetitorDAO) context.getBean("competitorDAO");
 
 		String username = user.getUsername();
 		String password = user.getPassword();
 		//TODO type check -> class cast exception may occour
-		RegisteredUser registeredUser = (RegisteredUser) competitorDAO.retrieveByUsername(username);
+		RegisteredUser registeredUser = (RegisteredUser) CompetitionManager.getInstance().getCompetitorByUsername(username);
 		String subPage= page.substring(29);
 			
 		if(registeredUser != null && password.equals(registeredUser.getPassword())){
@@ -60,7 +60,7 @@ public class IndexController implements ApplicationContextAware {
 			request.getSession().setAttribute("loggedIn", true);
 			return "redirect:" + subPage;
 		}
-		model.addAttribute("loginFailed", true);
+		model.addAttribute("message", "Wrong username or password.");
 		model.addAttribute("page", page);
 		return "/login";
 		/*request.getSession().setAttribute("username", user.getUsername());

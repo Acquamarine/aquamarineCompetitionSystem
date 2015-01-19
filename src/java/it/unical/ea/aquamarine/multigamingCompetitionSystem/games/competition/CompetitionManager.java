@@ -11,6 +11,7 @@ import java.util.Map;
 public class CompetitionManager {
 	private static CompetitionManager instance;
 	private final Map<Integer, ICompetitor> activeCompetitors = new HashMap<>();
+	private final Map<String, ICompetitor> activeCompetitorsByUsername = new HashMap<>();
 	float HIGHER_BOUND = 2000;
 	float LOWER_BOUND = 600;
 	float HIGHER_ELO_CONSTANT = 10;
@@ -46,6 +47,19 @@ public class CompetitionManager {
 		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
 		ICompetitor competitor = competitorDAO.retrieveById(competitorId);
 		activeCompetitors.put(competitorId, competitor);
+		activeCompetitorsByUsername.put(competitor.getNickname(), competitor);
+		return competitor;
+		
+	}
+	public ICompetitor getCompetitorByUsername(String username) {
+		if(activeCompetitorsByUsername.containsKey(username)) {
+			return activeCompetitorsByUsername.get(username);
+		}
+		//TODO check
+		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
+		ICompetitor competitor = competitorDAO.retrieveByUsername(username);
+		activeCompetitorsByUsername.put(username, competitor);
+		activeCompetitors.put(competitor.getId(), competitor);
 		return competitor;
 		
 	}
