@@ -3,7 +3,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem"%>
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemCategory"%>
-<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1"%>
+<%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1"%>
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser"%>
 <%@page import="it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard"%>
 <%@page import="java.util.List"%>
@@ -151,7 +151,7 @@
                                 if ($('#deck').length) {
                                     distributeCard(obj.picked0, obj.winner, obj.deck + 1, false);
                                     console.log($('#deck-image').text);
-                                    setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck,true)", 2000);
+                                    setTimeout("distributeCard(obj.picked1,obj.loser,obj.deck,true)", 2000);
 
                                 }
                             }

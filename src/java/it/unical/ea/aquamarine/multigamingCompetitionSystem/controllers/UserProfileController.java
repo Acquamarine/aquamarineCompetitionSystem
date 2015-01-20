@@ -2,7 +2,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.MatchResultDAO;

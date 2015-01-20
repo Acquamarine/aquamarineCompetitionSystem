@@ -2,7 +2,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;
 import java.io.File;

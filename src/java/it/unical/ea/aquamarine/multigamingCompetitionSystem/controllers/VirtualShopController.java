@@ -3,7 +3,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.AbstractCompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemCategory;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;

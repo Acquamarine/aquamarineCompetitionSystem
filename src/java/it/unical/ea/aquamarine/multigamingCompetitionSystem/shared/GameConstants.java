@@ -1,7 +1,7 @@
 
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.shared;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette.Tressette1v1;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
