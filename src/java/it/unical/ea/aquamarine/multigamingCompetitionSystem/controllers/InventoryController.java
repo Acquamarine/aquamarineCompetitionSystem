@@ -24,7 +24,6 @@ public class InventoryController {
 	public String inventory(HttpServletRequest request, Model m) {
 		if(request.getSession().getAttribute("nickname") != null){
 			m.addAttribute("user", request.getSession().getAttribute("nickname"));
-			//TODO get from DAO
 			RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
 			OnDemandPersistenceManager.getInstance().initializeInventory(user);
 			OnDemandPersistenceManager.getInstance().initializeEquip(user);
@@ -39,6 +38,7 @@ public class InventoryController {
 		RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
 		item.equip(user);
 		OnDemandPersistenceManager.getInstance().updateCompetitor(user);
+		request.getSession().setAttribute("focus", "InventoryButton"+itemId);
 		System.out.println("equipItem " + itemId);
 		return "redirect:inventory";
 	}
@@ -48,6 +48,7 @@ public class InventoryController {
 		RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
 		item.unequip(user);
 		OnDemandPersistenceManager.getInstance().updateCompetitor(user);
+		request.getSession().setAttribute("focus", "InventoryButton"+itemId);
 		System.out.println("unequipItem " + itemId);
 		return "redirect:inventory";
 	}

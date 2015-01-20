@@ -44,8 +44,8 @@ public class IndexController implements ApplicationContextAware {
 
 		String username = user.getUsername();
 		String password = user.getPassword();
-		//TODO type check -> class cast exception may occour
 		RegisteredUser registeredUser = (RegisteredUser) CompetitionManager.getInstance().getCompetitorByUsername(username);
+		
 		String subPage= page.substring(29);
 			
 		if(registeredUser != null && password.equals(registeredUser.getPassword())){

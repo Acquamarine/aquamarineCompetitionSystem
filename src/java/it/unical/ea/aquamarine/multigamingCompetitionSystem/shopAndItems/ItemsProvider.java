@@ -31,14 +31,12 @@ public class ItemsProvider {
 			switch(itemType){
 				case "market":
 					readingItem = new MarketItem();
-					//TODO remove, use DAO
 					readingItem.setId(itemReader.getInteger("id"));
 					shopItemsMap.put(readingItem.getId(), (MarketItem) readingItem);
 					((MarketItem) readingItem).setVirtualPointsPrice(itemReader.getInteger("price"));
 					break;
 				default: //eloReward
 					readingItem = new EloRewardItem();
-					//TODO remove, use DAO
 					readingItem.setId(itemReader.getInteger("id"));
 					eloRewardItemsMap.put(readingItem.getId(), (EloRewardItem) readingItem);
 					((EloRewardItem) readingItem).setUnlockingElo(itemReader.getInteger("elo"));

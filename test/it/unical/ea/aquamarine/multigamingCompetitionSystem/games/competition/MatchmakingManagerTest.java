@@ -52,7 +52,6 @@ public class MatchmakingManagerTest {
 		MatchmakingManager instance = new MatchmakingManager();
 		instance.addToQueue(game, player);
 		instance.removeFromQueue(game, player);
-		// TODO review the generated test code and remove the default call to fail.
 		assertTrue(instance.getQueuedCompetitorsMap().isEmpty());
 	}
 
@@ -82,7 +81,6 @@ public class MatchmakingManagerTest {
 			Logger.getLogger(MatchmakingManagerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
-		// TODO review the generated test code and remove the default call to fail.
 		assertTrue(instance.getQueues().get(game).getQueuedCompetitors().size() == 0);
 	}
 	

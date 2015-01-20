@@ -87,7 +87,6 @@ public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITresset
 			}
 			finalScores.put(player, pointCounter / 3);
 		});
-		//TODO get two values score for match history
 
 	}
 

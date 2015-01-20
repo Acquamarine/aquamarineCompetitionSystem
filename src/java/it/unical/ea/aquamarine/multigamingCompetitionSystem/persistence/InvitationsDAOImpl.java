@@ -23,6 +23,9 @@ public class InvitationsDAOImpl implements InvitationsDAO {
 	
 	@Override
 	public void create(Invitation invitation) {
+		if(doesInvitationExists(invitation.getInvitingTeam(), invitation.getInvitedUser())){
+			return;
+		}
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
 		try{
@@ -81,6 +84,18 @@ public class InvitationsDAOImpl implements InvitationsDAO {
 		List<Invitation> invitations = (List<Invitation>) query.list();
 		session.close();
 		return invitations;
+	}
+
+	@Override
+	public boolean doesInvitationExists(Team invitingTeam, RegisteredUser invitedUser) {
+		Session session = sessionFactory.openSession();
+		String queryString = "from Invitation where invitingTeam = :inviting and invitedUser = :invited";
+		Query query = session.createQuery(queryString);
+		query.setParameter("inviting", invitingTeam);
+		query.setParameter("invited", invitedUser);
+		Invitation invitation = (Invitation) query.uniqueResult();
+		session.close();
+		return invitation!=null;
 	}
 	
 }

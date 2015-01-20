@@ -12,6 +12,13 @@
         <link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css">
         <link href="/MultigamingCompetitionSystem/css/inventory.css" rel="stylesheet" type="text/css">
         <script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(window).scrollTop($("#${focus}").offset().top - 300);
+				console.log($("#${focus}"));
+			<%request.getSession().removeAttribute("focus");%>
+			});
+		</script>
     </head>
     <body>
         <%@include file="../../resources/html/header.html" %>
@@ -40,15 +47,15 @@
                                 <div class="ItemCategory Detail">Category: ${itemInCategory.getCategory().toString()}</div>
                                 <div class="EquipOption Detail">
                                     <%String buttonValue = "Equip!";
-                                                                                                                    String buttonClass = "Equip";
+										String buttonClass = "Equip";
                                     %>
                                     <c:if  test="${registeredUser.getEquip(itemInCategory.getGame()).isItemEquipped(itemInCategory)}">
                                         <%buttonValue = "Unequip!";
-                                                                                                                                        buttonClass = "Unequip";
+											buttonClass = "Unequip";
                                         %>
                                     </c:if>
                                     <form action="/MultigamingCompetitionSystem/inventory?<%=buttonClass%>=${itemInCategory.getId()}" method="post">
-                                        <input  class="Submit EquipItemButton <%=buttonClass%>"  type="submit" value="<%=buttonValue%>"/>
+                                        <input  class="Submit EquipItemButton <%=buttonClass%>" id="InventoryButton${itemInCategory.getId()}" type="submit" value="<%=buttonValue%>"/>
                                     </form>
                                 </div>
                             </div>

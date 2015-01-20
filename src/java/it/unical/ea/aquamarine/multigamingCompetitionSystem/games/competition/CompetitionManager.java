@@ -17,22 +17,22 @@ public class CompetitionManager {
 	float HIGHER_BOUND = 2000;
 	float LOWER_BOUND = 600;
 	float HIGHER_ELO_CONSTANT = 10;
-	float LOWER_ELO_CONSTANT = 30;		
-	
+	float LOWER_ELO_CONSTANT = 30;
+
 	public static CompetitionManager getInstance() {
-		if(instance == null) {
+		if(instance == null){
 			instance = new CompetitionManager();
 		}
 		return instance;
 	}
-	
+
 	public void eloUpdate(String game, Integer winnerId, Integer loserId) {
 		ICompetitor winner = activeCompetitors.get(winnerId);
 		ICompetitor loser = activeCompetitors.get(loserId);
 		int winnerPreviousElo = winner.getElo(game);
 		int loserPreviousElo = loser.getElo(game);
-		double eloDifference = winnerPreviousElo-loserPreviousElo;
-		double loserExpectedWinningProbability = 1/(1+Math.pow(10,(eloDifference/400)));
+		double eloDifference = winnerPreviousElo - loserPreviousElo;
+		double loserExpectedWinningProbability = 1 / (1 + Math.pow(10, (eloDifference / 400)));
 		int winnerNewElo = (int) Math.round(winnerPreviousElo + getEloDynamicConstant(winnerPreviousElo) * (loserExpectedWinningProbability));
 		int loserNewElo = (int) Math.round(loserPreviousElo + getEloDynamicConstant(loserPreviousElo) * (-loserExpectedWinningProbability));
 		winner.updateElo(game, winnerNewElo);
@@ -40,66 +40,66 @@ public class CompetitionManager {
 		OnDemandPersistenceManager.getInstance().updateCompetitor(loser);
 		OnDemandPersistenceManager.getInstance().updateCompetitor(winner);
 	}
-	
 
 	public ICompetitor getCompetitor(Integer competitorId) {
-		if(activeCompetitors.containsKey(competitorId)) {
+		if(activeCompetitors.containsKey(competitorId)){
 			return activeCompetitors.get(competitorId);
 		}
-		//TODO check
 		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
 		ICompetitor competitor = competitorDAO.retrieveById(competitorId);
-		activeCompetitors.put(competitorId, competitor);
-		if(!competitor.isTeam()) {
-			activeCompetitorsByUsername.put(((RegisteredUser)competitor).getUsername(), competitor);
+		if(competitor != null){
+			activeCompetitors.put(competitorId, competitor);
+			if(!competitor.isTeam()){
+				activeCompetitorsByUsername.put(((RegisteredUser) competitor).getUsername(), competitor);
+			}
+			activeCompetitorsByNick.put(competitor.getNickname(), competitor);
 		}
-		activeCompetitorsByNick.put(competitor.getNickname(), competitor);
 		return competitor;
-		
+
 	}
-	
+
 	public ICompetitor getCompetitorByNick(String nick) {
-		if(activeCompetitorsByNick.containsKey(nick)) {
+		if(activeCompetitorsByNick.containsKey(nick)){
 			return activeCompetitorsByNick.get(nick);
 		}
-		//TODO check
 		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
 		ICompetitor competitor = competitorDAO.retrieveByNick(nick);
-		activeCompetitorsByNick.put(nick, competitor);
-		if(!competitor.isTeam()) {
-			activeCompetitorsByUsername.put(((RegisteredUser)competitor).getUsername(), competitor);
+		if(competitor != null){
+			activeCompetitorsByNick.put(nick, competitor);
+			if(!competitor.isTeam()){
+				activeCompetitorsByUsername.put(((RegisteredUser) competitor).getUsername(), competitor);
+			}
+			activeCompetitors.put(competitor.getId(), competitor);
 		}
-		activeCompetitors.put(competitor.getId(), competitor);
 		return competitor;
-		
+
 	}
-	
+
 	public ICompetitor getCompetitorByUsername(String username) {
-		if(activeCompetitorsByUsername.containsKey(username)) {
+		if(activeCompetitorsByUsername.containsKey(username)){
 			return activeCompetitorsByUsername.get(username);
 		}
-		//TODO check
 		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
 		ICompetitor competitor = competitorDAO.retrieveByUsername(username);
-		activeCompetitorsByUsername.put(username, competitor);
-		activeCompetitors.put(competitor.getId(), competitor);
+		if(competitor != null){
+			activeCompetitorsByUsername.put(username, competitor);
+			activeCompetitors.put(competitor.getId(), competitor);
+			activeCompetitorsByNick.put(competitor.getNickname(), competitor);
+		}
 		return competitor;
-		
+
 	}
 
 	private double getEloDynamicConstant(int startingElo) {
-		
-		
-		if(startingElo >= HIGHER_BOUND) {
+
+		if(startingElo >= HIGHER_BOUND){
 			return HIGHER_ELO_CONSTANT;
-		}
-		else if(startingElo<= LOWER_BOUND) {
+		}else if(startingElo <= LOWER_BOUND){
 			return LOWER_ELO_CONSTANT;
 		}
-		double t =  (startingElo - LOWER_BOUND) / (HIGHER_BOUND - LOWER_BOUND) * (LOWER_ELO_CONSTANT-HIGHER_ELO_CONSTANT);
+		double t = (startingElo - LOWER_BOUND) / (HIGHER_BOUND - LOWER_BOUND) * (LOWER_ELO_CONSTANT - HIGHER_ELO_CONSTANT);
 		return LOWER_ELO_CONSTANT - t;
-		
-		
+
 	}
 
 	public void giveVirtualPoints(Integer winnerId, Integer loserId, String simpleName) {
@@ -110,5 +110,27 @@ public class CompetitionManager {
 		OnDemandPersistenceManager.getInstance().updateCompetitor(loser);
 		OnDemandPersistenceManager.getInstance().updateCompetitor(winner);
 	}
-	
+
+	public boolean doesTeamExistByNick(String teamNickname) {
+		ICompetitor competitor = activeCompetitorsByNick.get(teamNickname);
+		if(competitor != null){
+			return competitor.isTeam();
+		}
+		competitor = DAOProvider.getCompetitorDAO().retrieveByNick(teamNickname);
+		if(competitor != null){
+			return competitor.isTeam();
+		}
+		return false;
+	}
+	public boolean doesUserExistByNick(String userNickname) {
+		ICompetitor competitor = activeCompetitorsByNick.get(userNickname);
+		if(competitor != null){
+			return !competitor.isTeam();
+		}
+		competitor = DAOProvider.getCompetitorDAO().retrieveByNick(userNickname);
+		if(competitor != null){
+			return !competitor.isTeam();
+		}
+		return false;
+	}
 }

@@ -32,10 +32,6 @@ public class TressetteGameManager implements GameManager {
 	
 	@Override
 	public void startMatch(ICompetitor user1, ICompetitor user2, boolean rankedMatch) {
-		//TODO all checks
-		if(activeMatches.get(user1.getId())!=null) {
-			return;
-		}
 		List<Integer> players = new ArrayList<>();
 		players.add(user1.getId());
 		players.add(user2.getId());
