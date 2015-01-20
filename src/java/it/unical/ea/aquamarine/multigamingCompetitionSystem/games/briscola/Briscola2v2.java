@@ -1,6 +1,7 @@
 
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.briscola;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.AbstractNeapolitanCardGame;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.INeapolitanCardGame;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
@@ -15,8 +16,16 @@ import java.util.Map;
 import java.util.Queue;
 
 
-public class Briscola2v2 implements INeapolitanCardGame {
+public class Briscola2v2 extends AbstractNeapolitanCardGame implements INeapolitanCardGame {
 
+	public Briscola2v2(List<Integer> players, boolean rankedMatch) {
+		super(players, rankedMatch);
+		players.stream().forEach((player) -> {
+			for(int i = 0; i < 3; i++){
+				hands.get(player).addCard(deck.poll());
+			}
+		});
+	}	
 	
 	@Override
 	public TressetteRoundSummary playCard(Integer playerId, NeapolitanCard card) {
