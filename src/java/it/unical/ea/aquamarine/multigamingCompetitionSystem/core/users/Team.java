@@ -9,7 +9,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -17,6 +19,7 @@ import javax.persistence.Transient;
 public class Team extends AbstractCompetitor{
 	
 	private Set<RegisteredUser> members;
+	private RegisteredUser leader;
 
 	public Team() {
 		 members = new HashSet<>();
@@ -43,5 +46,16 @@ public class Team extends AbstractCompetitor{
 	public boolean isTeam() {
 		return true;
 	}
+
+	@ManyToOne
+	@JoinColumn(name = "leader")
+	public RegisteredUser getLeader() {
+		return leader;
+	}
+
+	public void setLeader(RegisteredUser leader) {
+		this.leader = leader;
+	}
+	
 	
 }

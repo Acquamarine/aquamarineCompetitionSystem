@@ -12,8 +12,15 @@
         <link href="/MultigamingCompetitionSystem/css/indexStyle.css" rel="stylesheet" type="text/css">
         <link href="/MultigamingCompetitionSystem/css/virtualShop.css" rel="stylesheet" type="text/css">
         <script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(window).scrollTop($("#${focus}").offset().top-300);
+				console.log($("#${focus}"));
+			<%request.getSession().removeAttribute("focus");%>
+			});
+		</script>
     </head>
-    <body>
+    <body >
         <%@include file="../../resources/html/header.html" %>
         <div class="ShopContainer">
             <div class="ShopHeader">
@@ -59,7 +66,7 @@
 										</c:when>
 									</c:choose>
 									<form action="/MultigamingCompetitionSystem/virtualShop?buyItem=${itemInCategory.getId()}" method="post">
-										<input  class="Submit BuyItemButton <%=buttonClass%>"  type="submit" value="<%=buttonValue%>" <%=disabled%>/>
+										<input  class="Submit BuyItemButton <%=buttonClass%>"  id="VirtualShopButton${itemInCategory.getId()}" type="submit" value="<%=buttonValue%>" <%=disabled%>/>
 									</form>
                                 </div>
                             </div>

@@ -156,7 +156,6 @@ public class CompetitorDAOImplTest {
 		user.setPassword("ciccioEloTestP");
 		user.getCompetitionProfile().put("tressette1v1", 1500);
 		instance.create(user);
-		// TODO review the generated test code and remove the default call to fail.
 		RegisteredUser retrievedUser = (RegisteredUser) instance.retrieveByNick("ciccioEloTestN");
 		assertTrue(1500 == retrievedUser.getElo("tressette1v1"));
 	}
@@ -176,7 +175,6 @@ public class CompetitorDAOImplTest {
 		user1.updateElo("Tressette1v1", 1100);
 		OnDemandPersistenceManager.getInstance().updateCompetitor(user);
 		OnDemandPersistenceManager.getInstance().updateCompetitor(user1);
-		// TODO review the generated test code and remove the default call to fail.
 		List<Pair<ICompetitor, Integer>> userRanking = instance.getCompetitorRanking("Tressette1v1");
 		assertTrue(1500 == userRanking.get(0).getValue());
 		assertTrue(1100 == userRanking.get(1).getValue());

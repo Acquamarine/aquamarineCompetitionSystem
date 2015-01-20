@@ -24,11 +24,11 @@ public class MultigamingBlManager {
 	public void createMatch(String game, ICompetitor first, ICompetitor second) {
 		if(game.endsWith("normal")) {
 			System.out.println("normal game");
-			gameManagers.get(game).startMatch(first, second, false);//TODO switch between ranked and unranked
+			gameManagers.get(game).startMatch(first, second, false);
 		}
 		else {
 			System.out.println("ranked game");
-			gameManagers.get(game).startMatch(first, second, true);//TODO switch between ranked and unranked
+			gameManagers.get(game).startMatch(first, second, true);
 			
 		}
 	}

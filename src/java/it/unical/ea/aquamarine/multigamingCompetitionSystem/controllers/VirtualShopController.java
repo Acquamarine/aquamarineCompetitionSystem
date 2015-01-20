@@ -65,6 +65,7 @@ public class VirtualShopController {
 		ICompetitor buyer = (ICompetitor)request.getSession().getAttribute("buyer");
         VirtualShop.getInstance().buyItem(buyer, ItemsProvider.getInstance().getMarketItem(buyItem));
 		OnDemandPersistenceManager.getInstance().updateCompetitor(buyer);
+		request.getSession().setAttribute("focus", "VirtualShopButton"+buyItem);
         return "redirect:virtualShop";
     }
 }

@@ -12,4 +12,5 @@ public interface InvitationsDAO {
 	public void delete(Team team, RegisteredUser user);
 	public List<Invitation> retrieve(RegisteredUser invited);
 	public List<Invitation> retrieve(Team inviting);
+	public boolean doesInvitationExists(Team invitingTeam, RegisteredUser invitedUser);
 }
