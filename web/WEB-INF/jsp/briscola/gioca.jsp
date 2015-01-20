@@ -22,180 +22,180 @@
         <script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
         <script>
             <%String deckCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
-                String opponentCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
-                ICompetitor user = (ICompetitor) request.getSession().getAttribute("matchedCompetitor");
-                System.out.println(user.getNickname());
-                System.out.println(user.getEquip("Tressette1v1").getEquipMap());
-                if (user.getEquip("Tressette1v1").getEquipMap().containsKey(ItemCategory.CARD_COVER)) {
-                    String cover = user.getEquip("Tressette1v1").getEquipMap().get(ItemCategory.CARD_COVER).getName();
-                    opponentCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/" + cover + ".png";
-                }%>
-            var graphicComplete = true;
-            function gameComplete() {
-                $.ajax({
-                    url: "./gioca",
-                    data: {
-                        gameComplete: true
-                    },
-                    success: function (data) {
-                        obj = JSON.parse(data);
-                        $('#player1-cards').remove();
-                        $('#player2-cards').remove();
-                        $('#cards-on-table').children().remove();
-                        console.log(obj);
-                        var elements = obj.results;
-                        var i = 0;
-                        for (element in elements) {
-                            console.log(element + " " + elements[element]);
-                            externalDivToAppend = document.createElement("div");
-                            externalDivToAppend.className = "finalScore";
-                            externalDivToAppend.id = "finalScore" + i;
-                            i++;
-                            externalDivToAppend.innerHTML = " " + element + " Points " + elements[element];
-                            document.getElementById('cards-on-table').appendChild(externalDivToAppend);
-                        }
-                        //$('#player1-other-info').html(${user} + " Points " + obj.results['${user}']);
-                        //$('#player2-other-info').html(${matched} + " Points " + obj.results['${matched}']);
-                    }
-                });
-            }
-            function cardsClick() {
-                var parentId = this.id;
-                console.log(parentId);
-                if (graphicComplete) {
-                    $.ajax({
-                        url: "./gioca",
-                        data: {
-                            cardId: parentId
-                        },
-                        success: function (data) {
-                        }
-                    });
-                }
-            }
-            $(document).ready(function () {
-                $(".player2-cards").click(cardsClick);
-            });
+				String opponentCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
+				ICompetitor user = (ICompetitor) request.getSession().getAttribute("matchedCompetitor");
+				System.out.println(user.getNickname());
+				System.out.println(user.getEquip("Tressette1v1").getEquipMap());
+				if(user.getEquip("Tressette1v1").getEquipMap().containsKey(ItemCategory.CARD_COVER)){
+					String cover = user.getEquip("Tressette1v1").getEquipMap().get(ItemCategory.CARD_COVER).getName();
+					opponentCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/" + cover + ".png";
+				}%>
+			var graphicComplete = true;
+			function gameComplete() {
+				$.ajax({
+					url: "./gioca",
+					data: {
+						gameComplete: true
+					},
+					success: function (data) {
+						obj = JSON.parse(data);
+						$('#player1-cards').remove();
+						$('#player2-cards').remove();
+						$('#cards-on-table').children().remove();
+						console.log(obj);
+						var elements = obj.results;
+						var i = 0;
+						for (element in elements) {
+							console.log(element + " " + elements[element]);
+							externalDivToAppend = document.createElement("div");
+							externalDivToAppend.className = "finalScore";
+							externalDivToAppend.id = "finalScore" + i;
+							i++;
+							externalDivToAppend.innerHTML = " " + element + " Points " + elements[element];
+							document.getElementById('cards-on-table').appendChild(externalDivToAppend);
+						}
+						//$('#player1-other-info').html(${user} + " Points " + obj.results['${user}']);
+						//$('#player2-other-info').html(${matched} + " Points " + obj.results['${matched}']);
+					}
+				});
+			}
+			function cardsClick() {
+				var parentId = this.id;
+				console.log(parentId);
+				if (graphicComplete) {
+					$.ajax({
+						url: "./gioca",
+						data: {
+							cardId: parentId
+						},
+						success: function (data) {
+						}
+					});
+				}
+			}
+			$(document).ready(function () {
+				$(".player2-cards").click(cardsClick);
+			});
 
 
-            function removeCardsFromTable() {
-                $('#card-played-0').children("img").remove();
-                $('#card-played-1').children("img").remove();
-            }
-            function distributeCard(card, player, deck, complete) {
-                setTimeout(function () {
-                    $('#deck').html("<img id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'>" + deck + "</img>");
-                }, 2000);
+			function removeCardsFromTable() {
+				$('#card-played-0').children("img").remove();
+				$('#card-played-1').children("img").remove();
+			}
+			function distributeCard(card, player, deck, complete) {
+				setTimeout(function () {
+					$('#deck').html("<img id='deck-image' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png'>" + deck + "</img>");
+				}, 2000);
 
-                setTimeout(function () {
-                    $('#deck').html("<img  id='deck-image' class='cards_img' src=<%=deckCoverPath%>/>" + deck + "</img>");
-                    if (player === "${nickname}" && $('#' + card).length === 0) {
-                        externalDivToAppend = document.createElement("div");
-                        externalDivToAppend.className = "player2-cards-container";
-                        divToAppend = document.createElement("div");
-                        var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png";
-                        divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
-                        divToAppend.className = "player2-cards";
-                        divToAppend.id = card;
-                        toAppend = document.createElement("li");
-                        externalDivToAppend.appendChild(divToAppend);
-                        toAppend.appendChild(externalDivToAppend);
-                        toAppend.className = "li-cards";
-                        document.getElementById("player2-cards-list").appendChild(toAppend);
-                        $('#' + card).click(cardsClick);
-                    } else if (player !== "${nickname}") {
-                        divToAppend = document.createElement("div");
-                        divToAppend.innerHTML = "<img class='cards_img' src=<%=opponentCoverPath%>/>";
-                        divToAppend.className = "player1-cards";
-                        toAppend = document.createElement("li");
-                        toAppend.appendChild(divToAppend);
-                        toAppend.className = "li-cards";
-                        document.getElementById("player1-cards-list").appendChild(toAppend);
-                    }
-                    if (deck === 0 && $('#deck').length) {
-                        $('#deck').remove();
-                    }
-                    graphicComplete = complete;
-                }, 3000);
-            }
-            var index = ${eventIndex};
-            console.log(index);
-            function eventHandler() {
-                console.log(index);
-                $.ajax({
-                    url: "./gioca",
-                    data: {
-                        eventIndex: index
-                    },
-                    success: function (data) {
-                        graphicComplete = false;
-                        if (data !== "") {
-                            index++;
-                            obj = JSON.parse(data);
-                            if ("${nickname}" === obj.actionPlayer) {
-                                $('#' + obj.card).parent("div").parent("li").remove();
-                            }
-                            else {
-                                $('.li-cards').first().remove();
-                            }
-                            $('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
-                            //console.log(obj.round);
-                            if (obj.round === 1) {
-                                setTimeout(function () {
-                                    $('#card-played-0').children("img").remove();
-                                    $('#card-played-1').children("img").remove();
-                                    if (!$('#deck').length) {
-                                        graphicComplete = true;
-                                    }
-                                }, 1000);
-                                if ($('#deck').length) {
-                                    distributeCard(obj.picked0, obj.winner, obj.deck + 1, false);
-                                    console.log($('#deck-image').text);
-                                    setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck,true)", 2000);
+				setTimeout(function () {
+					$('#deck').html("<img  id='deck-image' class='cards_img' src=<%=deckCoverPath%>/>" + deck + "</img>");
+					if (player === "${nickname}" && $('#' + card).length === 0) {
+						externalDivToAppend = document.createElement("div");
+						externalDivToAppend.className = "player2-cards-container";
+						divToAppend = document.createElement("div");
+						var cardPath = "/MultigamingCompetitionSystem/assets/carte_napoletane/" + card + ".png";
+						divToAppend.innerHTML = "<img  class='cards_img' src=" + cardPath + " />";
+						divToAppend.className = "player2-cards";
+						divToAppend.id = card;
+						toAppend = document.createElement("li");
+						externalDivToAppend.appendChild(divToAppend);
+						toAppend.appendChild(externalDivToAppend);
+						toAppend.className = "li-cards";
+						document.getElementById("player2-cards-list").appendChild(toAppend);
+						$('#' + card).click(cardsClick);
+					} else if (player !== "${nickname}") {
+						divToAppend = document.createElement("div");
+						divToAppend.innerHTML = "<img class='cards_img' src=<%=opponentCoverPath%>/>";
+						divToAppend.className = "player1-cards";
+						toAppend = document.createElement("li");
+						toAppend.appendChild(divToAppend);
+						toAppend.className = "li-cards";
+						document.getElementById("player1-cards-list").appendChild(toAppend);
+					}
+					if (deck === 0 && $('#deck').length) {
+						$('#deck').remove();
+					}
+					graphicComplete = complete;
+				}, 3000);
+			}
+			var index = ${eventIndex};
+			console.log(index);
+			function eventHandler() {
+				console.log(index);
+				$.ajax({
+					url: "./gioca",
+					data: {
+						eventIndex: index
+					},
+					success: function (data) {
+						graphicComplete = false;
+						if (data !== "") {
+							index++;
+							obj = JSON.parse(data);
+							if ("${nickname}" === obj.actionPlayer) {
+								$('#' + obj.card).parent("div").parent("li").remove();
+							}
+							else {
+								$('.li-cards').first().remove();
+							}
+							$('#card-played-' + obj.round).html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
+							//console.log(obj.round);
+							if (obj.round === 1) {
+								setTimeout(function () {
+									$('#card-played-0').children("img").remove();
+									$('#card-played-1').children("img").remove();
+									if (!$('#deck').length) {
+										graphicComplete = true;
+									}
+								}, 1000);
+								if ($('#deck').length) {
+									distributeCard(obj.picked0, obj.winner, obj.deck + 1, false);
+									console.log($('#deck-image').text);
+									setTimeout("distributeCard(obj.picked1,obj.looser,obj.deck,true)", 2000);
 
-                                }
-                            }
-                            else {
-                                graphicComplete = true;
-                            }
-                            if (obj.gameover) {
-                                gameComplete();
-                            } else {
-                                if (obj.round === 1) {
-                                    $('#turn').html(obj.winner + ' tocca a te!');
-                                } else if ("${nickname}" === obj.actionPlayer) {
-                                    $('#turn').html('${matched} tocca a te!');
-                                } else {
-                                    $('#turn').html('${nickname} tocca a te!');
-                                }
+								}
+							}
+							else {
+								graphicComplete = true;
+							}
+							if (obj.gameover) {
+								gameComplete();
+							} else {
+								if (obj.round === 1) {
+									$('#turn').html(obj.winner + ' tocca a te!');
+								} else if ("${nickname}" === obj.actionPlayer) {
+									$('#turn').html('${matched} tocca a te!');
+								} else {
+									$('#turn').html('${nickname} tocca a te!');
+								}
 
-                                eventHandler();
-                            }
-                        }
-                    }
-                });
-            }
-            $(document).ready(function () {
-                eventHandler();
+								eventHandler();
+							}
+						}
+					}
+				});
+			}
+			$(document).ready(function () {
+				eventHandler();
 
-            });
+			});
         </script>
     </head>
     <body>
         <%@include file="../../../resources/html/header.html" %>
         <div id="game-table">
-            <div id="player1">
-                <ul id="player1_info">
-                    <li id="player1-avatar">
+            <div id="MyTeammate">
+                <ul id="MyTeammate_info">
+                    <li id="MyTeammate-avatar">
                     </li>
-                    <li class="player_other_info"> ${matched}</li>
+                    <li class="MyTeammate_other_info"> ${matched}</li>
                 </ul>
-                <div id="player1-cards">
-                    <ul id="player1-cards-list">
+                <div id="MyTeammate-cards">
+                    <ul id="MyTeammate-cards-list">
                         <c:forEach items = "${matchedPlayerCards}"  var = "card" >
                             <c:if test='${card!=null}'>
                                 <li class="li-cards">
-                                    <div class="player1-cards">
+                                    <div class="MyTeammate-cards">
                                         <img class='cards_img' src=<%=opponentCoverPath%>/>
                                     </div>
                                 </li>
@@ -210,14 +210,17 @@
                     <li class="table-card">
                         <c:if test="${deck!=0}">
                             <div id="deck">
-                                <img id="deck-image" class='cards_img' src=<%=deckCoverPath%>></img>${deck}
+                                <img id="deck-image" class='cards_img Inline' src=<%=deckCoverPath%>></img>${deck}
                             </div>
+							<div id="briscolaCard">
+                                <img id="briscolaCard-image" class='cards_img Inline' src=${briscolaCard}></img>${deck}
+							</div>
                         </c:if>
                     </li>
                     <li class="table-card">
                         <div class= "played-cards" id="card-played-0">
-                            <c:if test="${cardOnTable!=null}">
-                                <img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/${cardOnTable}.png'/>
+                            <c:if test="${cardOnTable.size()>0}">
+                                <img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/${cardOnTable.get(0)}.png'/>
                             </c:if>
                         </div>
                     </li>
