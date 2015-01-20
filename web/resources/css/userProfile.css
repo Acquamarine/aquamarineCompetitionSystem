@@ -117,3 +117,10 @@ body {
     list-style-type: none;
     text-align: center;
 }
+
+
+.Error{
+	margin-left: 5em;
+	margin-top: 3em;
+	color:#ff0000;
+}

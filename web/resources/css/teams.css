@@ -66,7 +66,7 @@
 .InvitationsSearchBox{
 	text-align: right;
 	top: 8em;
-        width: 20em;
+    width: 20em;
 }
 
 .InvitationsSearchBoxContainer{
@@ -74,6 +74,7 @@
     right: 0;
     bottom: 0;
 }
+
 
 .Invite {
     background-color: #40dd40;
@@ -86,6 +87,8 @@
 
 .InvitationsHeader {
     position: relative;
+		min-height: 2em;
+
 }
 
 .PendingMember {
@@ -133,4 +136,11 @@
 
 .PlatformGamesTitle {
     margin-top: 1.2em;
+}
+
+.AllTeamsHeader{
+	width: 80%;
+	height: 4em;
+	margin:auto;
+	position: relative;
 }

@@ -40,6 +40,7 @@ public class CompetitionManager {
 		OnDemandPersistenceManager.getInstance().updateCompetitor(loser);
 		OnDemandPersistenceManager.getInstance().updateCompetitor(winner);
 	}
+	
 
 	public ICompetitor getCompetitor(Integer competitorId) {
 		if(activeCompetitors.containsKey(competitorId)) {

@@ -9,6 +9,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.Co
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +25,7 @@ public class TeamsController {
 
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public String teams(Model model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
+		if((boolean)request.getSession().getAttribute("loggedIn") == false){
 			return "redirect:login";
 		}
 		RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
@@ -36,14 +36,37 @@ public class TeamsController {
 		model.addAttribute("invitationsMap", invitationsMap);
 		List<Invitation> myInvitations = DAOProvider.getInvitationsDAO().retrieve(user);
 		model.addAttribute("myInvitations", myInvitations);
+		List<Team> usersTeams = new LinkedList<>();
+		for(Team team: user.getTeams() ){
+			usersTeams.add((Team)CompetitionManager.getInstance().getCompetitorByNick(team.getNickname()));
+		}
+		model.addAttribute("usersTeams", usersTeams);
+		model.addAttribute("myInvitations", myInvitations);
 		return "/teams";
 	}
 	
 	
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "createTeam")
+	public String inviteUserInTeam(Model model, HttpServletRequest request, @RequestParam("createTeam") String teamNick) {
+		if((boolean)request.getSession().getAttribute("loggedIn") == false){
+			return "redirect:login";
+		}
+		//TODO check whether the inviting user is in the inviting team
+		Team team;
+		RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
+		if(DAOProvider.getCompetitorDAO().retrieveByNick(teamNick)==null){
+			team = new Team();
+			team.setNickname(teamNick);
+			team.addMember(user);
+			user.addTeam(team);
+			DAOProvider.getCompetitorDAO().updateCompetitor(user);
+		}
+		return "redirect:teams";
+	}
+	
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"team", "invitedUser"})
 	public String inviteUserInTeam(Model model, HttpServletRequest request, @RequestParam("team") String teamNick, @RequestParam("invitedUser") String userNick) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
+		if((boolean)request.getSession().getAttribute("loggedIn") == false){
 			return "redirect:login";
 		}
 		//TODO check whether the inviting user is in the inviting team
@@ -55,12 +78,11 @@ public class TeamsController {
 	
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"accept"})
 	public String acceptTeamInvitation(Model model, HttpServletRequest request, @RequestParam("accept") String teamNick) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
+		if((boolean)request.getSession().getAttribute("loggedIn") == false){
 			return "redirect:login";
 		}
 		//TODO check whether the invited user has really been invited in the inviting team
-		Team team = (Team)DAOProvider.getCompetitorDAO().retrieveByNick(teamNick);
+		Team team = (Team)CompetitionManager.getInstance().getCompetitorByNick(teamNick);
 		RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
 		acceptOrDeclineTeamInvitation(team, user, true);
 		return "redirect:teams";
@@ -68,8 +90,7 @@ public class TeamsController {
 	
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"decline"})
 	public String declineTeamInvitation(Model model, HttpServletRequest request, @RequestParam("decline") String teamNick) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
+		if((boolean)request.getSession().getAttribute("loggedIn") == false){
 			return "redirect:login";
 		}
 		//TODO check whether the invited user has really been invited in the inviting team

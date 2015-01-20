@@ -42,18 +42,12 @@ public class TressetteController {
 
 	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST})
 	public String index(Model model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
-		}
 		return "/tressette";
 	}
 	
 
 	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST})
 	public String play(Model model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
-		}
 		Integer me = (Integer) request.getSession().getAttribute("playerId"); //TODO get from session
 		String myNickname = CompetitionManager.getInstance().getCompetitor(me).getNickname();
 		//TODO input validation

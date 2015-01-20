@@ -26,10 +26,6 @@ public class IndexController implements ApplicationContextAware {
 
 	@RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
 	public String index(Model model, HttpServletRequest request) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
-		}
-		
 		return "index";
 	}
 

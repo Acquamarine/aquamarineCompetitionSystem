@@ -28,12 +28,12 @@
 
 					<p class="contact"><label for="username">Create a username</label></p> 
 					<div>
-						<form:input id="username" name="username" placeholder="username" required="" tabindex="2" type="text" path="username"/> 
+						<form:input class="NoSpace" id="username" name="username" placeholder="username" required="" tabindex="2" type="text" path="username"/> 
 					</div>
 					<p class="contact"><label for="username">Create a nickname</label></p> 
 
 					<div>
-						<form:input id="nickname" name="nickname" placeholder="nickname" required="" tabindex="2" type="text" path="nickname"/> 
+						<form:input class="NoSpace" id="nickname" name="nickname" placeholder="nickname" required="" tabindex="2" type="text" path="nickname"/> 
 					</div>
 
 					<p class="contact"><label for="password">Create a password</label></p> 

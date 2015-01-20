@@ -12,4 +12,12 @@
 		$("#login-button").attr("action", "/MultigamingCompetitionSystem/login?page=" + window.location.pathname);
 		$("#signup-button").attr("action", "/MultigamingCompetitionSystem/register");
 	}
+	
+	$('.NoSpace').keypress(function(e){
+    if(e.which==32){
+		return false;
+    } else {
+      return true;
+    }
+  });
 </script>

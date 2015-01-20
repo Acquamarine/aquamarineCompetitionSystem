@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RankingController {
 	@RequestMapping(value = "/ranking", method = {RequestMethod.GET, RequestMethod.POST}, params="game")
 	public String ranking(Model model, HttpServletRequest request, @RequestParam("game") String game) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
-		}
 		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
 		MatchResultDAO matchResultsDAO = DAOProvider.getMatchResultsDAO();
 		List<Pair<ICompetitor, Integer>> usersRankingWithCompetitor = competitorDAO.getCompetitorRanking(game);

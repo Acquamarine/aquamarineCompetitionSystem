@@ -25,39 +25,36 @@
 				<td class="ranking-heading ranking-table">Defeats</td>
 				<td class="ranking-heading ranking-table">Victory rate</td>
 			</tr>
+			<c:forEach items = "${usersRanking}"  var = "userRanking" varStatus="loop" >
+				<tr>
+					<td class="ranking-column ranking-table">
+						${loop.index}.
+					</td>
+					<td class="ranking-column ranking-table">
+						coming soon
+					</td>
+					<td class="ranking-column ranking-table">
+						<a class="NoStyle" action="/MultigamingCompetitionSystem/userProfile?user=${userRanking.getKey()}">
+							${userRanking.getKey()}
+						</a>
+					</td>
+					<td class="ranking-column ranking-table">
+						"${userRanking.getValue()}"
+					</td>
+					<td class="ranking-column ranking-table">
+						${usersDefeatsAndVictories.get(loop.index).getValue()}
+					</td>
+					<td class="ranking-column ranking-table">
+						${usersDefeatsAndVictories.get(loop.index).getKey()}
+					</td>
+					<td class="ranking-column ranking-table">
+						${usersDefeatsAndVictories.get(loop.index).getValue()/(usersDefeatsAndVictories.get(loop.index).getValue()+usersDefeatsAndVictories.get(loop.index).getKey())*100}
+					</td>
+				</tr>
+			</c:forEach>
 			
 		</table>
 		<%@include file="../../resources/html/footer.html" %>
-		<script>
-			var i = 0;
-			function createColumn(htmlToIns, row, id) {
-				colToAppend = document.createElement("td");
-				if(id!==""){
-					colToAppend.id=id;
-					colToAppend.className="Clickable";
-				}
-				colToAppend.className+=" ranking-column ranking-table";
-				colToAppend.innerHTML =htmlToIns;
-				row.appendChild(colToAppend);
-			}
-			<c:forEach items = "${usersRanking}"  var = "userRanking" varStatus="loop" >
-				console.log(${userRanking});
-			rowToAppend = document.createElement("tr");
-			createColumn((i + 1) + ".",rowToAppend,"");
-			createColumn("coming soon",rowToAppend,"");
-			createColumn("${userRanking.getKey()}",rowToAppend,"${userRanking.getKey()}");
-			createColumn("${userRanking.getValue()}",rowToAppend,"");
-                        var defeats = ${usersDefeatsAndVictories.get(loop.index).getKey()};
-                        var victories = ${usersDefeatsAndVictories.get(loop.index).getValue()};
-			createColumn(victories,rowToAppend,"");
-			createColumn(defeats,rowToAppend,"");
-                        var winRate = victories/(defeats+victories)*100;
-			createColumn(winRate,rowToAppend,"");
-			$('#ranking').append(rowToAppend,"");
-			i++;
-			</c:forEach>
-				$('.Clickable').click(function(){window.location.href = "/MultigamingCompetitionSystem/userProfile?user=" +this.id;});
-				$('.Clickable').css("cursor","pointer");
-		</script>
+		
     </body>
 </html>

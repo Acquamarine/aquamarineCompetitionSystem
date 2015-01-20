@@ -21,54 +21,60 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping(value = "/userProfile")
 public class UserProfileController {
-	
+
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public String userProfile(Model model, HttpServletRequest request) {
 		String nick = (String) request.getSession().getAttribute("nickname");
-		addTest(nick);	
+		addTest(nick);
 		String bestGame = getBestGame(nick);
 		buildModel(model, nick, bestGame);
 		return "/userProfile";
 	}
+
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = "user")
-	public String userProfile(@RequestParam("user") String user,Model model, HttpServletRequest request) {
+	public String userProfile(@RequestParam("user") String user, Model model, HttpServletRequest request) {
+		if(DAOProvider.getCompetitorDAO().retrieveByNick(user) == null){
+			model.addAttribute("error", "User is not present!");
+			return "/userProfile";
+		}
 		String bestGame = getBestGame(user);
 		buildModel(model, user, bestGame);
 		return "/userProfile";
 	}
-	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"user","game"})
-	public String userProfile(@RequestParam("user") String user,@RequestParam("game") String game,Model model, HttpServletRequest request) {
+
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"user", "game"})
+	public String userProfile(@RequestParam("user") String user, @RequestParam("game") String game, Model model, HttpServletRequest request) {
 		buildModel(model, user, game);
 		return "/userProfile";
 	}
-	
+
 	private String getBestGame(String nick) {
 		//TODO get best
 		return Tressette1v1.class.getSimpleName();
 	}
 
-	private Pair<Integer,Integer> computeRank(String nick, String game) {
+	private Pair<Integer, Integer> computeRank(String nick, String game) {
 		CompetitorDAO competitorDAO = DAOProvider.getCompetitorDAO();
 		return competitorDAO.getCompetitorRankAndEloByNick(nick, game);
 	}
 
 	private List<TwoCompetitorsMatchResult> getMatchHistory(String user, String game) {
-		
+
 		MatchResultDAO matchResultsDAO = DAOProvider.getMatchResultsDAO();
 		ICompetitor competitor = DAOProvider.getCompetitorDAO().retrieveByNick(user);
-		return matchResultsDAO.retrieveCompetitorMatches(competitor,game);
-		
+		return matchResultsDAO.retrieveCompetitorMatches(competitor, game);
+
 	}
 
 	private void buildModel(Model model, String nick, String bestGame) {
 		model.addAttribute("user", nick);
 		model.addAttribute("game", bestGame);
-		model.addAttribute("matchHistory", getMatchHistory(nick,bestGame));
-		model.addAttribute("rankAndElo",computeRank(nick,bestGame));
+		model.addAttribute("matchHistory", getMatchHistory(nick, bestGame));
+		model.addAttribute("rankAndElo", computeRank(nick, bestGame));
 	}
 
 	private void addTest(String nick) {
-		ICompetitor comp=DAOProvider.getCompetitorDAO().retrieveByNick(nick);
+		ICompetitor comp = DAOProvider.getCompetitorDAO().retrieveByNick(nick);
 		comp.updateElo(Tressette1v1.class.getSimpleName(), 1500);
 		OnDemandPersistenceManager.getInstance().updateCompetitor(comp);
 		TwoCompetitorsMatchResult match1 = new TwoCompetitorsMatchResult();
@@ -93,8 +99,4 @@ public class UserProfileController {
 		DAOProvider.getMatchResultsDAO().create(match2);
 	}
 
-	
-	
-	
-	
 }

@@ -33,9 +33,7 @@ public class RegisterController implements ApplicationContextAware{
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String get(Model model, HttpServletRequest request, @ModelAttribute("userForm") RegisteredUser user) {
-		if(request.getSession().getAttribute("loggedIn") == null){
-			request.getSession().setAttribute("loggedIn", false);
-		}
+	
 		model.addAttribute("passwordWrong", false);
 		model.addAttribute("userUnavailable", false);
 		model.addAttribute("nickUnavailable", false);
@@ -69,12 +67,8 @@ public class RegisterController implements ApplicationContextAware{
 		}
 		if(validForm){
 			user.gainVirtualPoints(500);
-			Team team = new Team();
-			team.setNickname(user.getNickname()+"Team");
-			team.addMember(user);
-			user.addTeam(team);
 			competitorDAO.create(user);
-			OnDemandPersistenceManager.getInstance().updateCompetitor(team);
+			
 			model.addAttribute("message","Registration has been successful. You can now login!");
 			model.addAttribute("registrationCompleted", true);
 			return "/login";

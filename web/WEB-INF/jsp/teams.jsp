@@ -60,9 +60,25 @@
             </c:if>
         </div>
         <div class="AllTeams">
-            <div class="PlatformGamesTitle">Teams</div>
+			<div class="AllTeamsHeader">
+				<div class="PlatformGamesTitle">Teams</div>
+				<div class="InvitationsSearchBoxContainer CreateTeam">
+					<form action="/MultigamingCompetitionSystem/teams" method="get">
+						<div class="InvitationsSearchBox">
+							<div class="HeaderSearchBoxBlock Inline">
+								<div class="HeaderSearchBoxInput Inline">
+									<input type="text" name="createTeam" class="Search NoSpace"  placeholder="Team Name">
+								</div>
+								<div class="HeaderSearchButton Inline">
+									<input class="Submit Invite" type="submit"  value="Create Team">
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
             <div class="TeamsList">
-                <c:forEach items="${registeredUser.getTeams()}" var="team">
+                <c:forEach items="${usersTeams}" var="team">
                     <div class="TeamDiv FrontBanner">
                         <div class="IconAndName">
                             <div class="ProfileIcon Inline">
@@ -84,7 +100,7 @@
                         <div class="PlatformGamesTitle MembersTitle">Members</div>
                         <ul class="Members">
                             <c:forEach items="${team.getMembers()}" var="member">
-                                <li class="Member">
+                                <li class="Member Inline">
                                     <div class="ProfileIcon Inline">
                                         <div class="CompetitorImage MemberImage Inline">
                                             <div class="borderImage">
