@@ -76,6 +76,12 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 		return true;
 	}
 
+	public NeapolitanCard getBriscolaCard() {
+		return briscolaCard;
+	}
+
+	
+	
 	@Override
 	protected void generateMatchResultsForHistory() {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -86,10 +92,6 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
-	@Override
-	protected void addEventSummary(NeapolitanGameRoundSummary summary) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
 
 	@Override
 	protected void computeWinnersAndAssignRewards() {
@@ -162,14 +164,11 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 		Integer currentPlayerId = me;
 		do{
 			returningList.add(CompetitionManager.getInstance().getCompetitor(currentPlayerId));
-			currentPlayerId = followingPlayer.get(me);
+			currentPlayerId = followingPlayer.get(currentPlayerId);
 		}while(!currentPlayerId.equals(me));
 		return returningList;
 	}
 
-	public boolean areThereSummaries() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
 
 	public List<NeapolitanCard> getTableFrom(Integer me) {
 		List<NeapolitanCard> returningList = new ArrayList<>();

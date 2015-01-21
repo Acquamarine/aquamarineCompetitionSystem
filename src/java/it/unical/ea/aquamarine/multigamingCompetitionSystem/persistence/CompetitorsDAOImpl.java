@@ -145,7 +145,8 @@ public class CompetitorsDAOImpl implements CompetitorDAO {
 	}
 
 	@Override
-	public void initializeEquip(ICompetitor competitor) {
+	public synchronized void initializeEquip(ICompetitor competitor) {
+		//TODO synchronize on single euquips
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
 		try{

@@ -24,8 +24,10 @@
             <%String deckCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
 				String opponentCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
 				String myTeamCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
-				/*	ICompetitor opponentTeam = (ICompetitor) request.getSession().getAttribute("matchedCompetitor");
-				 ICompetitor myTeam = (ICompetitor) request.getSession().getAttribute("myTeam");
+				ICompetitor opponentCompetitor = ((List<ICompetitor>)request.getSession().getAttribute("players")).get(1);
+				Map<ICompetitor,ICompetitor> playersTeamsMap=(Map<ICompetitor,ICompetitor>) request.getSession().getAttribute("playersTeamsMap");
+					ICompetitor opponentTeam = playersTeamsMap.get(opponentCompetitor);
+				 ICompetitor myTeam = playersTeamsMap.get(0);
 				 System.out.println(opponentTeam.getNickname());
 				 System.out.println(opponentTeam.getEquip("Briscola").getEquipMap());
 				 if(opponentTeam.getEquip("Briscola").getEquipMap().containsKey(ItemCategory.CARD_COVER)){
@@ -35,7 +37,7 @@
 				 if(myTeam.getEquip("Briscola").getEquipMap().containsKey(ItemCategory.CARD_COVER)){
 				 String cover = myTeam.getEquip("Briscola").getEquipMap().get(ItemCategory.CARD_COVER).getName();
 				 myTeamCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/" + cover + ".png";
-				 }*/
+				 }
 			%>
 			var graphicComplete = true;
 			function gameComplete() {
@@ -90,6 +92,7 @@
 			}
 			function distributeCard(obj) {
 				for (var i = 0; i < 4; i++) {
+					
 				}
 			}
 			var index = ${eventIndex};
@@ -133,11 +136,11 @@
 								gameComplete();
 							} else {
 								if (obj.round === 1) {
-									$('#turn').html(obj.winner + ' tocca a te!');
+									$('#turn').html(obj.winner + ' is your turn!');
 								} else if ("${nickname}" === obj.actionPlayer) {
-									$('#turn').html('${matched} tocca a te!');
+									$('#turn').html('${matched} is your turn!');
 								} else {
-									$('#turn').html('${nickname} tocca a te!');
+									$('#turn').html('${nickname} is your turn!');
 								}
 
 								eventHandler();
@@ -208,11 +211,11 @@
 									<img id="deck-image" class='cards_img Inline' src=<%=deckCoverPath%>></img>${deck}
 								</div>
 								<div id="briscolaCard" class="Inline">
-									<img id="briscolaCard-image" class='cards_img Inline' src=${briscolaCard}></img>${deck}
+									<img id="briscolaCard-image" class='cards_img Inline' src='/MultigamingCompetitionSystem/assets/carte_napoletane/${briscola}.png'></img>
 								</div>
 							</c:if>
 							<div  id="turn">
-								${turn} tocca a te!
+								${turn.getNickname()} is your turn!
 							</div>
 						</div>
 					</div>
