@@ -1,7 +1,5 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette;
 
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared.TurnGameSummaryManager;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared.ITurnSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared.NeapolitanGameRoundSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
@@ -45,11 +43,6 @@ public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITresset
 			finalScores.put(player, pointCounter / 3);
 		});
 
-	}
-
-	@Override
-	public Map<Integer, Integer> getFinalScores() {
-		return finalScores;
 	}
 
 	@Override

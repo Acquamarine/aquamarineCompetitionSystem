@@ -1,11 +1,7 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users;
 
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

@@ -79,7 +79,10 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 
 	}
 	
-	
+	@Override
+	public Map<Integer, Integer> getFinalScores() {
+		return finalScores;
+	}
 	
 	protected void pickACard(Integer pickingPlayer) {
 		NeapolitanCard pickedCard = deck.poll();
