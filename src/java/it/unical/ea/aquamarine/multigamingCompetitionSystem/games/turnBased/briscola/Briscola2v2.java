@@ -21,7 +21,7 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 	private final NeapolitanCard briscolaCard;
 	private final List<Integer> teams;
 	private final Map<Integer, Integer> teamsMap = new HashMap<>();
-
+	
 	public Briscola2v2(List<Integer> players, List<Integer> teams, boolean rankedMatch) {
 		super(players, rankedMatch);
 		for(int i = 0; i < 4; i++){
@@ -186,7 +186,7 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 		List<NeapolitanCard> returningList = new ArrayList<>();
 		int turnPositionWRTMe = 0;
 		int currentPlayer = me;
-		while(currentPlayer != turnPlayer){
+		while(currentPlayer != firstPlayerOfHand ){
 			currentPlayer = followingPlayer.get(currentPlayer);
 			turnPositionWRTMe++;
 		}

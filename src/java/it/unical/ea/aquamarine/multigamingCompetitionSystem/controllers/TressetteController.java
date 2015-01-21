@@ -53,7 +53,7 @@ public class TressetteController {
 		request.getSession().setAttribute(me+"", myNickname);
 		request.getSession().setAttribute(matchedPlayerId+"", matchedPlayer);
 		
-		if(!playerGame.areThereSummaries()){
+		if(!playerGame.areThereSummaries() || request.getSession().getAttribute("eventIndex")==null){
 			request.getSession().setAttribute("eventIndex", 0);
 			request.getSession().setAttribute("deck", 20);
 			request.getSession().setAttribute("reloaded", false);

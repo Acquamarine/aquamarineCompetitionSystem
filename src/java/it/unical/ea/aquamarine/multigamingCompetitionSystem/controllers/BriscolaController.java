@@ -58,7 +58,7 @@ public class BriscolaController {
 			OnDemandPersistenceManager.getInstance().initializeEquip(team);
 		}
 		request.getSession().setAttribute("playersTeamsMap", playersTeamsMap);
-		if(!playerGame.areThereSummaries()){
+		if(!playerGame.areThereSummaries() || request.getSession().getAttribute("eventIndex")==null){
 			request.getSession().setAttribute("eventIndex", 0);
 			request.getSession().setAttribute("deck", 28);
 			request.getSession().setAttribute("reloaded", false);

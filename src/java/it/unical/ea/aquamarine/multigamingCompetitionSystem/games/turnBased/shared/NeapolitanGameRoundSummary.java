@@ -23,6 +23,7 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 	private List<NeapolitanCard> pickedCards;
 	private List<Integer> pickList;
 	private boolean pickSummary = false;
+	private String turnPlayer;
 
 	public Integer getActionPlayer() {
 		return actionPlayer;
@@ -72,6 +73,12 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 		this.cardsInDeck = size;
 	}
 
+	public void setTurnPlayer(String turnPlayer) {
+		this.turnPlayer = turnPlayer;
+	}
+
+	
+	
 	public int getCardsInDeck() {
 		return cardsInDeck;
 	}
@@ -118,6 +125,7 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 					summaryJson.put("pickedCards", pickedCardsByStrings);
 					summaryJson.put("pickList",pickListWithNicks);
 					summaryJson.put("deck", cardsInDeck);
+					summaryJson.put("turnPlayer", turnPlayer);
 				}
 				request.getSession().setAttribute("deck", cardsInDeck);
 			}

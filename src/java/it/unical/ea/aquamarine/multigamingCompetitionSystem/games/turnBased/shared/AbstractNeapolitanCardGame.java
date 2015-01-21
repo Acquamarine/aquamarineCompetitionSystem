@@ -30,6 +30,7 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 	protected boolean gameComplete = false;
 	protected boolean rankedMatch;
 	private final TurnGameSummaryManager summaryManager = new TurnGameSummaryManager();
+	protected Integer firstPlayerOfHand;
 
 	public AbstractNeapolitanCardGame(List<Integer> players, boolean rankedMatch) {
 		this.players = players;
@@ -43,6 +44,7 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 		}
 		deck = SharedFunctions.getShuffledNeapolitanDeck();		
 		turnPlayer = players.iterator().next();
+		firstPlayerOfHand = turnPlayer;
 		this.rankedMatch = rankedMatch;
 	}
 	
@@ -57,6 +59,7 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 				summary.setCard(card.toString());
 				if(table.size() < players.size()){
 					turnPlayer = followingPlayer.get(playerId);
+					summary.setTurnPlayer(CompetitionManager.getInstance().getCompetitor(turnPlayer).getNickname());
 				}else{
 					handComplete(summary);
 					checkGameComplete();
@@ -155,6 +158,7 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 			pickCards(handWinner, summary);
 		}
 		turnPlayer = handWinner;
+		firstPlayerOfHand = turnPlayer;
 	}
 	
 	private void pickCards(Integer handWinner, NeapolitanGameRoundSummary summary) {
