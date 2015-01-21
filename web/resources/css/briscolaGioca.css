@@ -6,6 +6,8 @@
 	width: 60em;
 	height: 45em;
 	opacity: 1;
+	position: relative;
+	padding: 1em;
 }
 
 .AvatarImage{
@@ -20,8 +22,75 @@
 	cursor: pointer;
 }
 
-#deck{
-	margin-left: 3em;
-	width: 6.5em;
-	height: 7.5em;
+
+.CenterOfTable{
+	width: 100%;
+	margin: auto;
+}
+
+#MyTeammate{
+	width: 80%;
+	margin: auto;
+	text-align: center;
+}
+
+#OpponentFirst{
+	width: 15%;
+	text-align: center;
+	display:table-cell;
+    vertical-align:middle; 
+}
+
+#OpponentSecond{
+	width: 15%;
+	text-align: center;
+	display:table-cell;
+    vertical-align:middle; 
+}
+
+
+#Me{
+	width: 80%;
+	margin: auto;
+	text-align: center;
+	margin-top: 2em;
+}
+
+.OpponentFirst-cards{
+	margin-top: -3em;
+}
+.OpponentSecond-cards{
+	margin-bottom: -3em;
+}
+
+#cards-on-table{
+	width: 25%;
+	height: 70%;
+	text-align: center;
+	display:table-cell;
+    vertical-align:middle; 
+}
+
+#playedCard3{
+	width: 30%;
+	display:table-cell;
+    vertical-align:middle; 
+	text-align: center;
+}
+#playedCard1{
+	width: 30%;
+	display:table-cell;
+    vertical-align:middle; 
+	text-align: center;
+}
+
+#playedCard2{
+	margin-top: 1em;
+	margin-bottom: -6em;
+	height: 8em;
+}
+#playedCard0{
+	margin-bottom: 1em;
+	margin-top: -8em;
+	height: 8em;
 }

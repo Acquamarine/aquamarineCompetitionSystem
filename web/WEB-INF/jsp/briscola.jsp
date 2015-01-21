@@ -22,6 +22,16 @@
             </div>
             <div class="MatchChooserContainer">
                 <ul class="MatchChooser">
+					<c:if test="${not empty registeredUser && !registeredUser.getTeams().isEmpty()}">
+					Chose your team!
+					<div class="TeamSelectorDiv">
+						<select id="TeamSelector">
+							<c:forEach items="${registeredUser.getTeams()}" var="team">
+								<option value="${team.getNickname()}">${team.getNickname()}</option>
+							</c:forEach>
+						</select>
+					</div>
+					</c:if>
                     <li id="rankedQueueButton" class="FrontGamePlayButton Inline">
                         <input id="rankedGameInput" class="Submit" type="submit" value="Queue up for a ranked match!" />
                     </li>
@@ -40,12 +50,15 @@
 			<c:if test="${empty nickname}">
 			$('#rankedQueueButton').children().first().attr("value", "Login to play ranked matches");
 			$('#rankedQueueButton').children().first().css("background-color", "#ff4040");
-			$('#rankedQueueButton').children().first().prop("disabled",true);
-                        
+			$('#rankedQueueButton').children().first().prop("disabled", true);
+
 			</c:if>
+				if(!$("#TeamSelector").length){
+					$('.FrontGamePlayButton').children().attr("value", "You don't have a team!");
+				}
 			function initMatch() {
 				$.ajax({
-					url: "tressette/gioca",
+					url: "briscola/gioca",
 					success: function (data) {
 						console.log("play call");
 					}
@@ -55,25 +68,26 @@
 				console.log(rankedQueue);
 				console.log("inserting in queue");
 				$(".MatchChooserContainer").html("<img id='loading' src='/MultigamingCompetitionSystem/assets/loading.gif'>Loading</img> <form  id='undo-queue' method='post'> <input class='Submit' type='submit' value='Undo'/> </form>");
-				$('#undo-queue').attr("action","/MultigamingCompetitionSystem/tressette?undoQueue=" + rankedQueue);
+				$('#undo-queue').attr("action", "/MultigamingCompetitionSystem/briscola?undoQueue=" + rankedQueue);
 				$.ajax({
-					url: "tressette",
+					url: "briscola",
 					data: {
-						addToRankedQueue: rankedQueue
+						addToRankedQueue: rankedQueue,
+						team: $('#TeamSelector').value
 					},
 					success: function (data) {
 						console.log("add in queue success");
 					}
 				});
 				$.ajax({
-					url: "tressette",
+					url: "briscola",
 					data: {
 						inQueue: true
 					},
 					success: function (data) {
 						console.log("match is ready");
 						initMatch();
-						window.location.href = "/MultigamingCompetitionSystem/tressette/gioca";
+						window.location.href = "/MultigamingCompetitionSystem/briscola/gioca";
 					}
 				});
 
