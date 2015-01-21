@@ -102,7 +102,7 @@
 					imgToAppend.className = "cards_img";
 					var imgPath = 'carte_napoletane/'+obj.pickedCards[i];
 					if (obj.pickList[i] !==${nickname}) {
-						imgPath = 'items/CARD_COVER/basic'
+						imgPath = 'items/CARD_COVER/basic';
 					}
 					imgToAppend.setAttribute("src", '/MultigamingCompetitionSystem/assets/' + imgPath + '.png');
 					toAppend.appendChild(imgToAppend);
