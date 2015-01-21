@@ -1,6 +1,8 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.core;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.briscola.Briscola2v2;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.briscola.BriscolaGameManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.TressetteGameManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
@@ -36,6 +38,8 @@ public class ApplicationManager implements ServletContextListener {
 		MultigamingBlManager.getInstance().startQueues();
 		MultigamingBlManager.getInstance().addGameManager(Tressette1v1.class.getSimpleName(), TressetteGameManager.getInstance());
 		MultigamingBlManager.getInstance().addGameManager(Tressette1v1.class.getSimpleName()+"normal", TressetteGameManager.getInstance());
+		MultigamingBlManager.getInstance().addGameManager(Briscola2v2.class.getSimpleName(), BriscolaGameManager.getInstance());
+		MultigamingBlManager.getInstance().addGameManager(Briscola2v2.class.getSimpleName()+"normal", BriscolaGameManager.getInstance());
 	}
 
 	@Override
