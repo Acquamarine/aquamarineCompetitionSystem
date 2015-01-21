@@ -1,5 +1,6 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.tressette;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;

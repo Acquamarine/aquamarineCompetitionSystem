@@ -15,9 +15,9 @@ public class MultigamingBlManager {
 		return instance;
 	}
 	
-	private Map<String, GameManager> gameManagers = new HashMap<>();
+	private final Map<String, IGameManager> gameManagers = new HashMap<>();
 	
-	public void addGameManager(String game, GameManager gameManager) {
+	public void addGameManager(String game, IGameManager gameManager) {
 		gameManagers.put(game, gameManager);
 	}
 	
@@ -37,7 +37,7 @@ public class MultigamingBlManager {
 		MatchmakingManager.getInstance().startQueuesThread();
 	}
 	
-	public GameManager getGameManager(String id) {
+	public IGameManager getGameManager(String id) {
 		return gameManagers.get(id);
 	}
 	

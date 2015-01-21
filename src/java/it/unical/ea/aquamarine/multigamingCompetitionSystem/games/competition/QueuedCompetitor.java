@@ -4,8 +4,8 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetit
 import java.util.Objects;
 
 public class QueuedCompetitor {
-	private ICompetitor competitor;
-	private long queueStartTime;
+	private final ICompetitor competitor;
+	private final long queueStartTime;
 
 	public QueuedCompetitor(ICompetitor competitor) {
 		this.competitor = competitor;
