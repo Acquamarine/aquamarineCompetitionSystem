@@ -47,6 +47,7 @@ public class MatchmakingManager {
 				buildingTeam = new LinkedList<>();
 				buildingTeams.put(team, buildingTeam);
 			}
+			buildingTeam.add(competitor);
 			if(buildingTeam.size() == requiredTeamSize) {
 				buildingTeams.remove(team);
 				addTeamToQueue(team, buildingTeam, game);
@@ -132,6 +133,7 @@ public class MatchmakingManager {
 	}
 
 	private void createMatch(String game, QueuedCompetitor first, QueuedCompetitor second) {
+		System.out.println("cerating match");
 		MultigamingBlManager.getInstance().createMatch(game, getPlayersFromQueue(first, second), getTeamsFromQueued(first, second));
 	}
 

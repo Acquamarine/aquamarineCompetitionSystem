@@ -39,6 +39,7 @@ public abstract class AbstractGameManager implements IGameManager{
 			teamIds = null;
 		}
 		ICompetitionGame match = instantiateMatch(competitorIds, teamIds, rankedMatch);
+		System.out.println("match started");
 		lock.lock();
 		try {
 			for(Integer competitorId:competitorIds) {
@@ -58,11 +59,11 @@ public abstract class AbstractGameManager implements IGameManager{
 	public void waitForMatch(Integer player) {
 		lock.lock();
 		if(activeMatches.get(player)==null) {
-			
 			Condition newCondition = lock.newCondition();
 			conditionsMap.put(player, newCondition);
 			try {
 				newCondition.await();
+				System.out.println("moving out");
 			} catch (InterruptedException ex) {
 				Logger.getLogger(AbstractGameManager.class.getName()).log(Level.SEVERE, null, ex);
 			}finally {
@@ -72,6 +73,7 @@ public abstract class AbstractGameManager implements IGameManager{
 		else {
 			lock.unlock();
 		}
+		
 	}
 	
 	@Override
