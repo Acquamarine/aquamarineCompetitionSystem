@@ -23,6 +23,9 @@ public class CompetitorsQueue {
 	
 	public void removeCompetitor(QueuedCompetitor competitor) {
 		queuedCompetitors.get(competitor.getCompetitor().getElo(game)).remove(competitor);
+		if(queuedCompetitors.get(competitor.getCompetitor().getElo(game)).isEmpty()) {
+			queuedCompetitors.remove(competitor.getCompetitor().getElo(game));
+		}
 	}
 
 	public TreeMap<Integer, Set<QueuedCompetitor>> getQueuedCompetitors() {

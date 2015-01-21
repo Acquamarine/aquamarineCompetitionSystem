@@ -18,22 +18,36 @@ public abstract class AbstractGameManager implements IGameManager{
 	protected Map<Integer, ICompetitionGame> completedMatches = new HashMap<>();
 	private final Map<Integer, Condition> conditionsMap = new HashMap<>();
 	private final Lock lock = new ReentrantLock();
+
+	public AbstractGameManager() {
+	}
+	
 	
 	@Override
-	public void startMatch(ICompetitor user1, ICompetitor user2, boolean rankedMatch) {
-		List<Integer> players = new ArrayList<>();
-		players.add(user1.getId());
-		players.add(user2.getId());
-		ICompetitionGame match = instantiateMatch(players, rankedMatch);
+	public void startMatch(List<ICompetitor> competitors, List<ICompetitor> teams, boolean rankedMatch) {
+		List<Integer> competitorIds = new ArrayList<>();
+		List<Integer> teamIds = new ArrayList<>();
+		for(ICompetitor competitor:competitors) {
+			competitorIds.add(competitor.getId());
+		}
+		if(teams!=null) {
+			for(ICompetitor team:teams) {
+				teamIds.add(team.getId());
+			}
+		}
+		else {
+			teamIds = null;
+		}
+		ICompetitionGame match = instantiateMatch(competitorIds, teamIds, rankedMatch);
 		lock.lock();
 		try {
-			activeMatches.put(user1.getId(), match);
-			activeMatches.put(user2.getId(), match);
-			if(conditionsMap.get(user1.getId())!=null) {
-				conditionsMap.get(user1.getId()).signal();
+			for(Integer competitorId:competitorIds) {
+				activeMatches.put(competitorId, match);
 			}
-			if(conditionsMap.get(user2.getId())!=null) {
-				conditionsMap.get(user2.getId()).signal();
+			for(Integer competitorId:competitorIds) {
+				if(conditionsMap.get(competitorId)!=null) {
+					conditionsMap.get(competitorId).signal();
+				}
 			}
 		} finally {
 			lock.unlock();
@@ -73,9 +87,6 @@ public abstract class AbstractGameManager implements IGameManager{
 			activeMatches.remove(playerId);
 		}
 	}
-	
-	@Override
-	public abstract ICompetitionGame instantiateMatch(List<Integer> players, boolean rankedMatch);
 	
 	@Override
 	public synchronized ICompetitionGame getPlayerActiveMatch(Integer player) {

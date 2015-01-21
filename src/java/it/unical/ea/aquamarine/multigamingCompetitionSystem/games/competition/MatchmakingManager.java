@@ -1,9 +1,13 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.Team;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.MultigamingBlManager;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -14,23 +18,48 @@ public class MatchmakingManager {
 
 	private static MatchmakingManager instance = new MatchmakingManager();
 	private HashMap<ICompetitor, QueuedCompetitor> queuedCompetitorsMap = new HashMap<>();
+	private HashMap<Team, List<RegisteredUser>> buildingTeams = new HashMap<>();
 	private static final int ELO_EXPANSION_PER_SECOND = 20;
 
 	public static MatchmakingManager getInstance() {
 		return instance;
 	}
-	private Map<String, CompetitorsQueue> queues = new HashMap<>();
+	private final Map<String, CompetitorsQueue> queues = new HashMap<>();
 
-	public synchronized void addToQueue(String game, ICompetitor competitor) {
+	public synchronized void addToQueue(String game, RegisteredUser competitor, Team team) {
 		if(MultigamingBlManager.getInstance().getGameManager(game).isCompetitorInGame(competitor)) {
 			return;
 		}
 		if (queues.get(game) == null) {
 			queues.put(game, new CompetitorsQueue(game));
 		}
-		QueuedCompetitor queuedCompetitor = new QueuedCompetitor(competitor);
+		if(team==null) {
+			List<RegisteredUser> playersList = new LinkedList<>();
+			playersList.add(competitor);
+			QueuedCompetitor queuedCompetitor = new QueuedCompetitor(null, playersList);
+			queues.get(game).addCompetitor(queuedCompetitor);
+			queuedCompetitorsMap.put(competitor, queuedCompetitor);
+		}
+		else {
+			int requiredTeamSize = MultigamingBlManager.getInstance().getGameManager(game).getTeamSize();
+			List<RegisteredUser> buildingTeam = buildingTeams.get(team);
+			if(buildingTeam == null) {
+				buildingTeam = new LinkedList<>();
+				buildingTeams.put(team, buildingTeam);
+			}
+			if(buildingTeam.size() == requiredTeamSize) {
+				buildingTeams.remove(team);
+				addTeamToQueue(team, buildingTeam, game);
+			}
+		}
+	}
+	
+	private void addTeamToQueue(Team team, List<RegisteredUser> buildingTeam, String game) {
+		QueuedCompetitor queuedCompetitor = new QueuedCompetitor(team, buildingTeam);
 		queues.get(game).addCompetitor(queuedCompetitor);
-		queuedCompetitorsMap.put(competitor, queuedCompetitor);
+		//TODO check whether we want to allow more games for the same team at the same time
+		queuedCompetitorsMap.put(team, queuedCompetitor);
+		
 	}
 
 	public synchronized void removeFromQueue(String game, ICompetitor competitor) {
@@ -103,7 +132,7 @@ public class MatchmakingManager {
 	}
 
 	private void createMatch(String game, QueuedCompetitor first, QueuedCompetitor second) {
-		MultigamingBlManager.getInstance().createMatch(game, first.getCompetitor(), second.getCompetitor());
+		MultigamingBlManager.getInstance().createMatch(game, getPlayersFromQueue(first, second), getTeamsFromQueued(first, second));
 	}
 
 	public void startQueuesThread() {
@@ -114,6 +143,26 @@ public class MatchmakingManager {
 	public Map<String, CompetitorsQueue> getQueues() {
 		return queues;
 	}
+
+	private List<ICompetitor> getTeamsFromQueued(QueuedCompetitor first, QueuedCompetitor second) {
+		if(first.getTeam() == null) {
+			return null;
+		}
+		List<ICompetitor> returningList = new LinkedList<>();
+		returningList.add(first.getTeam());
+		returningList.add(second.getTeam());
+		return returningList;
+	}
+	
+	private List<ICompetitor> getPlayersFromQueue(QueuedCompetitor first, QueuedCompetitor second) {
+		List<ICompetitor> returningList = new LinkedList<>();
+		returningList.addAll(first.getPlayers());
+		returningList.addAll(second.getPlayers());
+		return returningList;
+		
+	}
+
+	
 
 	private class MatchmakingTrigger implements Runnable {
 
@@ -130,5 +179,7 @@ public class MatchmakingManager {
 			}
 		}
 	}
+	
+	
 
 }

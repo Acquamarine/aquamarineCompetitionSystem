@@ -15,8 +15,20 @@ public class TressetteGameManager extends AbstractGameManager implements IGameMa
 		return instance;
 	}
 
+	public TressetteGameManager() {
+	}
+	
+	
 	@Override
-	public ICompetitionGame instantiateMatch(List<Integer> players, boolean rankedMatch) {
+	public ICompetitionGame instantiateMatch(List<Integer> players, List<Integer> teams, boolean rankedMatch) {
 		return new Tressette1v1(players, rankedMatch);
 	}
+
+	@Override
+	public int getTeamSize() {
+		return 1;
+	}
+	
+	
+
 }

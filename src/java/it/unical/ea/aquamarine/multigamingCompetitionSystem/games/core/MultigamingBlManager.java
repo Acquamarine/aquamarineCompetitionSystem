@@ -3,6 +3,7 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.MatchmakingManager;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MultigamingBlManager {
@@ -21,14 +22,14 @@ public class MultigamingBlManager {
 		gameManagers.put(game, gameManager);
 	}
 	
-	public void createMatch(String game, ICompetitor first, ICompetitor second) {
+	public void createMatch(String game, List<ICompetitor> players, List<ICompetitor> teams) {
 		if(game.endsWith("normal")) {
 			System.out.println("normal game");
-			gameManagers.get(game).startMatch(first, second, false);
+			gameManagers.get(game).startMatch(players, teams, false);
 		}
 		else {
 			System.out.println("ranked game");
-			gameManagers.get(game).startMatch(first, second, true);
+			gameManagers.get(game).startMatch(players, teams, true);
 			
 		}
 	}

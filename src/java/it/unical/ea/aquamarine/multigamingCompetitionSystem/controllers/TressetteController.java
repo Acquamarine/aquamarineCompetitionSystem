@@ -98,9 +98,9 @@ public class TressetteController {
 	@RequestMapping(value = "/tressette", method = {RequestMethod.GET, RequestMethod.POST}, params = "addToRankedQueue")
 	public void putCompetitorInQueue(HttpServletRequest request, @RequestParam("addToRankedQueue") boolean ranked) {
 		if(ranked){
-			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getSimpleName(), CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
+			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getSimpleName(), (RegisteredUser) CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId")), null); //new Player(competitor)
 		}else{
-			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getSimpleName()+"normal", CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId"))); //new Player(competitor)
+			MatchmakingManager.getInstance().addToQueue(Tressette1v1.class.getSimpleName()+"normal", (RegisteredUser) CompetitionManager.getInstance().getCompetitor((Integer) request.getSession().getAttribute("playerId")), null); //new Player(competitor)
 		}
 	}
 
