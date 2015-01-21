@@ -23,13 +23,20 @@
         <script>
             <%String deckCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
 				String opponentCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
-				ICompetitor user = (ICompetitor) request.getSession().getAttribute("matchedCompetitor");
-				System.out.println(user.getNickname());
-				System.out.println(user.getEquip("Tressette1v1").getEquipMap());
-				if(user.getEquip("Tressette1v1").getEquipMap().containsKey(ItemCategory.CARD_COVER)){
-					String cover = user.getEquip("Tressette1v1").getEquipMap().get(ItemCategory.CARD_COVER).getName();
+				String myTeamCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/basic.png";
+				ICompetitor opponentTeam = (ICompetitor) request.getSession().getAttribute("matchedCompetitor");
+				ICompetitor myTeam = (ICompetitor) request.getSession().getAttribute("myTeam");
+				System.out.println(opponentTeam.getNickname());
+				System.out.println(opponentTeam.getEquip("Briscola").getEquipMap());
+				if(opponentTeam.getEquip("Briscola").getEquipMap().containsKey(ItemCategory.CARD_COVER)){
+					String cover = opponentTeam.getEquip("Briscola").getEquipMap().get(ItemCategory.CARD_COVER).getName();
 					opponentCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/" + cover + ".png";
-				}%>
+				}
+				if(myTeam.getEquip("Briscola").getEquipMap().containsKey(ItemCategory.CARD_COVER)){
+					String cover = myTeam.getEquip("Briscola").getEquipMap().get(ItemCategory.CARD_COVER).getName();
+					myTeamCoverPath = "/MultigamingCompetitionSystem/assets/items/CARD_COVER/" + cover + ".png";
+				}
+			%>
 			var graphicComplete = true;
 			function gameComplete() {
 				$.ajax({
@@ -185,29 +192,52 @@
         <%@include file="../../../resources/html/header.html" %>
         <div id="game-table">
             <div id="MyTeammate">
-                <ul id="MyTeammate_info">
-                    <li id="MyTeammate-avatar">
-                    </li>
-                    <li class="MyTeammate_other_info"> ${matched}</li>
-                </ul>
+                <div id="MyTeammate_info">
+                    <div id="MyTeammate-avatar" class="Inline">
+                    </div>
+                    <div class="MyTeammate_other_info" class="Inline"> ${MyTeammate}</div>
+                </div>
                 <div id="MyTeammate-cards">
-                    <ul id="MyTeammate-cards-list">
-                        <c:forEach items = "${matchedPlayerCards}"  var = "card" >
+                    <div id="MyTeammate-cards-list">
+                        <c:forEach items = "${playersCards.get(2)}"  var = "card" >
                             <c:if test='${card!=null}'>
-                                <li class="li-cards">
+                                <div class="li-cards Inline">
                                     <div class="MyTeammate-cards">
-                                        <img class='cards_img' src=<%=opponentCoverPath%>/>
+                                        <img class='cards_img' src=<%=myTeamCoverPath%>/>
                                     </div>
-                                </li>
+                                </div>
                             </c:if>
                         </c:forEach>
-                    </ul>
-
+                    </div>
                 </div>
+				<div class= "played-cards" id="playedCard2">
+				</div>
             </div>
-            <div id="cards-on-table">
-                <ul id="cards-on-table-list">
-                    <li class="table-card">
+            <div id="OpponentFirst" class="Inline">
+                <div id="OpponentFirst_info" class="Inline">
+                    <div id="OpponentFirst-avatar" >
+                    </div>
+                    <div class="OpponentFirst_other_info"> ${OpponentFirst}</div>
+                </div>
+                <div id="OpponentFirst-cards" class="Inline">
+                    <div id="OpponentFirst-cards-list">
+                        <c:forEach items = "${playersCards.get(3)}"  var = "card" >
+                            <c:if test='${card!=null}'>
+                                <div class="li-cards">
+                                    <div class="OpponentFirst-cards">
+                                        <img class='cards_img' src=<%=opponentCoverPath%>/>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+				<div class= "played-cards Inline" id="playedCard3">
+				</div>
+            </div>
+			<div id="cards-on-table" class="Inline">
+                <div id="cards-on-table-list">
+                    <div class="table-card">
                         <c:if test="${deck!=0}">
                             <div id="deck">
                                 <img id="deck-image" class='cards_img Inline' src=<%=deckCoverPath%>></img>${deck}
@@ -216,52 +246,81 @@
                                 <img id="briscolaCard-image" class='cards_img Inline' src=${briscolaCard}></img>${deck}
 							</div>
                         </c:if>
-                    </li>
-                    <li class="table-card">
-                        <div class= "played-cards" id="card-played-0">
-                            <c:if test="${cardOnTable.size()>0}">
-                                <img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/${cardOnTable.get(0)}.png'/>
-                            </c:if>
-                        </div>
-                    </li>
-                    <li class="table-card">
-                        <div class= "played-cards" id="card-played-1">
-
-                        </div>
-                    </li>
-                    <li class="table-card">
-                        <div class= "played-cards" id="turn">
+                        <div class= "Inline" id="turn">
                             ${turn} tocca a te!
                         </div>
-                    </li>
-                </ul>
+                    </div>
+
+                    <div class="table-card">
+                        <div class= "played-cards" id="playedCard3">
+                        </div>
+                    </div>
+                    <div class="table-card">
+                        <div class= "played-cards" id="playedCard1">
+                        </div>
+                    </div>
+                    <div class="table-card">
+                        <div class= "played-cards" id="playedCard0">
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div id="player2">
-                <div id="player2-cards">
-                    <ul id="player2-cards-list">
-                        <c:forEach items = "${cards}"  var = "card" >
+            <div id="OpponentSecond" class="Inline">
+                <ul id="OpponentSecond_info">
+                    <li id="OpponentSecond-avatar">
+                    </li>
+                    <li class="OpponentSecond_other_info"> ${OpponentSecond}</li>
+                </ul>
+                <div id="OpponentSecond-cards">
+                    <ul id="OpponentSecond-cards-list">
+                        <c:forEach items = "${playersCards.get(1)}"  var = "card" >
                             <c:if test='${card!=null}'>
                                 <li class="li-cards">
-                                    <div class="player2-cards-container">
-                                        <div class="player2-cards" id='${card.toString()}'>
-                                            <img  class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/${card.toString()}.png' />
-                                        </div>
+                                    <div class="OpponentSecond-cards">
+                                        <img class='cards_img' src=<%=opponentCoverPath%>/>
                                     </div>
                                 </li>
                             </c:if>
                         </c:forEach>
                     </ul>
+					<div class= "played-cards" id="playedCard1">
+					</div>
                 </div>
-                <ul id="player2_info">
-                    <li class="player_other_info"> ${nickname}</li>
-                    <li id="player2-avatar">
-                    </li>
-                </ul>
             </div>
-        </div>
+			<div id="Me">
+                <ul id="My_info">
+                    <li id="My-avatar">
+                    </li>
+                    <li class="My_other_info"> ${Me}</li>
+                </ul>
+                <div id="My-cards">
+                    <ul id="My-cards-list">
+                        <c:forEach items = "${playersCards.get(0)}"  var = "card" >
+                            <c:if test='${card!=null}'>
+                                <li class="li-cards">
+                                    <div class="My-cards">
+                                        <img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + ${card.toString()} + ".png'/>
+                                    </div>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+                    </ul>
+					<div class= "played-cards" id="playedCard0">
+					</div>
+                </div>
+            </div>
+
+		</div>
         <%@include file="../../../resources/html/footer.html" %>
 
-
+		<script>
+			<c:forEach items="${cardsOnTable}" var="cardOnTable" varStatus="loop">
+				<c:if test="${cardOnTable!=null}">
+			$("#playedCard" +${loop.index}).html( < img  class = 'cards_img' src = '/MultigamingCompetitionSystem/assets/carte_napoletane/${cardOnTable.toString()}.png' / > );
+				</c:if>
+			</c:forEach>
+		</script>
 
     </body>
 </html>

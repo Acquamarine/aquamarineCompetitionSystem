@@ -10,7 +10,7 @@
         <link href="/MultigamingCompetitionSystem/css/tressette.css" rel="stylesheet" type="text/css"/>
         <link href="/MultigamingCompetitionSystem/css/briscola.css" rel="stylesheet" type="text/css"/>
         <script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
-        <title>Tressette</title>
+        <title>Briscola</title>
 
     </head>
     <body>
