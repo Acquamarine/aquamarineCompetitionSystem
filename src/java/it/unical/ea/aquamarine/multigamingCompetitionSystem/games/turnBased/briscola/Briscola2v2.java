@@ -3,11 +3,13 @@ package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.bri
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.IGameManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared.AbstractNeapolitanCardGame;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared.NeapolitanGameRoundSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared.TurnGameSummaryManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,7 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 		for(int i = 0; i < 4; i++){
 			teamsMap.put(players.get(i), teams.get(i / 2));
 		}
+		disposePlayers();
 		this.teams = teams;
 		players.stream().forEach((player) -> {
 			for(int i = 0; i < 3; i++){
@@ -40,11 +43,6 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 		BriscolaRoundSummary summary = new BriscolaRoundSummary();
 		playCard(playerId, card, summary);
 		return summary;
-	}
-
-	@Override
-	public Map<Integer, Integer> getFinalScores() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 	@Override
@@ -68,6 +66,12 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 			pointCounter = takenCards.get(player).stream().map((card) -> getCardValue(card)).reduce(pointCounter, Integer::sum);
 			finalScores.put(player, pointCounter);
 		});
+		for(int i=0;i<teams.size();i++) {
+			int teamPoints =0;
+			teamPoints+=finalScores.get(players.get(0+i));
+			teamPoints+=finalScores.get(players.get(2+i));
+			finalScores.put(teams.get(i), teamPoints);
+		}
 
 	}
 
@@ -78,17 +82,21 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 
 	@Override
 	protected void generateMatchResultsForHistory() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+		TwoCompetitorsMatchResult score = new TwoCompetitorsMatchResult();
+		score.setPlayer1(CompetitionManager.getInstance().getCompetitor(teams.get(0)));
+		score.setPlayer2(CompetitionManager.getInstance().getCompetitor(teams.get(1)));
+		score.setPlayer1Score(finalScores.get(teams.get(0)));
+		score.setPlayer2Score(finalScores.get(teams.get(1)));
+		score.setRankedMatch(rankedMatch);
+		score.setGame(Briscola2v2.class.getSimpleName());
+		score.setMatchEndTimeByMillis(System.currentTimeMillis());
+		ICompetitor winner = CompetitionManager.getInstance().getCompetitor(teams.get(0));
+		if (finalScores.get(teams.get(0)) < finalScores.get(teams.get(1))) {
+			winner = CompetitionManager.getInstance().getCompetitor(teams.get(1));
 
-	@Override
-	protected void handComplete(NeapolitanGameRoundSummary summary) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	@Override
-	protected void addEventSummary(NeapolitanGameRoundSummary summary) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		}
+		score.setWinner(winner);
+		DAOProvider.getMatchResultsDAO().create(score);
 	}
 
 	@Override
@@ -188,5 +196,12 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 			}
 		}
 		return returningList;
+	}
+
+	private void disposePlayers() {
+		Integer secondPlayer = players.get(1);
+		players.set(1,players.get(2));
+		players.set(2,secondPlayer);
+		
 	}
 }
