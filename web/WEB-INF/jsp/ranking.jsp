@@ -28,7 +28,7 @@
 			<c:forEach items = "${usersRanking}"  var = "userRanking" varStatus="loop" >
 				<tr>
 					<td class="ranking-column ranking-table">
-						${loop.index}.
+						${loop.index+1}.
 					</td>
 					<td class="ranking-column ranking-table">
 						coming soon
@@ -39,7 +39,7 @@
 						</a>
 					</td>
 					<td class="ranking-column ranking-table">
-						"${userRanking.getValue()}"
+						${userRanking.getValue()}
 					</td>
 					<td class="ranking-column ranking-table">
 						${usersDefeatsAndVictories.get(loop.index).getValue()}
@@ -48,13 +48,20 @@
 						${usersDefeatsAndVictories.get(loop.index).getKey()}
 					</td>
 					<td class="ranking-column ranking-table">
-						${usersDefeatsAndVictories.get(loop.index).getValue()/(usersDefeatsAndVictories.get(loop.index).getValue()+usersDefeatsAndVictories.get(loop.index).getKey())*100}
+						<c:choose>
+							<c:when test="${usersDefeatsAndVictories.get(loop.index).getValue()+usersDefeatsAndVictories.get(loop.index).getKey()!=0}">
+								${usersDefeatsAndVictories.get(loop.index).getValue()/(usersDefeatsAndVictories.get(loop.index).getValue()+usersDefeatsAndVictories.get(loop.index).getKey())*100}
+							</c:when>
+							<c:otherwise>
+								0
+							</c:otherwise>
+						</c:choose>
 					</td>
 				</tr>
 			</c:forEach>
-			
+
 		</table>
 		<%@include file="../../resources/html/footer.html" %>
-		
+
     </body>
 </html>

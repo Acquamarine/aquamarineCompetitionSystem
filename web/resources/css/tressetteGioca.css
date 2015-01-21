@@ -21,22 +21,21 @@
 	margin-left: 1em;
 	border-color: #ff5400;
 	border-radius: 10%;
-	background-image: url("../assets/female.jpg");
-	background-size: contain;
 	height: 5em;
 	width: 5em;
 }
 #player2-avatar{
 	border-color:#ff5400;
 	border-radius: 10%;
-	background-image: url("../assets/male.png");
-	background-size: contain;
 	height: 5em;
 	width: 5em;
 	
 }
 
-
+.AvatarImage{
+	height: 5em;
+	width: 5em;
+}
 #player1-cards-list{
 	padding-left: 4em;
 	list-style-type: none;

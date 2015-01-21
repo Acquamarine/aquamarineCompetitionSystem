@@ -142,23 +142,28 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 	protected void handComplete(NeapolitanGameRoundSummary summary) {
 		Integer handWinner = computeHandWinner();
 		summary.setRoundWinner(handWinner);
-		summary.setRoundLoser(getOpponent(handWinner));
 		takenCards.get(handWinner).addAll(table);
 		table.clear();
 		lastPickedCards.clear();
 		if (!deck.isEmpty()) {
-			pickCards(handWinner);
-			summary.setPickedCards(lastPickedCards);
+			pickCards(handWinner, summary);
 		}
 		turnPlayer = handWinner;
 	}
 	
-	private void pickCards(Integer handWinner) {
+	private void pickCards(Integer handWinner, NeapolitanGameRoundSummary summary) {
 		Integer picking = handWinner;
+		List<Integer> pickList = new ArrayList<>();
+		List<NeapolitanCard> pickedCards = new ArrayList<>();
 		do {
 			pickACard(picking);
+			pickedCards.add(lastPickedCards.get(picking));
+			pickList.add(picking);
 			picking = followingPlayer.get(picking);
 		}while(!picking.equals(handWinner));
+		summary.setPickList(pickList);
+		summary.setPickedCards(pickedCards);
+		summary.setPickSummary(true);
 	}
 	
 	protected abstract IGameManager getGameManager();

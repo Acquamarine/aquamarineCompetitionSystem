@@ -1,7 +1,10 @@
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared;
 
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.controllers.TressetteController;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,13 +15,14 @@ import org.json.JSONObject;
 public class NeapolitanGameRoundSummary implements ITurnSummary {
 	private boolean cardPlayed;
 	private int round;
-	private Integer roundWinner;
-	private Integer roundLoser;
+	private Integer roundWinner = null;
 	private Integer actionPlayer;
 	private String card;
 	private int cardsInDeck;
 	private boolean gameOver = false;
-	private Map<Integer, NeapolitanCard> pickedCards;
+	private List<NeapolitanCard> pickedCards;
+	private List<Integer> pickList;
+	private boolean pickSummary = false;
 
 	public Integer getActionPlayer() {
 		return actionPlayer;
@@ -27,7 +31,7 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 	public void setActionPlayer(Integer actionPlayer) {
 		this.actionPlayer = actionPlayer;
 	}
-	
+
 	public boolean isCardPlayed() {
 		return cardPlayed;
 	}
@@ -52,11 +56,7 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 		this.roundWinner = roundWinner;
 	}
 
-	public Map<Integer, NeapolitanCard> getPickedCards() {
-		return pickedCards;
-	}
-
-	public void setPickedCards(Map<Integer, NeapolitanCard> pickedCards) {
+	public void setPickedCards(List<NeapolitanCard> pickedCards) {
 		this.pickedCards = pickedCards;
 	}
 
@@ -69,7 +69,7 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 	}
 
 	public void setCardsInDeck(int size) {
-		this.cardsInDeck=size;
+		this.cardsInDeck = size;
 	}
 
 	public int getCardsInDeck() {
@@ -84,41 +84,47 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 		this.gameOver = gameOver;
 	}
 
-	public Integer getRoundLoser() {
-		return roundLoser;
+	public void setPickList(List<Integer> pickList) {
+		this.pickList = pickList;
 	}
 
-	public void setRoundLoser(Integer roundLoser) {
-		this.roundLoser = roundLoser;
+	public void setPickSummary(boolean pickSummary) {
+		this.pickSummary = pickSummary;
 	}
-	
-	
 
+	
+	
 	@Override
 	public void buildJsonRepresentation(JSONObject summaryJson, HttpServletRequest request) {
-		try {
+		try{
 			summaryJson.put("played", cardPlayed);
 			summaryJson.put("card", card);
 			summaryJson.put("round", round);
 			summaryJson.put("gameover", gameOver);
-			summaryJson.put("actionPlayer", request.getSession().getAttribute(actionPlayer+""));
-			if(getRound() == 1){
+			summaryJson.put("actionPlayer", CompetitionManager.getInstance().getCompetitor(actionPlayer).getNickname());
+			if(roundWinner != null){
 				Integer winner = roundWinner;
-				summaryJson.put("winner", request.getSession().getAttribute(winner+""));
-				Integer loser = roundLoser;
-				summaryJson.put("loser", request.getSession().getAttribute(loser+""));
-				if(getPickedCards() != null){
-					summaryJson.put("picked0", getPickedCards().get(winner));
-					summaryJson.put("picked1", getPickedCards().get((loser)));
+				summaryJson.put("winner", CompetitionManager.getInstance().getCompetitor(winner).getNickname());
+				if(pickSummary){
+					List<String> pickListWithNicks = new ArrayList<>();
+					for(Integer playerId : pickList){
+						pickListWithNicks.add(CompetitionManager.getInstance().getCompetitor(playerId).getNickname());
+					}
+					
+					List<String> pickedCardsByStrings = new ArrayList<>();
+					for(NeapolitanCard pickedCard : pickedCards){
+						pickedCardsByStrings.add(pickedCard.toString());
+					}
+					summaryJson.put("pickedCards", pickedCardsByStrings);
+					summaryJson.put("pickList",pickListWithNicks);
 					summaryJson.put("deck", cardsInDeck);
 				}
 				request.getSession().setAttribute("deck", cardsInDeck);
 			}
-			
+
 		}catch(JSONException ex){
 			Logger.getLogger(NeapolitanGameRoundSummary.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
-	
 }

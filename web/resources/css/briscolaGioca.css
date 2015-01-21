@@ -1,0 +1,27 @@
+#game-table{
+	margin: 50px auto;
+	background-color: rgba(0, 64, 35, 1);
+	border-radius: 5%;
+	border-width: thick;
+	width: 60em;
+	height: 45em;
+	opacity: 1;
+}
+
+.AvatarImage{
+	height: 5em;
+	width: 5em;
+}
+
+.cards_img{
+	width: 5em;
+	height: 8em;
+	border: 0;
+	cursor: pointer;
+}
+
+#deck{
+	margin-left: 3em;
+	width: 6.5em;
+	height: 7.5em;
+}
