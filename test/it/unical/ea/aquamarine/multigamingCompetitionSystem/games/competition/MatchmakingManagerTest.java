@@ -21,6 +21,7 @@ public class MatchmakingManagerTest {
 	
 	@BeforeClass
 	public static void setUpClass() {
+		MultigamingBlManager.getInstance().addGameManager(Tressette1v1.class.getSimpleName(), TressetteGameManager.getInstance());
 	}
 	
 	@AfterClass
@@ -50,7 +51,7 @@ public class MatchmakingManagerTest {
 		RegisteredUser player = new RegisteredUser();
 		player.setNickname(playerNick);
 		MatchmakingManager instance = new MatchmakingManager();
-		instance.addToQueue(game, player);
+		instance.addToQueue(game, player, null);
 		instance.removeFromQueue(game, player);
 		assertTrue(instance.getQueuedCompetitorsMap().isEmpty());
 	}
@@ -62,7 +63,6 @@ public class MatchmakingManagerTest {
 	public void testStartQueuesThread() {
 		System.out.println("startQueuesThread");
 		String game = Tressette1v1.class.getSimpleName();
-		MultigamingBlManager.getInstance().addGameManager(game, new TressetteGameManager());
 		MatchmakingManager instance = new MatchmakingManager();
 		instance.startQueuesThread();
 		String player1Nick = "ciccio";
@@ -73,10 +73,10 @@ public class MatchmakingManagerTest {
 		RegisteredUser player2 = new RegisteredUser();
 		player2.setNickname(player2Nick);
 		player2.setId(1);
-		instance.addToQueue(game, player1);
-		instance.addToQueue(game, player2);
+		instance.addToQueue(game, player1, null);
+		instance.addToQueue(game, player2, null);
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 		} catch (InterruptedException ex) {
 			Logger.getLogger(MatchmakingManagerTest.class.getName()).log(Level.SEVERE, null, ex);
 		}

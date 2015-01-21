@@ -19,7 +19,12 @@ public class BriscolaGameManager extends AbstractGameManager implements IGameMan
 	}
 
 	@Override
-	public ICompetitionGame instantiateMatch(List<Integer> players, boolean rankedMatch) {
-		return new Briscola2v2(players, rankedMatch);
+	public ICompetitionGame instantiateMatch(List<Integer> players, List<Integer> teams, boolean rankedMatch) {
+		return new Briscola2v2(players, teams, rankedMatch);
+	}
+	
+	@Override
+	public int getTeamSize() {
+		return 2;
 	}
 }
