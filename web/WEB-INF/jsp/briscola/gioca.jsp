@@ -160,11 +160,11 @@
                     <div id="MyTeammate-avatar">
 						<img class="AvatarImage" src="/MultigamingCompetitionSystem/assets/male.png"/>
                     </div>
-                    <div class="MyTeammate_other_info"> ${MyTeammate}</div>
+                    <div class="MyTeammate_other_info"> ${players.get(2).getNickname()}</div>
                 </div>
                 <div id="MyTeammate-cards" class="Inline">
-                    <div id="MyTeammate-cards-list" class="${MyTeammate}Cards">
-                        <c:forEach items = "${playersCards.get(2)}"  var = "card" >
+                    <div id="MyTeammate-cards-list" class="${players.get(2).getNickname()}Cards">
+                        <c:forEach items = "${hands.get(2).getHandCards()}"  var = "card" >
                             <c:if test='${card!=null}'>
 								<div class="MyTeammate-cards Inline ">
 									<img class='cards_img' src=<%=myTeamCoverPath%>/>
@@ -180,8 +180,8 @@
 				<div id="OpponentFirst">
 
 					<div id="OpponentFirst-cards">
-						<div id="OpponentFirst-cards-list" class="${OpponentFirst}Cards">
-							<c:forEach items = "${playersCards.get(3)}"  var = "card" >
+						<div id="OpponentFirst-cards-list" class="${players.get(1).getNickname()}Cards">
+							<c:forEach items = "${hands.get(3).getHandCards()}"  var = "card" >
 								<c:if test='${card!=null}'>
                                     <div class="OpponentFirst-cards">
                                         <img class='cards_img' src=<%=opponentCoverPath%>/>
@@ -195,7 +195,7 @@
 						<div id="OpponentFirst-avatar" >
 							<img class="AvatarImage" src="/MultigamingCompetitionSystem/assets/female.jpg"/>
 						</div>
-						<div class="OpponentFirst_other_info"> ${OpponentFirst}</div>
+						<div class="OpponentFirst_other_info"> ${players.get(1).getNickname()}</div>
 					</div>
 				</div>
 				<div class= "played-cards" id="playedCard3">
@@ -224,12 +224,12 @@
 						<div id="OpponentSecond-avatar">
 							<img class="AvatarImage" src="/MultigamingCompetitionSystem/assets/male.png"/>
 						</div>
-						<div class="OpponentSecond_other_info"> ${OpponentSecond}</div>
+						<div class="OpponentSecond_other_info"> ${players.get(3).getNickname()}</div>
 					</div>
 
 					<div id="OpponentSecond-cards">
-						<div id="OpponentSecond-cards-list" class="${OpponentSecond}Cards">
-							<c:forEach items = "${playersCards.get(1)}"  var = "card" >
+						<div id="OpponentSecond-cards-list" class="${players.get(3).getNickname()}Cards">
+							<c:forEach items = "${hands.get(1).getHandCards()}"  var = "card" >
 								<c:if test='${card!=null}'>
 									<div class="OpponentSecond-cards">
 										<img class='cards_img' src=<%=opponentCoverPath%>/>
@@ -246,7 +246,7 @@
 				</div>
                 <div id="My-cards" class="Inline">
                     <div id="My-cards-list">
-                        <c:forEach items = "${playersCards.get(0)}"  var = "card" >
+                        <c:forEach items = "${hands.get(0).getHandCards()}"  var = "card" >
                             <c:if test='${card!=null}'>
 								<div class="My-cards Inline">
 									<img id='${card}' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/${card}.png'/>
@@ -259,7 +259,7 @@
                     <div id="My-avatar">
 						<img class="AvatarImage" src="/MultigamingCompetitionSystem/assets/female.jpg"/>
                     </div>
-                    <div class="My_other_info "> ${Me}</div>
+                    <div class="My_other_info "> ${players.get(0).getNickname()}</div>
                 </div>
             </div>
 

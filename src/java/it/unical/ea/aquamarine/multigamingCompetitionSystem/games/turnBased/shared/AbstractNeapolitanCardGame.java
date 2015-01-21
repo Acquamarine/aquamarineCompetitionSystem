@@ -29,6 +29,7 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 	protected List<NeapolitanCard> table = new ArrayList<>();
 	protected boolean gameComplete = false;
 	protected boolean rankedMatch;
+	private final TurnGameSummaryManager summaryManager = new TurnGameSummaryManager();
 
 	public AbstractNeapolitanCardGame(List<Integer> players, boolean rankedMatch) {
 		this.players = players;
@@ -44,6 +45,8 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 		turnPlayer = players.iterator().next();
 		this.rankedMatch = rankedMatch;
 	}
+	
+	
 	
 	public synchronized void playCard(Integer playerId, NeapolitanCard card, NeapolitanGameRoundSummary summary) {
 		if(playerId.equals(turnPlayer) && !gameComplete){
@@ -174,12 +177,22 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 	
 	protected abstract void generateMatchResultsForHistory();
 
-	protected abstract void addEventSummary(NeapolitanGameRoundSummary summary);
 
 	protected abstract void computeWinnersAndAssignRewards();
 
 	protected abstract Integer computeHandWinner();
 			
+	public ITurnSummary getSummary(int eventIndex) {
+		return summaryManager.getSummary(eventIndex);
+	}
 
+	
+	protected void addEventSummary(NeapolitanGameRoundSummary summary) {
+		summaryManager.addSummary(summary);
+	}
+
+	public boolean areThereSummaries() {
+		return summaryManager.areThereSummaries();
+	}
 
 }

@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITressette {
 
-	private final TurnGameSummaryManager summaryManager = new TurnGameSummaryManager();
+	
 
 	public Tressette1v1(List<Integer> players, boolean rankedMatch) {
 		super(players, rankedMatch);
@@ -102,18 +102,7 @@ public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITresset
 		return followingPlayer.get(player);
 	}
 
-	public ITurnSummary getSummary(int eventIndex) {
-		return summaryManager.getSummary(eventIndex);
-	}
-
-	@Override
-	protected void addEventSummary(NeapolitanGameRoundSummary summary) {
-		summaryManager.addSummary(summary);
-	}
-
-	public boolean areThereSummaries() {
-		return summaryManager.areThereSummaries();
-	}
+	
 
 	@Override
 	protected void generateMatchResultsForHistory() {

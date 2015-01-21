@@ -73,7 +73,7 @@
 					url: "briscola",
 					data: {
 						addToRankedQueue: rankedQueue,
-						team: $(TeamSelector).value
+						team: $('#TeamSelector').value
 					},
 					success: function (data) {
 						console.log("add in queue success");
