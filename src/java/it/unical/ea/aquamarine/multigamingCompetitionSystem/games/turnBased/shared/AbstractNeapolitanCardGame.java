@@ -59,7 +59,7 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 				summary.setCard(card.toString());
 				if(table.size() < players.size()){
 					turnPlayer = followingPlayer.get(playerId);
-					summary.setTurnPlayer(CompetitionManager.getInstance().getCompetitor(turnPlayer).getNickname());
+					summary.setTurnPlayer(turnPlayer);
 				}else{
 					handComplete(summary);
 					checkGameComplete();

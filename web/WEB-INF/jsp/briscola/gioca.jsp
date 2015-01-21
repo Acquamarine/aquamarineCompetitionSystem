@@ -70,13 +70,13 @@
 				});
 			}
 			function cardsClick() {
-				var parentId = this.id;
-				console.log(parentId);
+				console.log($(this).find('img:first').attr("id"));
+				var childId = $(this).find('img:first').attr("id");
 				if (graphicComplete) {
 					$.ajax({
 						url: "./gioca",
 						data: {
-							cardId: parentId
+							cardId: childId
 						},
 						success: function (data) {
 						}
@@ -93,20 +93,16 @@
 			}
 			function distributeCard(obj) {
 				for (var i = 0; i < 4; i++) {
-					var toAppend = document.createElement("div");
-					toAppend.className = obj.pickList[i] + "Cards";
-					if (i % 2 === 0) {
-						toAppend.className += "Inline";
-					}
 					var imgToAppend = document.createElement("img");
 					imgToAppend.className = "cards_img";
+					imgToAppend.id=obj.pickedCards[i];
 					var imgPath = 'carte_napoletane/'+obj.pickedCards[i];
-					if (obj.pickList[i] !==${nickname}) {
+					if (obj.pickList[i] !=="${nickname}") {
 						imgPath = 'items/CARD_COVER/basic';
 					}
 					imgToAppend.setAttribute("src", '/MultigamingCompetitionSystem/assets/' + imgPath + '.png');
-					toAppend.appendChild(imgToAppend);
-					$("." + obj.pickList[i] + "CardsList").append(toAppend);
+					$('.'+obj.pickList[i]+'CardsList').appendChild(imgToAppend);
+					$("." + obj.pickList[i] + "CardsList").children('#toFill').append(toAppend);
 				}
 			}
 			var index = ${eventIndex};
@@ -124,11 +120,12 @@
 							index++;
 							obj = JSON.parse(data);
 							if ("${nickname}" === obj.actionPlayer) {
+								$('#' + obj.card).parent().attr("id","toFill");
 								$('#' + obj.card).remove();
 								$('#playedCard0').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
 							}
 							else {
-								$('.' + obj.actionPlayer + "CardsList").first().remove();
+								$('.' + obj.actionPlayer + "CardsList").children().first().remove();
 								$('.' + obj.actionPlayer + "PlayedCard").html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
 							}
 							if (obj.round === 3) {
@@ -274,8 +271,8 @@
                     <div id="My-cards-list">
                         <c:forEach items = "${hands.get(0).getHandCards()}"  var = "card" >
                             <c:if test='${card!=null}'>
-								<div class="player0-cards Inline" id='${card}' >
-									<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/${card}.png'/>
+								<div class="player0-cards Inline"  >
+									<img id='${card}' class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/${card}.png'/>
 								</div>
                             </c:if>
                         </c:forEach>
