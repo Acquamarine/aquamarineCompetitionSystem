@@ -84,6 +84,9 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 	protected void generateMatchResultsForHistory() {
 		TwoCompetitorsMatchResult score = new TwoCompetitorsMatchResult();
 		populateResults(score, teams);
+		if(surrenderer!=null) {
+			score.setWinner(CompetitionManager.getInstance().getCompetitor(teamsMap.get(followingPlayer.get(surrenderer))));
+		}
 		score.setGame(Briscola2v2.class.getSimpleName());
 		DAOProvider.getMatchResultsDAO().create(score);
 	}
@@ -171,13 +174,13 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 		Integer currentPlayerId = me;
 		do{
 			returningList.add(CompetitionManager.getInstance().getCompetitor(currentPlayerId));
-			currentPlayerId = followingPlayer.get(me);
+			currentPlayerId = followingPlayer.get(currentPlayerId);
 		}while(!currentPlayerId.equals(me));
 		return returningList;
 	}
-
-	public boolean areThereSummaries() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	
+	public NeapolitanCard getBriscolaCard() {
+		return briscolaCard;
 	}
 
 	public List<NeapolitanCard> getTableFrom(Integer me) {

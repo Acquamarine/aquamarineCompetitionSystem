@@ -99,6 +99,9 @@ public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITresset
 	protected void generateMatchResultsForHistory() {
 		TwoCompetitorsMatchResult score = new TwoCompetitorsMatchResult();
 		populateResults(score, players);
+		if(surrenderer!=null) {
+			score.setWinner(CompetitionManager.getInstance().getCompetitor(followingPlayer.get(surrenderer)));
+		}
 		score.setGame(Tressette1v1.class.getSimpleName());
 		DAOProvider.getMatchResultsDAO().create(score);
 	}

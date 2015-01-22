@@ -32,7 +32,6 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 	private final TurnGameSummaryManager summaryManager = new TurnGameSummaryManager();
 	protected Integer firstPlayerOfHand;
 	protected Integer surrenderer = null;
-	protected final TurnGameSummaryManager summaryManager = new TurnGameSummaryManager();
 
 	public AbstractNeapolitanCardGame(List<Integer> players, boolean rankedMatch) {
 		this.players = players;
