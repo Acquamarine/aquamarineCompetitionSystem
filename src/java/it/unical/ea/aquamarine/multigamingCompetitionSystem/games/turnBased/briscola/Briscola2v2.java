@@ -124,8 +124,8 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 
 	@Override
 	protected Integer computeHandWinner() {
-		Integer winner = turnPlayer;
-		Integer currentPlayer = turnPlayer;
+		Integer winner = firstPlayerOfHand;
+		Integer currentPlayer = firstPlayerOfHand;
 		NeapolitanCard winnerCard = table.get(0);
 		for(int i = 1; i < 4; i++){
 			NeapolitanCard nextCard = table.get(i);
@@ -215,6 +215,7 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 	protected NeapolitanGameRoundSummary getSummaryInstance() {
 		return new BriscolaRoundSummary();
 	}
+	
 	
 	
 }

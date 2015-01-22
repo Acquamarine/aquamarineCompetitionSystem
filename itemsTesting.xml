@@ -8,14 +8,50 @@
 		<type>market</type>
 		<price>50</price>
 		<id>1</id>
+		<description>The fury deck is composed by sharp and rusty cards. They have been around for many years now, yet they seek for glory in victories.</description>
 	</item>
+
+	<item>
+		<name>lightBlueCover</name>
+		<displayName>Sea Cover</displayName>
+		<game>Tressette1v1</game>
+		<category>Card cover</category>
+		<type>market</type>
+		<price>100</price>
+		<id>3</id>
+		<description>The sea deck comes from Naples, invented in the glorious sea age. Cards flow gently as they take away precious rewards from the table.</description>
+	</item>
+
 	<item>
 		<name>greenCover</name>
 		<displayName>Hope Cover</displayName>
 		<game>Tressette1v1</game>
 		<category>Card cover</category>
-		<type>eloReward</type>
-		<elo>1200</elo>
-		<id>2</id>
+		<type>market</type>
+		<price>100</price>
+		<id>4</id>
+		<description>None loses his faith with a hope deck in their hands. Known for extraordinary comebacks and unbelieved victories.</description>
 	</item>
+	
+	<item>
+		<name>dragonCover</name>
+		<displayName>Dragon Cover</displayName>
+		<game>Tressette1v1</game>
+		<category>Card cover</category>
+		<type>market</type>
+		<price>100</price>
+		<id>5</id>
+		<description></description>
+	</item>
+	<item>
+		<name>phoenixCover</name>
+		<displayName>Phoenix Cover</displayName>
+		<game>Tressette1v1</game>
+		<category>Card cover</category>
+		<type>market</type>
+		<price>100</price>
+		<id>6</id>
+		<description></description>
+	</item>
+	
 </items>

@@ -5,6 +5,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.Registere
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.Team;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.MatchmakingManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitionGame;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.briscola.Briscola2v2;
@@ -124,5 +125,15 @@ public class BriscolaController {
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"inQueue"})
 	public void getMatch(HttpServletRequest request) {
 		BriscolaGameManager.getInstance().waitForMatch((Integer) request.getSession().getAttribute("playerId"));
+	}
+	
+	@RequestMapping(value = "/gioca", method = {RequestMethod.GET, RequestMethod.POST}, params = "surrender")
+	public void surrenderMatch(HttpServletRequest request) {
+		System.out.println("surrender started");
+		Integer me = (Integer) request.getSession().getAttribute("playerId");
+		ICompetitionGame playerActiveMatch = BriscolaGameManager.getInstance().getPlayerActiveMatch(me);
+		if(playerActiveMatch!=null) {
+			playerActiveMatch.surrenderMatch(me);
+		}
 	}
 }

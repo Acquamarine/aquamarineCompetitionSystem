@@ -94,3 +94,10 @@
 	margin-top: -8em;
 	height: 8em;
 }
+
+.SurrenderOptionButton {
+    vertical-align: bottom;
+    position: absolute;
+    bottom: 1.5em;
+    left:3em;
+}
