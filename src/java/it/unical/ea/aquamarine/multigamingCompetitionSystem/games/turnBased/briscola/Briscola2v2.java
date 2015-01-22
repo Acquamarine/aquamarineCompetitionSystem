@@ -217,4 +217,5 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 	}
 	
 	
+	
 }

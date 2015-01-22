@@ -83,8 +83,25 @@
 					});
 				}
 			}
+                        
+                        function surrenderRequest(event) {
+                                event.preventDefault();
+				if (graphicComplete) {
+					$.ajax({
+						url: "./gioca",
+						data: {
+							surrender: true
+						},
+						success: function (data) {
+                                                    console.log("surrender success");
+						}
+					});
+				}
+			}
+                        
 			$(document).ready(function () {
 				$(".player0-cards").click(cardsClick);
+                                $(".SurrenderOption").click(surrenderRequest);
 			});
 
 
@@ -297,6 +314,11 @@
                     </div>
                     <div class="My_other_info "> ${players.get(0).getNickname()}</div>
                 </div>
+                 <div class="SurrenderOption Inline">
+                        <form action="" method="post">
+                            <input  class="SurrenderOptionButton Submit"  type="submit" value="Surrender match"/>
+                        </form>
+                    </div>
             </div>
 
 		</div>

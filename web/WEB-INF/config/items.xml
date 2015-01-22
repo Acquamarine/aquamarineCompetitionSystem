@@ -43,5 +43,15 @@
 		<id>5</id>
 		<description></description>
 	</item>
+	<item>
+		<name>phoenixCover</name>
+		<displayName>Phoenix Cover</displayName>
+		<game>Tressette1v1</game>
+		<category>Card cover</category>
+		<type>market</type>
+		<price>100</price>
+		<id>6</id>
+		<description></description>
+	</item>
 	
 </items>
