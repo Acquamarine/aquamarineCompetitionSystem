@@ -110,7 +110,7 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 		try{
 			summaryJson.put("gameover", gameOver);
 			summaryJson.put("surrenderer", surrenderer);
-			summaryJson.put("turnPlayer", CompetitionManager.getInstance().getCompetitor(turnPlayer));
+			summaryJson.put("turnPlayer", CompetitionManager.getInstance().getCompetitor(turnPlayer).getNickname());
 			if(surrenderer==null) {
 				summaryJson.put("played", cardPlayed);
 				summaryJson.put("card", card);

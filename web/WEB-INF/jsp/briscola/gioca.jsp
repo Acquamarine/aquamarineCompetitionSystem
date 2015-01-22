@@ -93,18 +93,29 @@
 			}
 			function distributeCard(obj) {
 				for (var i = 0; i < 4; i++) {
+					var divToAppend = document.createElement("div");
 					var imgToAppend = document.createElement("img");
 					imgToAppend.className = "cards_img";
-					imgToAppend.id = obj.pickedCards[i];
-					var imgPath = 'carte_napoletane/' + obj.pickedCards[i];
-					if (obj.pickList[i] !== "${nickname}") {
-						imgPath = 'items/CARD_COVER/basic';
+
+					var imgPath = 'items/CARD_COVER/basic';
+					if (obj.pickList[i] === "${nickname}") {
+						imgToAppend.id = obj.pickedCards[i];
+						imgPath = 'carte_napoletane/' + obj.pickedCards[i];
+						divToAppend.className="player0-cards";
 					}
 					imgToAppend.setAttribute("src", '/MultigamingCompetitionSystem/assets/' + imgPath + '.png');
-					console.log(obj.pickList[i]);
-					$('.' + obj.pickList[i] + 'CardsList').append(imgToAppend);
-					$("." + obj.pickList[i] + "CardsList").children('#toFill').append(toAppend);
-					$('#toFill').attr("id","filled");
+					divToAppend.appendChild(imgToAppend);
+					$('.' + obj.pickList[i] + 'CardsList').append(divToAppend);
+					if (obj.pickList[i] === "${nickname}") {
+						$('#'+obj.pickedCards[i]).parent().click(cardsClick);
+						$('#'+obj.pickedCards[i]).parent().css("display","inline-block");
+					}else if(obj.pickList[(i+2)%4] === "${nickname}"){
+						divToAppend.style.display="inline-block";
+					}else if(obj.pickList[(i+1)%4] === "${nickname}"){
+						divToAppend.style.marginTop="-3em";
+					}else{
+						divToAppend.style.marginBottom="-3em";
+					}
 				}
 			}
 			var index = ${eventIndex};
@@ -123,8 +134,7 @@
 							obj = JSON.parse(data);
 							console.log(obj);
 							if ("${nickname}" === obj.actionPlayer) {
-								$('#' + obj.card).parent().attr("id", "toFill");
-								$('#' + obj.card).remove();
+								$('#' + obj.card).parent().remove();
 								$('#playedCard0').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
 							}
 							else {
@@ -140,6 +150,7 @@
 								}, 1000);
 								if ($('#deck').length) {
 									distributeCard(obj);
+									graphicComplete=true;
 								}
 							}
 							else {
@@ -249,7 +260,6 @@
 						</div>
 						<div class="OpponentSecond_other_info"> ${players.get(1).getNickname()}</div>
 					</div>
-
 					<div id="OpponentSecond-cards">
 						<div id="OpponentSecond-cards-list" class="${players.get(1).getNickname()}CardsList">
 							<c:forEach items = "${hands.get(1).getHandCards()}"  var = "card" >
@@ -271,7 +281,7 @@
 					</c:if>
 				</div>
                 <div id="My-cards" class="Inline">
-                    <div id="My-cards-list">
+                    <div id="My-cards-list" class="${players.get(0).getNickname()}CardsList">
                         <c:forEach items = "${hands.get(0).getHandCards()}"  var = "card" >
                             <c:if test='${card!=null}'>
 								<div class="player0-cards Inline"  >

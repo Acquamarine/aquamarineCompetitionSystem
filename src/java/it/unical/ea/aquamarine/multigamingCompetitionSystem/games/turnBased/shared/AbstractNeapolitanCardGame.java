@@ -156,6 +156,7 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 			pickCards(handWinner, summary);
 		}
 		turnPlayer = handWinner;
+		summary.setTurnPlayer(turnPlayer);
 		firstPlayerOfHand = turnPlayer;
 	}
 	

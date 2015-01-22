@@ -1,6 +1,7 @@
 
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.shared;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.briscola.Briscola2v2;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1;
 import java.net.URI;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class GameConstants {
 	private static Map<String, Pair<Integer, Integer>> initVirtualPointRewards() {
 		Map<String, Pair<Integer, Integer>> map = new HashMap<>();
 		map.put(Tressette1v1.class.getSimpleName(), new Pair<>(50, 100));
+		map.put(Briscola2v2.class.getSimpleName(), new Pair<>(50, 100));
 		return map;
 	}
 	
