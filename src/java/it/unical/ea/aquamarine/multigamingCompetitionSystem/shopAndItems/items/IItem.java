@@ -31,5 +31,9 @@ public interface IItem {
 	
 	public void setId(int id);
 	
+	public String getDescription();
+	
+	public void setDescription(String description);
+	
 	
 }

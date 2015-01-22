@@ -84,3 +84,12 @@
 .ShopHeader {
     margin-bottom: 2em;
 }
+
+.ItemName {
+    color: #ffcc00;
+}
+
+.ItemDescriptionText {
+    margin-top: 0.7em;
+    font-size: 0.8em;
+}

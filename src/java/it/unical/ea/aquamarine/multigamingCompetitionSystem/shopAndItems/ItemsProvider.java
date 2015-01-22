@@ -46,6 +46,7 @@ public class ItemsProvider {
 			readingItem.setGame(itemReader.getString("game"));
 			readingItem.setName(itemReader.getString("name"));
 			readingItem.setDisplayName(itemReader.getString("displayName"));
+			readingItem.setDescription(itemReader.getString("description"));
 			String category = itemReader.getString("category");
 			readingItem.setCategory(ItemCategory.getItemCategory(category));
 			itemDAO.create(readingItem);

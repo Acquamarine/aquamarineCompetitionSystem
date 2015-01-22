@@ -31,6 +31,7 @@ public abstract class AbstractItem implements IItem, Serializable{
 	protected ItemCategory category;
 	protected String name;
 	protected String displayName;
+	protected String description;
 	
 
 	@Override
@@ -123,6 +124,19 @@ public abstract class AbstractItem implements IItem, Serializable{
 		}
 		return true;
 	}
+
+	@Override
+	@Column(name = "description")
+	public String getDescription() {
+		return description;
+	}
+
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 	
 	
 }

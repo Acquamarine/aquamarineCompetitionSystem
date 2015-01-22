@@ -121,7 +121,7 @@
 						externalDivToAppend.appendChild(divToAppend);
 						toAppend.appendChild(externalDivToAppend);
 						toAppend.className = "li-cards";
-						document.getElementById("player2-cards-list").appendChild(toAppend);
+						document.getElementById("MyTeammate-cards-list").appendChild(toAppend);
 						$('#' + card).click(cardsClick);
 					} else if (player !== "${nickname}") {
 						divToAppend = document.createElement("div");

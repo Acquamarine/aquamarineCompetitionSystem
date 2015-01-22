@@ -71,7 +71,8 @@
                                 </div>
                             </div>
                             <div class="ItemDescription Inline">
-                                Descrizione
+                                Description
+                                <div class="ItemDescriptionText">${itemInCategory.getDescription()}</div>
                             </div>
                         </div>
                     </c:forEach>
