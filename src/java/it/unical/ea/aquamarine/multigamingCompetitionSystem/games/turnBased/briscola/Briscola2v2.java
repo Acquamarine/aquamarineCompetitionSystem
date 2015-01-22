@@ -206,6 +206,9 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 		Integer secondPlayer = players.get(1);
 		players.set(1,players.get(2));
 		players.set(2,secondPlayer);
+		for(int i=0;i<players.size();i++) {
+			followingPlayer.put(players.get(i), players.get((i+1)%players.size()));
+		}
 	}
 
 	@Override
