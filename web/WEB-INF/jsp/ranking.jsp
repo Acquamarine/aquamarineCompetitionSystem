@@ -35,7 +35,7 @@
 						coming soon
 					</td>
 					<td class="ranking-column ranking-table">
-						<a class="NoStyle" action="/MultigamingCompetitionSystem/userProfile?user=${userRanking.getKey()}">
+						<a class="NoStyle" href="/MultigamingCompetitionSystem/userProfile?user=${userRanking.getKey()}" >
 							${userRanking.getKey()}
 						</a>
 					</td>

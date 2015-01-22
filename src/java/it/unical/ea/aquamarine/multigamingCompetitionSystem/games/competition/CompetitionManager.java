@@ -41,6 +41,7 @@ public class CompetitionManager {
 		winner.updateElo(game, winnerNewElo);
 		loser.updateElo(game, loserNewElo);
 		//TODO remove in case of fire
+		OnDemandPersistenceManager.getInstance().initializeInventory(winner);
 		List<IItem> wonItems = ItemsProvider.getInstance().getUnlockedItems(game, winnerNewElo);
 		for(IItem wonItem:wonItems) {
 			winner.getInventory().addItem(wonItem);

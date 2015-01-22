@@ -61,6 +61,11 @@
 							i++;
 							externalDivToAppend.innerHTML = " " + element + " Points " + elements[element];
 							document.getElementById('game-table').appendChild(externalDivToAppend);
+							externalDivToAppend.style.color="#ffffff";
+							externalDivToAppend.style.fontSize="2em";
+							externalDivToAppend.style.marginTop="1em";
+							externalDivToAppend.style.marginLeft="3em";
+							
 						}
 
 					}
