@@ -95,14 +95,16 @@
 				for (var i = 0; i < 4; i++) {
 					var imgToAppend = document.createElement("img");
 					imgToAppend.className = "cards_img";
-					imgToAppend.id=obj.pickedCards[i];
-					var imgPath = 'carte_napoletane/'+obj.pickedCards[i];
-					if (obj.pickList[i] !=="${nickname}") {
+					imgToAppend.id = obj.pickedCards[i];
+					var imgPath = 'carte_napoletane/' + obj.pickedCards[i];
+					if (obj.pickList[i] !== "${nickname}") {
 						imgPath = 'items/CARD_COVER/basic';
 					}
 					imgToAppend.setAttribute("src", '/MultigamingCompetitionSystem/assets/' + imgPath + '.png');
-					$('.'+obj.pickList[i]+'CardsList').appendChild(imgToAppend);
+					console.log(obj.pickList[i]);
+					$('.' + obj.pickList[i] + 'CardsList').append(imgToAppend);
 					$("." + obj.pickList[i] + "CardsList").children('#toFill').append(toAppend);
+					$('#toFill').attr("id","filled");
 				}
 			}
 			var index = ${eventIndex};
@@ -119,8 +121,9 @@
 						if (data !== "") {
 							index++;
 							obj = JSON.parse(data);
+							console.log(obj);
 							if ("${nickname}" === obj.actionPlayer) {
-								$('#' + obj.card).parent().attr("id","toFill");
+								$('#' + obj.card).parent().attr("id", "toFill");
 								$('#' + obj.card).remove();
 								$('#playedCard0').html("<img class='cards_img' src='/MultigamingCompetitionSystem/assets/carte_napoletane/" + obj.card + ".png'/>");
 							}
