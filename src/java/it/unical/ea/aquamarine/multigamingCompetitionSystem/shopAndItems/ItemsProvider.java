@@ -10,6 +10,8 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class ItemsProvider {
@@ -73,5 +75,13 @@ public class ItemsProvider {
 			return eloRewardItemsMap.get(id);
 		}
 		return shopItemsMap.get(id);
+	}
+	
+	public List<IItem> getUnlockedItems(String game, int elo) {
+		List<IItem> returningList = new LinkedList<>();
+		eloRewardItemsMap.values().stream().filter((item) -> (item.getUnlockingElo() <=elo)).forEach((item) -> {
+			returningList.add(item);
+		});
+		return returningList;
 	}
 }
