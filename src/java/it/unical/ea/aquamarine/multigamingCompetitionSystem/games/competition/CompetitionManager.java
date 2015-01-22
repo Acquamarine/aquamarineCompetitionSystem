@@ -6,7 +6,10 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.DAOProvi
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.CompetitorDAO;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.shared.GameConstants;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.ItemsProvider;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.shopAndItems.items.IItem;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CompetitionManager {
@@ -37,6 +40,11 @@ public class CompetitionManager {
 		int loserNewElo = (int) Math.round(loserPreviousElo + getEloDynamicConstant(loserPreviousElo) * (-loserExpectedWinningProbability));
 		winner.updateElo(game, winnerNewElo);
 		loser.updateElo(game, loserNewElo);
+		//TODO remove in case of fire
+		List<IItem> wonItems = ItemsProvider.getInstance().getUnlockedItems(game, winnerNewElo);
+		for(IItem wonItem:wonItems) {
+			winner.getInventory().addItem(wonItem);
+		}
 		OnDemandPersistenceManager.getInstance().updateCompetitor(loser);
 		OnDemandPersistenceManager.getInstance().updateCompetitor(winner);
 	}

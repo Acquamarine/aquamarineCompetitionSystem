@@ -41,7 +41,7 @@
 		<type>market</type>
 		<price>100</price>
 		<id>5</id>
-		<description></description>
+		<description>This deck has been created in honor of the Black Drake defeat in Umbaria.</description>
 	</item>
 	<item>
 		<name>phoenixCover</name>
@@ -51,7 +51,7 @@
 		<type>market</type>
 		<price>100</price>
 		<id>6</id>
-		<description></description>
+		<description>A legendary tier deck, designed to commemorate Flamia, the benevolent phoenix of Croxia.</description>
 	</item>
 	
 </items>
