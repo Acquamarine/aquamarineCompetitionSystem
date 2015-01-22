@@ -23,6 +23,7 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 	private List<NeapolitanCard> pickedCards;
 	private List<Integer> pickList;
 	private boolean pickSummary = false;
+	private int turnPlayer;
 	private Integer surrenderer = null;
 
 	public Integer getActionPlayer() {
@@ -73,6 +74,12 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 		this.cardsInDeck = size;
 	}
 
+	public void setTurnPlayer(int turnPlayer) {
+		this.turnPlayer = turnPlayer;
+	}
+
+	
+	
 	public int getCardsInDeck() {
 		return cardsInDeck;
 	}

@@ -256,7 +256,7 @@
             </div>
             <div id="player2">
                 <div id="player2-cards">
-                    <ul id="player2-cards-list">
+                    <ul id="MyTeammate-cards-list">
                         <c:forEach items = "${cards}"  var = "card" >
                             <c:if test='${card!=null}'>
                                 <li class="li-cards">
