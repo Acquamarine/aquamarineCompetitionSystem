@@ -50,10 +50,7 @@
 					},
 					success: function (data) {
 						obj = JSON.parse(data);
-						$('#player1-cards').remove();
-						$('#player2-cards').remove();
-						$('#cards-on-table').children().remove();
-						console.log(obj);
+						$('#game-table').children().remove();
 						var elements = obj.results;
 						var i = 0;
 						for (element in elements) {
@@ -63,7 +60,7 @@
 							externalDivToAppend.id = "finalScore" + i;
 							i++;
 							externalDivToAppend.innerHTML = " " + element + " Points " + elements[element];
-							document.getElementById('cards-on-table').appendChild(externalDivToAppend);
+							document.getElementById('game-table').appendChild(externalDivToAppend);
 						}
 
 					}
@@ -113,7 +110,7 @@
 					var divToAppend = document.createElement("div");
 					var imgToAppend = document.createElement("img");
 					imgToAppend.className = "cards_img";
-
+					
 					var imgPath = 'items/CARD_COVER/basic';
 					if (obj.pickList[i] === "${nickname}") {
 						imgToAppend.id = obj.pickedCards[i];

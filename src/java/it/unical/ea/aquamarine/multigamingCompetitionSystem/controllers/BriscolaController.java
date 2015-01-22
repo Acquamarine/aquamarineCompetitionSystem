@@ -19,7 +19,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -135,5 +138,24 @@ public class BriscolaController {
 		if(playerActiveMatch!=null) {
 			playerActiveMatch.surrenderMatch(me);
 		}
+	}
+	
+	@RequestMapping(value = "/gioca", method = RequestMethod.GET, params = "gameComplete")
+	public @ResponseBody
+	String gameComplete(HttpServletRequest request) {
+		Integer me = (Integer) request.getSession().getAttribute("playerId");
+		Briscola2v2 playerGame = (Briscola2v2) BriscolaGameManager.getInstance().getPlayerCompletedMatch(me);
+		Map<Integer, Integer> finalScores = playerGame.getFinalScores();
+		Map<String, Integer> finalScoreWithNicks = new HashMap<>();
+		finalScores.keySet().stream().forEach((id) -> {			
+			finalScoreWithNicks.put(CompetitionManager.getInstance().getCompetitor(id).getNickname(), finalScores.get(id));
+		});
+		JSONObject json = new JSONObject();
+		try{
+			json.put("results", finalScoreWithNicks);
+		}catch(JSONException ex){
+			Logger.getLogger(BriscolaController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return json.toString();
 	}
 }

@@ -78,8 +78,6 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 		this.turnPlayer = turnPlayer;
 	}
 
-	
-	
 	public int getCardsInDeck() {
 		return cardsInDeck;
 	}
@@ -99,19 +97,20 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 	public void setPickSummary(boolean pickSummary) {
 		this.pickSummary = pickSummary;
 	}
-	
+
 	public void setSurrender(Integer surrenderer) {
 		this.surrenderer = surrenderer;
 	}
 
-	
 	@Override
 	public void buildJsonRepresentation(JSONObject summaryJson, HttpServletRequest request) {
 		try{
 			summaryJson.put("gameover", gameOver);
 			summaryJson.put("surrenderer", surrenderer);
-			summaryJson.put("turnPlayer", CompetitionManager.getInstance().getCompetitor(turnPlayer).getNickname());
-			if(surrenderer==null) {
+			if(!gameOver){
+				summaryJson.put("turnPlayer", CompetitionManager.getInstance().getCompetitor(turnPlayer).getNickname());
+			}
+			if(surrenderer == null){
 				summaryJson.put("played", cardPlayed);
 				summaryJson.put("card", card);
 				summaryJson.put("round", round);
@@ -130,7 +129,7 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 							pickedCardsByStrings.add(pickedCard.toString());
 						}
 						summaryJson.put("pickedCards", pickedCardsByStrings);
-						summaryJson.put("pickList",pickListWithNicks);
+						summaryJson.put("pickList", pickListWithNicks);
 						summaryJson.put("deck", cardsInDeck);
 					}
 					request.getSession().setAttribute("deck", cardsInDeck);
@@ -141,7 +140,5 @@ public class NeapolitanGameRoundSummary implements ITurnSummary {
 			Logger.getLogger(NeapolitanGameRoundSummary.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-
-	
 
 }

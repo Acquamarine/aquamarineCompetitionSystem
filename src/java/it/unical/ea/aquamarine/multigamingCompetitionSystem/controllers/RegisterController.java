@@ -66,7 +66,7 @@ public class RegisterController implements ApplicationContextAware{
 			model.addAttribute("nickUnavailable", false);
 		}
 		if(validForm){
-			user.gainVirtualPoints(500);
+			user.gainVirtualPoints(200);
 			competitorDAO.create(user);
 			
 			model.addAttribute("message","Registration has been successful. You can now login!");
