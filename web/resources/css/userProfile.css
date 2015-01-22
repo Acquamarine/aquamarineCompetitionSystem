@@ -39,6 +39,7 @@ body {
 
 #matchHistory{
 	width: 100%; position: relative;
+        color: #000000;
 }
 
 .SingleMatchContainer{
@@ -48,6 +49,7 @@ body {
         border-style: ridge;
         overflow: hidden;
         border-radius: 1em;
+        position: relative;
 }
 .MatchType{
         padding-top: 1em;
@@ -86,8 +88,7 @@ body {
 .Score{margin-left: auto; margin-right: auto ; position: relative; text-align: center}
 
 .MatchStats{
-    padding-left: 10em;
-    padding-right: 10em;
+    text-align: center;
 }
 
 .Victory.MatchStats{
@@ -123,4 +124,10 @@ body {
 	margin-left: 5em;
 	margin-top: 3em;
 	color:#ff0000;
+}
+
+.Surrender {
+    text-align: right;   
+    position: absolute;
+    right: 1em;
 }

@@ -37,7 +37,7 @@ public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITresset
 		takenCards.keySet().stream().forEach((player) -> {
 			int pointCounter = 0;
 			pointCounter = takenCards.get(player).stream().map((card) -> getCardValue(card)).reduce(pointCounter, Integer::sum);
-			if (turnPlayer.equals(player)) {
+			if (turnPlayer.equals(player) && surrenderer==null) {
 				pointCounter += 3;
 			}
 			finalScores.put(player, pointCounter / 3);
@@ -95,24 +95,11 @@ public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITresset
 		return followingPlayer.get(player);
 	}
 
-	
-
 	@Override
 	protected void generateMatchResultsForHistory() {
 		TwoCompetitorsMatchResult score = new TwoCompetitorsMatchResult();
-		score.setPlayer1(CompetitionManager.getInstance().getCompetitor(players.get(0)));
-		score.setPlayer2(CompetitionManager.getInstance().getCompetitor(players.get(1)));
-		score.setPlayer1Score(finalScores.get(players.get(0)));
-		score.setPlayer2Score(finalScores.get(players.get(1)));
-		score.setRankedMatch(rankedMatch);
+		populateResults(score, players);
 		score.setGame(Tressette1v1.class.getSimpleName());
-		score.setMatchEndTimeByMillis(System.currentTimeMillis());
-		ICompetitor winner = CompetitionManager.getInstance().getCompetitor(players.get(0));
-		if (finalScores.get(players.get(0)) < finalScores.get(players.get(1))) {
-			winner = CompetitionManager.getInstance().getCompetitor(players.get(1));
-
-		}
-		score.setWinner(winner);
 		DAOProvider.getMatchResultsDAO().create(score);
 	}
 
@@ -139,6 +126,11 @@ public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITresset
 			winner = loser;
 			loser = temp;
 		}
+		assignRewards(winner, loser);
+	}
+
+	@Override
+	protected void assignRewards(Integer winner, Integer loser) {
 		CompetitionManager.getInstance().giveVirtualPoints(winner, loser, Tressette1v1.class.getSimpleName());
 		if (rankedMatch) {
 			CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getSimpleName(), winner, loser);
@@ -146,4 +138,15 @@ public class Tressette1v1 extends AbstractNeapolitanCardGame implements ITresset
 			CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getSimpleName() + "normal", winner, loser);
 		}
 	}
+
+	@Override
+	protected void assignRewardsAfterSurrender() {
+		Integer loser = surrenderer;
+		Integer winner = followingPlayer.get(loser);
+		assignRewards(winner, loser);
+	}
+	
+	
+	
+	
 }

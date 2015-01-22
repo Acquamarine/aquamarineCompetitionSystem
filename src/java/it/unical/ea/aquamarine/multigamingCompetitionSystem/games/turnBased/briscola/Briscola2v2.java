@@ -83,19 +83,8 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 	@Override
 	protected void generateMatchResultsForHistory() {
 		TwoCompetitorsMatchResult score = new TwoCompetitorsMatchResult();
-		score.setPlayer1(CompetitionManager.getInstance().getCompetitor(teams.get(0)));
-		score.setPlayer2(CompetitionManager.getInstance().getCompetitor(teams.get(1)));
-		score.setPlayer1Score(finalScores.get(teams.get(0)));
-		score.setPlayer2Score(finalScores.get(teams.get(1)));
-		score.setRankedMatch(rankedMatch);
+		populateResults(score, teams);
 		score.setGame(Briscola2v2.class.getSimpleName());
-		score.setMatchEndTimeByMillis(System.currentTimeMillis());
-		ICompetitor winner = CompetitionManager.getInstance().getCompetitor(teams.get(0));
-		if (finalScores.get(teams.get(0)) < finalScores.get(teams.get(1))) {
-			winner = CompetitionManager.getInstance().getCompetitor(teams.get(1));
-
-		}
-		score.setWinner(winner);
 		DAOProvider.getMatchResultsDAO().create(score);
 	}
 
@@ -110,12 +99,24 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 			winner = loser;
 			loser = temp;
 		}
-		CompetitionManager.getInstance().giveVirtualPoints(winner, loser, Tressette1v1.class.getSimpleName());
+		assignRewards(winner, loser);
+	}
+	
+	@Override
+	protected void assignRewards(Integer winner, Integer loser) {
+		CompetitionManager.getInstance().giveVirtualPoints(winner, loser, Briscola2v2.class.getSimpleName());
 		if(rankedMatch){
-			CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getSimpleName(), winner, loser);
+			CompetitionManager.getInstance().eloUpdate(Briscola2v2.class.getSimpleName(), winner, loser);
 		}else{
-			CompetitionManager.getInstance().eloUpdate(Tressette1v1.class.getSimpleName() + "normal", winner, loser);
+			CompetitionManager.getInstance().eloUpdate(Briscola2v2.class.getSimpleName() + "normal", winner, loser);
 		}
+	}
+	
+	@Override
+	protected void assignRewardsAfterSurrender() {
+		Integer loser = teamsMap.get(surrenderer);
+		Integer winner = teamsMap.get(followingPlayer.get(surrenderer));
+		assignRewards(winner, loser);
 	}
 
 	@Override
@@ -202,6 +203,12 @@ public class Briscola2v2 extends AbstractNeapolitanCardGame implements IBriscola
 		Integer secondPlayer = players.get(1);
 		players.set(1,players.get(2));
 		players.set(2,secondPlayer);
-		
 	}
+
+	@Override
+	protected NeapolitanGameRoundSummary getSummaryInstance() {
+		return new BriscolaRoundSummary();
+	}
+	
+	
 }

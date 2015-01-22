@@ -39,6 +39,7 @@
 					},
 					success: function (data) {
 						obj = JSON.parse(data);
+                                                $('.SurrenderOption').remove();
 						$('#player1-cards').remove();
 						$('#player2-cards').remove();
 						$('#cards-on-table').children().remove();
@@ -73,8 +74,24 @@
 					});
 				}
 			}
+                        function surrenderRequest(event) {
+                                event.preventDefault();
+				if (graphicComplete) {
+					$.ajax({
+						url: "./gioca",
+						data: {
+							surrender: true
+						},
+						success: function (data) {
+                                                    console.log("surrender success");
+						}
+					});
+				}
+			}
 			$(document).ready(function () {
 				$(".player2-cards").click(cardsClick);
+                                $(".SurrenderOption").click(surrenderRequest);
+                                
 			});
 
 
@@ -253,12 +270,19 @@
                         </c:forEach>
                     </ul>
                 </div>
-                <ul id="player2_info">
-                    <li class="player_other_info"> ${nickname}</li>
-                    <li id="player2-avatar">
-						<img class="AvatarImage" src="/MultigamingCompetitionSystem/assets/female.jpg"/>
-                    </li>
-                </ul>
+                <div class="Player2Div">
+                    <div class="SurrenderOption Inline">
+                        <form action="" method="post">
+                            <input  class="SurrenderOptionButton Submit"  type="submit" value="Surrender match"/>
+                        </form>
+                    </div>
+                    <ul id="player2_info" class="Inline">
+                        <li class="player_other_info"> ${nickname}</li>
+                        <li id="player2-avatar">
+                                                    <img class="AvatarImage" src="/MultigamingCompetitionSystem/assets/female.jpg"/>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <%@include file="../../../resources/html/footer.html" %>

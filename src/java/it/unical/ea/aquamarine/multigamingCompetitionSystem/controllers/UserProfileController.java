@@ -25,7 +25,7 @@ public class UserProfileController {
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
 	public String userProfile(Model model, HttpServletRequest request) {
 		String nick = (String) request.getSession().getAttribute("nickname");
-		addTest(nick);
+		//addTest(nick);
 		String bestGame = getBestGame(nick);
 		buildModel(model, nick, bestGame);
 		return "/userProfile";
@@ -85,6 +85,7 @@ public class UserProfileController {
 		match1.setPlayer2Score(5);
 		match1.setRankedMatch(false);
 		match1.setWinner(comp);
+		match1.setSurrendered(false);
 		match1.setMatchEndTimeByMillis(System.currentTimeMillis());
 		DAOProvider.getMatchResultsDAO().create(match1);
 		TwoCompetitorsMatchResult match2 = new TwoCompetitorsMatchResult();
@@ -96,6 +97,7 @@ public class UserProfileController {
 		match2.setRankedMatch(true);
 		match2.setMatchEndTimeByMillis(System.currentTimeMillis());
 		match2.setWinner(comp);
+		match2.setSurrendered(false);
 		DAOProvider.getMatchResultsDAO().create(match2);
 	}
 

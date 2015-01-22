@@ -1,5 +1,6 @@
 #game-table{
 	margin: 50px auto;
+        position: relative;
 	//background-image: url("../assets/green.jpg");
 	background-color: rgba(0, 64, 35, 1);
 	border-radius: 5%;
@@ -92,10 +93,9 @@ li{
 	
 }
 #player2_info{
-	padding-right: 2em;
-	margin-left:47em;
-	list-style-type: none;
-	overflow: visible;
+	position: absolute;
+        right: 2em;
+        bottom: 0em;
 }
 
 .player_other_info{
@@ -156,5 +156,10 @@ li{
 	margin-bottom: 6em;
 }
 
-
+.SurrenderOptionButton {
+    vertical-align: bottom;
+    position: absolute;
+    bottom: 1.5em;
+    left:3em;
+}
 

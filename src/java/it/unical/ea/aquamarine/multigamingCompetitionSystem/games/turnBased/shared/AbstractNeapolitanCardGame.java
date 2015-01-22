@@ -1,14 +1,14 @@
 
 package it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared;
 
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.ICompetitor;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.competition.CompetitionManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitionGame;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.IGameManager;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.matchResults.TwoCompetitorsMatchResult;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanCard;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.NeapolitanHand;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.shared.SharedFunctions;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.Tressette1v1;
-import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.TressetteGameManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,7 +29,8 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 	protected List<NeapolitanCard> table = new ArrayList<>();
 	protected boolean gameComplete = false;
 	protected boolean rankedMatch;
-	private final TurnGameSummaryManager summaryManager = new TurnGameSummaryManager();
+	protected Integer surrenderer = null;
+	protected final TurnGameSummaryManager summaryManager = new TurnGameSummaryManager();
 
 	public AbstractNeapolitanCardGame(List<Integer> players, boolean rankedMatch) {
 		this.players = players;
@@ -61,10 +62,7 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 					handComplete(summary);
 					checkGameComplete();
 					if(gameComplete){
-						getGameManager().gameCompletion(this);
-						computeFinalScores();
-						generateMatchResultsForHistory();
-						computeWinnersAndAssignRewards();
+						gameCompletion(false);
 					}
 					summary.setCardsInDeck(deck.size());
 				}
@@ -172,6 +170,17 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 		summary.setPickSummary(true);
 	}
 	
+	@Override
+	public synchronized void surrenderMatch(Integer competitor) {
+		surrenderer = competitor;
+		NeapolitanGameRoundSummary surrenderSummary = getSummaryInstance();
+		surrenderSummary.setSurrender(competitor);
+		surrenderSummary.setGameOver(true);
+		gameComplete = true;
+		summaryManager.addSummary(surrenderSummary);
+		gameCompletion(true);
+	}
+	
 	protected abstract IGameManager getGameManager();
 	
 	protected abstract void computeFinalScores();
@@ -180,11 +189,29 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 	
 	protected abstract void generateMatchResultsForHistory();
 
-
 	protected abstract void computeWinnersAndAssignRewards();
 
 	protected abstract Integer computeHandWinner();
+	
+	protected abstract void assignRewards(Integer winner, Integer loser);
+	
+	protected abstract void assignRewardsAfterSurrender();
 			
+	protected void populateResults(TwoCompetitorsMatchResult score, List<Integer> competitors) {
+		score.setPlayer1(CompetitionManager.getInstance().getCompetitor(competitors.get(0)));
+		score.setPlayer2(CompetitionManager.getInstance().getCompetitor(competitors.get(1)));
+		score.setPlayer1Score(finalScores.get(competitors.get(0)));
+		score.setPlayer2Score(finalScores.get(competitors.get(1)));
+		score.setRankedMatch(rankedMatch);
+		score.setMatchEndTimeByMillis(System.currentTimeMillis());
+		ICompetitor winner = CompetitionManager.getInstance().getCompetitor(competitors.get(0));
+		if (finalScores.get(competitors.get(0)) < finalScores.get(competitors.get(1))) {
+			winner = CompetitionManager.getInstance().getCompetitor(competitors.get(1));
+		}
+		score.setWinner(winner);
+		score.setSurrendered(surrenderer!=null);
+	}
+	
 	public ITurnSummary getSummary(int eventIndex) {
 		return summaryManager.getSummary(eventIndex);
 	}
@@ -197,5 +224,23 @@ public abstract class AbstractNeapolitanCardGame implements ICompetitionGame{
 	public boolean areThereSummaries() {
 		return summaryManager.areThereSummaries();
 	}
+
+	private void gameCompletion(boolean surrendered) {
+		getGameManager().gameCompletion(this);
+		computeFinalScores();
+		generateMatchResultsForHistory();
+		if(!surrendered) {
+			computeWinnersAndAssignRewards();
+		}
+		else {
+			assignRewardsAfterSurrender();
+		}
+	}
+
+	protected NeapolitanGameRoundSummary getSummaryInstance() {
+		return new NeapolitanGameRoundSummary();
+	}
+	
+	
 
 }

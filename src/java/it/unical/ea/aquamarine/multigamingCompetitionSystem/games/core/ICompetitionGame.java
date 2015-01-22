@@ -9,4 +9,5 @@ public interface ICompetitionGame {
 	public Map<Integer, Integer> getFinalScores();
 	public Integer getOpponent(Integer competitor);
 	public List<Integer> getPlayers();
+	public void surrenderMatch(Integer competitor);
 }

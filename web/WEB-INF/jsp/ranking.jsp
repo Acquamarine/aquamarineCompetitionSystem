@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -50,10 +51,10 @@
 					<td class="ranking-column ranking-table">
 						<c:choose>
 							<c:when test="${usersDefeatsAndVictories.get(loop.index).getValue()+usersDefeatsAndVictories.get(loop.index).getKey()!=0}">
-								${usersDefeatsAndVictories.get(loop.index).getValue()/(usersDefeatsAndVictories.get(loop.index).getValue()+usersDefeatsAndVictories.get(loop.index).getKey())*100}
+                                                                <fmt:formatNumber type="number" pattern="###.#%" value="${usersDefeatsAndVictories.get(loop.index).getValue()/(usersDefeatsAndVictories.get(loop.index).getValue()+usersDefeatsAndVictories.get(loop.index).getKey())}" />
 							</c:when>
 							<c:otherwise>
-								0
+								0.0
 							</c:otherwise>
 						</c:choose>
 					</td>

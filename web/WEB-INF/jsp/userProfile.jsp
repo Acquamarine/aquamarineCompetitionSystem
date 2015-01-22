@@ -109,29 +109,34 @@
 									<div class="MatchDate Inline">
 										${matchResult.getMatchEndTime()}
 									</div>
+                                                                        <div class="Surrender Inline">
+                                                                            <c:if test="${matchResult.isSurrendered()}">
+                                                                                With surrender
+                                                                            </c:if>
+                                                                        </div>
 								</div>
 								<div class="MatchStats <%=victoryOrDefeat%>">
-									<div class="MatchScores Inline">
-										<div class="PlayerMatchDetails Inline">
+									<ul class="MatchScores Inline">
+										<li class="PlayerMatchDetails Inline">
 											<div class="CompetitorName">
 												${matchResult.getPlayer1().getNickname()}
 											</div>
 											<div class="Score">
 												${matchResult.getPlayer1Score()}
 											</div>
-										</div>
-										<div class="MatchPlayersSeparator Inline">
+										</li>
+										<li class="MatchPlayersSeparator Inline">
 											vs
-										</div>
-										<div class="PlayerMatchDetails Inline">
+										</li>
+										<li class="PlayerMatchDetails Inline">
 											<div class="CompetitorName">
 												${matchResult.getPlayer2().getNickname()}
 											</div>
 											<div class="Score">
 												${matchResult.getPlayer2Score()}
 											</div>
-										</div>
-									</div>
+										</li>
+									</ul>
 								</div>
 							</div>
 						</c:forEach>

@@ -40,6 +40,8 @@ public class TwoCompetitorsMatchResult implements Serializable {
 	private boolean rankedMatch;
 	@Column
 	private Timestamp matchEndTime;
+	@Column
+	private boolean surrendered;
 	
 	@ManyToOne(targetEntity = AbstractCompetitor.class)
 	@JoinColumn(name="winner")
@@ -121,9 +123,13 @@ public class TwoCompetitorsMatchResult implements Serializable {
 	public void setWinner(ICompetitor winner) {
 		this.winner = winner;
 	}
-	
-	
-	
-	
+
+	public boolean isSurrendered() {
+		return surrendered;
+	}
+
+	public void setSurrendered(boolean surrendered) {
+		this.surrendered = surrendered;
+	}
 	
 }

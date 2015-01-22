@@ -9,6 +9,7 @@ import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tres
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.tressette.TressetteGameManager;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared.NeapolitanGameRoundSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.core.users.RegisteredUser;
+import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.core.ICompetitionGame;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.games.turnBased.shared.ITurnSummary;
 import it.unical.ea.aquamarine.multigamingCompetitionSystem.persistence.OnDemandPersistenceManager;
 import java.util.HashMap;
@@ -137,4 +138,15 @@ public class TressetteController {
 		}
 		return "/tressette";
 	}
+	
+	@RequestMapping(value = "/tressette/gioca", method = {RequestMethod.GET, RequestMethod.POST}, params = "surrender")
+	public void surrenderMatch(HttpServletRequest request) {
+		System.out.println("surrender started");
+		Integer me = (Integer) request.getSession().getAttribute("playerId");
+		ICompetitionGame playerActiveMatch = TressetteGameManager.getInstance().getPlayerActiveMatch(me);
+		if(playerActiveMatch!=null) {
+			playerActiveMatch.surrenderMatch(me);
+		}
+	}
+	
 }
