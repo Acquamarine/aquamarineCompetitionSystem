@@ -14,13 +14,13 @@
         <link href="/MultigamingCompetitionSystem/css/userProfile.css" rel="stylesheet" type="text/css">
         <link href="/MultigamingCompetitionSystem/css/teams.css" rel="stylesheet" type="text/css">
         <script src="/MultigamingCompetitionSystem/scripts/jquery-1.11.2.js"></script>
-		<script>
-			$(document).ready(function () {
-				$(window).scrollTop($("#${focus}").offset().top - 300);
-				console.log($("#${focus}"));
-			<%request.getSession().removeAttribute("focus");%>
-			});
-		</script>
+        <script>
+            $(document).ready(function () {
+                $(window).scrollTop($("#${focus}").offset().top - 300);
+                console.log($("#${focus}"));
+            <%request.getSession().removeAttribute("focus");%>
+            });
+        </script>
     </head>
     <body>
         <%@include file="../../resources/html/header.html" %>
@@ -67,23 +67,23 @@
             </c:if>
         </div>
         <div class="AllTeams">
-			<div class="AllTeamsHeader">
-				<div class="PlatformGamesTitle">Teams</div>
-				<div class="InvitationsSearchBoxContainer CreateTeam">
-					<form action="/MultigamingCompetitionSystem/teams" method="get">
-						<div class="InvitationsSearchBox">
-							<div class="HeaderSearchBoxBlock Inline">
-								<div class="HeaderSearchBoxInput Inline">
-									<input type="text" name="createTeam" class="Search NoSpace"  placeholder="Team Name">
-								</div>
-								<div class="HeaderSearchButton Inline">
-									<input class="Submit Invite" type="submit"  value="Create Team">
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
+            <div class="AllTeamsHeader">
+                <div class="PlatformGamesTitle">Teams</div>
+                <div class="InvitationsSearchBoxContainer CreateTeam">
+                    <form action="/MultigamingCompetitionSystem/teams" method="get">
+                        <div class="InvitationsSearchBox">
+                            <div class="HeaderSearchBoxBlock Inline">
+                                <div class="HeaderSearchBoxInput Inline">
+                                    <input type="text" name="createTeam" class="Search NoSpace"  placeholder="Team Name">
+                                </div>
+                                <div class="HeaderSearchButton Inline">
+                                    <input class="Submit Invite" type="submit"  value="Create Team">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="TeamsList">
                 <c:forEach items="${usersTeams}" var="team">
                     <div class="TeamDiv FrontBanner">
@@ -103,6 +103,11 @@
                                     ${team.getNickname()} 
                                 </div>
                             </div>
+                            <form action="/MultigamingCompetitionSystem/teams" method="GET">
+                                <input type="hidden" name="exit" value="true" />
+                                <input type="hidden" name="teamNick" value="${team.getNickname()}" />
+                                <input class="Submit RedButton Inline ExitTeamButton" type="submit"  value="Exit team"/>
+                            </form>
                         </div>
                         <div class="PlatformGamesTitle MembersTitle">Members</div>
                         <ul class="Members">
@@ -131,23 +136,23 @@
                                 <c:if test="${!invitationsMap.get(team.getNickname()).isEmpty()}">
                                     <div class="PlatformGamesTitle InvitationsTitle Inline">Pending Invitations</div>
                                 </c:if>
-								<c:if test="${team.getLeader().equals(registeredUser)}">
-									<div class="InvitationsSearchBoxContainer Inline">
-										<form action="/MultigamingCompetitionSystem/teams" method="GET">
-											<input type="hidden" name="team" value="${team.getNickname()}" /> 
-											<div class="InvitationsSearchBox">
-												<div class="HeaderSearchBoxBlock Inline">
-													<div class="HeaderSearchBoxInput Inline">
-														<input type="text" name="invitedUser" id="TeamButton${team.getNickname()}" class="Search"  placeholder="User Nickname">
-													</div>
-													<div class="HeaderSearchButton Inline">
-														<input class="Submit Invite" type="submit"  value="Invite user">
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-								</c:if>
+                                <c:if test="${team.getLeader().equals(registeredUser)}">
+                                    <div class="InvitationsSearchBoxContainer Inline">
+                                        <form action="/MultigamingCompetitionSystem/teams" method="GET">
+                                            <input type="hidden" name="team" value="${team.getNickname()}" /> 
+                                            <div class="InvitationsSearchBox">
+                                                <div class="HeaderSearchBoxBlock Inline">
+                                                    <div class="HeaderSearchBoxInput Inline">
+                                                        <input type="text" name="invitedUser" id="TeamButton${team.getNickname()}" class="Search"  placeholder="User Nickname">
+                                                    </div>
+                                                    <div class="HeaderSearchButton Inline">
+                                                        <input class="Submit Invite" type="submit"  value="Invite user">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </c:if>
                             </div>
                             <ul class="Members">
                                 <c:forEach items="${invitationsMap.get(team.getNickname())}" var="teamInvitation">

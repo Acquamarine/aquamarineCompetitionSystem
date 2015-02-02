@@ -69,6 +69,10 @@ public class RegisteredUser extends AbstractCompetitor implements Serializable {
 	public boolean isTeam() {
 		return false;
 	}
+	
+	public void exitTeam(Team team) {
+		teams.remove(team);
+	}
 
 	
 

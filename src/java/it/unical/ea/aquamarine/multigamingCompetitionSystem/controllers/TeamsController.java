@@ -82,6 +82,25 @@ public class TeamsController {
 		}
 		return "redirect:teams";
 	}
+	
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"teamNick","exit"})
+	public String exitTeam(Model model, HttpServletRequest request, @RequestParam("teamNick") String teamNick) {
+		if((boolean) request.getSession().getAttribute("loggedIn") == false){
+			return "redirect:login";
+		}
+		Team team = null;
+		if(CompetitionManager.getInstance().doesTeamExistByNick(teamNick)){
+			team = (Team) CompetitionManager.getInstance().getCompetitorByNick(teamNick);
+			RegisteredUser user = (RegisteredUser) request.getSession().getAttribute("registeredUser");
+			user.exitTeam(team);
+			team.removeMember(user);
+			OnDemandPersistenceManager.getInstance().updateCompetitor(user);
+			OnDemandPersistenceManager.getInstance().updateCompetitor(team);
+		}else{
+			return "redirect:teams";
+		}
+		return "redirect:teams";
+	}
 
 	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, params = {"teamNick","accept"})
 	public String acceptTeamInvitation(Model model, HttpServletRequest request, @RequestParam("accept") boolean accept, @RequestParam("teamNick") String teamNick) {

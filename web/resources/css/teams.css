@@ -2,6 +2,7 @@
     text-align: center;
     color: #ffcc00;
     margin-bottom: 3em;
+    position: relative;
 }
 .CompetitorName {
     margin-left: 1em;
@@ -143,4 +144,9 @@
 	height: 4em;
 	margin:auto;
 	position: relative;
+}
+
+.ExitTeamButton {
+    position: absolute;
+    right: 2em;
 }
